@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Logo aquí</a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+
+        <div class="col">
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Catálogo</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>Action - 1</button>
+                <button ngbDropdownItem>Another Action</button>
+                <button ngbDropdownItem>Something else is here</button>
+              </div>
+            </div>
+        </div>
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item mr-2 ml-2">
+          <a class="nav-link" href="#">Acerca de</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0" style="color:white">
+        <span > | </span>
+        <button class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
+        <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button">Regístrate</button>
+      </form>
+    </div>
+  </nav>
+
+
+<!--Modales-->
+
+<!--Modal del login-->
+<ng-template #login let-modal>
+    <div class="modal-body">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="1" style="width:50%">
+              <a ngbNavLink class="nav-login">Empleador</a>
+              <ng-template ngbNavContent>
+                  Login empleador
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" style="width:50%">
+              <a ngbNavLink class="nav-login">Empleado</a>
+              <ng-template ngbNavContent>
+                  Login empleado
+              </ng-template>
+            </li>
+          </ul>  
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </ng-template>
+
+  
+<!--Modal del registro-->

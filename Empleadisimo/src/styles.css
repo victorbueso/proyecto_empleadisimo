@@ -1,1 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*------------------------Fuentes----------------*/
+
+/*Títulos y encabezados*/
+
+    @font-face{
+        font-family: "Ramabhadra";
+        src:url("assets/fonts/Ramabhadra/Ramabhadra-Regular.ttf");
+    }
+
+/*Otros textos*/
+    @font-face{
+        font-family: 'Raleway medium';
+        src:url("assets/fonts/Raleway/static/Raleway-Medium.ttf")
+    }
+
+    @font-face{
+        font-family: 'Raleway semibold';
+        src:url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf")
+    }
+
+    @font-face{
+        font-family: 'Raleway bold';
+        src:url("assets/fonts/Raleway/static/Raleway-Bold.ttf")
+    }
+
+/*---------------------Botones----------------------*/
+
+.btn{
+    font-family: "Raleway medium";
+}
+
+.bg-light{
+    background-color: #054a91 !important;
+}
+
+/*Para botones con borde transparente, sin relleno*/
+.btn-outline-primary{
+    border: 1px solid transparent !important;
+    color: white !important;
+}
+
+/*Al hacer hover el fondo se pone blanco y la letra blanca*/
+.btn-outline-primary:hover{
+    background-color: white !important;
+    color: #054a91 !important;
+}
+
+/*Para botones con borde naranja, sin relleno*/
+.btn-outline-danger{
+    border: 1px solid #f17300 !important;
+    color: #f17300 !important;
+}
+
+/*Al hacer hover el fondo se pone naranja y la letra blanca*/
+.btn-outline-danger:hover{
+    background-color: #f17300 !important;
+    color: white !important;
+    
+}
+
+.btn-outline-danger:focus, .btn-outline-danger.focus{
+    box-shadow: 0 0 0 0.2rem rgb(241 115 0 / 50%) !important;
+}
+
+
+/*Botón con relleno azul y letras blancas*/
+.btn-primary{
+    border: 1px solid transparent !important;
+    color: white !important;
+    background-color: #054a91;
+}
+
+.btn-primary:hover{
+    background-color: #f17300;
+}
+
+
+/*Otros*/
+
+.nav-link{
+    color: white !important;
+}
+
+.nav-link:hover{
+    color: #f17300 !important;
+}
+
+.navbar{
+    font-family: "Raleway medium";
+}
+
