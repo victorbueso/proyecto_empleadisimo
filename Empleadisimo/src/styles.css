@@ -1,93 +1,211 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 /*------------------------Fuentes----------------*/
+
 
 /*Títulos y encabezados*/
 
-    @font-face{
-        font-family: "Ramabhadra";
-        src:url("assets/fonts/Ramabhadra/Ramabhadra-Regular.ttf");
-    }
+@font-face {
+    font-family: "Ramabhadra";
+    src: url("assets/fonts/Ramabhadra/Ramabhadra-Regular.ttf");
+}
+
 
 /*Otros textos*/
-    @font-face{
-        font-family: 'Raleway medium';
-        src:url("assets/fonts/Raleway/static/Raleway-Medium.ttf")
-    }
 
-    @font-face{
-        font-family: 'Raleway semibold';
-        src:url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf")
-    }
+@font-face {
+    font-family: 'Raleway medium';
+    src: url("assets/fonts/Raleway/static/Raleway-Medium.ttf")
+}
 
-    @font-face{
-        font-family: 'Raleway bold';
-        src:url("assets/fonts/Raleway/static/Raleway-Bold.ttf")
-    }
+@font-face {
+    font-family: 'Raleway semibold';
+    src: url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf")
+}
+
+@font-face {
+    font-family: 'Raleway bold';
+    src: url("assets/fonts/Raleway/static/Raleway-Bold.ttf")
+}
+
 
 /*---------------------Botones----------------------*/
 
-.btn{
+.btn {
     font-family: "Raleway medium";
 }
 
-.bg-light{
+.bg-light {
     background-color: #054a91 !important;
 }
 
+
 /*Para botones con borde transparente, sin relleno*/
-.btn-outline-primary{
+
+.btn-outline-primary {
     border: 1px solid transparent !important;
     color: white !important;
 }
 
+
 /*Al hacer hover el fondo se pone blanco y la letra blanca*/
-.btn-outline-primary:hover{
+
+.btn-outline-primary:hover {
     background-color: white !important;
     color: #054a91 !important;
 }
 
+
 /*Para botones con borde naranja, sin relleno*/
-.btn-outline-danger{
+
+.btn-outline-danger {
     border: 1px solid #f17300 !important;
     color: #f17300 !important;
 }
 
+
 /*Al hacer hover el fondo se pone naranja y la letra blanca*/
-.btn-outline-danger:hover{
+
+.btn-outline-danger:hover {
     background-color: #f17300 !important;
     color: white !important;
-    
 }
 
-.btn-outline-danger:focus, .btn-outline-danger.focus{
+.btn-outline-danger:focus,
+.btn-outline-danger.focus {
     box-shadow: 0 0 0 0.2rem rgb(241 115 0 / 50%) !important;
 }
 
 
-/*Botón con relleno azul y letras blancas*/
-.btn-primary{
+/* Botones */
+
+.btn-primary {
     border: 1px solid transparent !important;
     color: white !important;
     background-color: #054a91;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background-color: #f17300;
+}
+
+.btn-outline-secondary {
+    background-color: var(--main-color);
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    color: white;
+}
+
+.btn-outline-secondary:hover {
+    border: 1px solid var(--main-color);
+    background-color: white;
+    color: var(--main-color);
+    box-sizing: border-box;
 }
 
 
 /*Otros*/
 
-.nav-link{
+.nav-link {
     color: white !important;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     color: #f17300 !important;
 }
 
-.navbar{
+.navbar {
     font-family: "Raleway medium";
 }
 
+
+/*Primer bloque de landing page*/
+
+body {
+    --main-color: #054a91;
+    --secondary-color: #f17300;
+}
+
+.first-block {
+    display: flex;
+    flex-direction: row;
+    max-width: 100vw;
+    height: auto;
+}
+
+.f1-left {
+    width: 50vw;
+    display: inherit;
+    align-items: center;
+}
+
+.information {
+    color: var(--main-color);
+    box-sizing: border-box;
+    padding: 0% 5%;
+    text-align: center;
+    width: 100%;
+}
+
+.information h1 {
+    font-size: 2.5em;
+}
+
+.information h2 {
+    font-size: 1.5em;
+}
+
+.f2-rigth {
+    overflow: hidden;
+    height: 90vh;
+    width: 50vw;
+}
+
+.img-block {
+    max-height: 100%;
+}
+
+
+/* Media query styles */
+
+@media screen and (max-width: 730px) {
+    .first-block {
+        border-top: 1px solid white;
+        padding: 1em 0em;
+        background-color: var(--main-color);
+    }
+    .f2-rigth {
+        display: none;
+    }
+    .f1-left {
+        width: 100vw;
+        background-color: var(--main-color);
+    }
+    .information h1 {
+        font-size: 1.5;
+        color: white;
+    }
+    .information h2 {
+        font-size: 1;
+        color: white;
+    }
+    .btn-outline-secondary {
+        border: 1px solid white;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .information h1 {
+        font-size: 1em;
+    }
+    .information h2 {
+        font-size: .7em;
+    }
+    .btn-outline-secondary {
+        font-size: .7em;
+    }
+    .btn-outline-danger {
+        font-size: .7em;
+    }
+}
