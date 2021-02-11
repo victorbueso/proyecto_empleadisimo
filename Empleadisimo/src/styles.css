@@ -167,6 +167,72 @@ body {
 }
 
 
+/* Footer */
+
+footer {
+    background-color: var(--main-color);
+    color: white;
+    padding: 5%;
+    height: 50vh;
+    width: 100%;
+    margin: 0px;
+}
+
+.link-foo {
+    color: white !important;
+    cursor: pointer;
+}
+
+.link-foo:hover {
+    text-decoration: underline;
+}
+
+footer span {
+    border-bottom: 1px solid white;
+    font-family: "Ramabhadra";
+    display: inline-block;
+    margin-bottom: .5em;
+}
+
+footer ul {
+    font-family: "Raleway medium";
+    list-style-type: none;
+    padding: 10px 0px;
+}
+
+.ff-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.ff-list {
+    flex-grow: 1;
+}
+
+.sf-list {
+    flex-grow: 1;
+}
+
+.tf-list {
+    flex-grow: 2;
+}
+
+.df-list {
+    display: inherit;
+    flex-direction: row;
+    flex-basis: 1;
+}
+
+
+/* .email-list {
+    background-color: red;
+}
+
+.df-logo {
+    background-color: rosybrown;
+}  */
+
+
 /* Media query styles */
 
 @media screen and (max-width: 730px) {
