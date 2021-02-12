@@ -1,0 +1,20 @@
+h2{
+    font-family: 'Ramabhadra';
+    color:#054a91;
+}
+
+h5{
+    font-family: 'Raleway bold';
+    color:#054a91;
+}
+
+.pros{
+    font-family: 'Raleway semibold';
+}
+
+.pros-icon{
+    background-color: #f17300;
+    border-radius: 50%; 
+    width: 200px; 
+    height: 200px
+}
