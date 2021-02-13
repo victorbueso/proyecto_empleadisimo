@@ -260,13 +260,19 @@ footer ul {
     display: inline-block;
 }
 
+.rotate {
+    transform: rotate(180deg);
+}
+
+
+/*Slider container*/
+
 .slider-conteiner {
-    height: 70vh;
-    max-height: 70vh;
-    background-color: red;
+    height: 80vh;
+    max-height: 80vh;
     display: flex;
     align-items: center;
-    margin: 1% 0%;
+    box-sizing: border-box;
 }
 
 .slider {
@@ -285,6 +291,7 @@ footer ul {
 .slider-text {
     position: absolute;
     top: 75%;
+    font-family: Ramabhadra;
     background-color: black;
     width: 100%;
     height: 25%;
@@ -294,11 +301,27 @@ footer ul {
 
 .slider-button {
     position: absolute;
-    width: 2.5%;
+    width: 2em;
+    background-color: transparent;
+    border-width: 0px;
 }
 
+.main-title {
+    background-color: #054a9175;
+}
 
-/*Slider container*/
+.secondary-title {
+    background-color: #f1730094;
+}
+
+.image-slider {
+    height: 100%;
+    overflow: hidden;
+}
+
+.image-slider img {
+    width: 100%;
+}
 
 @media screen and (max-width: 730px) {
     .first-block {

@@ -15,11 +15,12 @@ export class SliderComponent{
   }
   
   moveSlider(add:number){
+
     for(var i of this.slider){
       if(add == 1)
-        i.position += 100;
-      else
         i.position -= 100;
+      else
+        i.position += 100;
     }
   }
 }

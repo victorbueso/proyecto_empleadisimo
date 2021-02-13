@@ -7,12 +7,18 @@ import { Injectable } from '@angular/core';
 export class SliderService {
   slider: sliderData[] = [
     {
-      img: "assets/img/pexels-andrea-piacquadio-3771045.jpg",
-      position: 0
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, officiis repellendus eaque, doloremque exercitationem adipisci accusamus cupiditate eius quia facilis nostrum voluptatibus esse quidem harum molestias est sit? Voluptate, quod.",
+      classText: "main-title",
+      position: 0,
+      title: "Lorem, ipsum dolor",
+      img: "assets/img/pexels-thisisengineering-3861958.jpg",
     },
     {
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, officiis repellendus eaque, doloremque exercitationem adipisci accusamus cupiditate eius quia facilis nostrum voluptatibus esse quidem harum molestias est sit? Voluptate, quod.",
+      classText: "secondary-title",
+      position: 100,
+      title: "Lorem, ipsum dolor",
       img: "assets/img/pexels-thisisengineering-3861958.jpg",
-      position: 100
     }
   ]
 
@@ -22,6 +28,9 @@ export class SliderService {
 }
 
 export interface sliderData {
-  img: string;
+  description: string;
+  classText: string;
   position: number;
+  title: string;
+  img: string;
 }
