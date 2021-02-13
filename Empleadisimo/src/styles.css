@@ -246,6 +246,20 @@ footer ul {
     cursor: pointer;
 }
 
+.ffr {
+    display: none;
+    color: white;
+    align-content: center;
+    text-align: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.footer-items a {
+    padding: 5px;
+    display: inline-block;
+}
+
 
 /* Media query styles */
 
@@ -273,6 +287,15 @@ footer ul {
     }
     .btn-outline-secondary {
         border: 1px solid white;
+    }
+    .ff-div {
+        display: none;
+    }
+    .df-list {
+        display: none;
+    }
+    .ffr {
+        display: flex;
     }
 }
 
