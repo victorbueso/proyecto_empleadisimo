@@ -8,6 +8,7 @@ import { LandingPageComponent } from './componentes/landing-page/landing-page.co
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { FirstBlockComponent } from './componentes/first-block/first-block.component';
 import { FooterComponent } from './componentes/footer/footer.component';
+import { SliderComponent } from './componentes/slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FooterComponent } from './componentes/footer/footer.component';
     LandingPageComponent,
     NavbarComponent,
     FirstBlockComponent,
-    FooterComponent
+    FooterComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,11 @@
+<div class="slider-conteiner">
+    <div class="slider">
+        <div *ngFor="let s of slider" class="item-slider" [ngStyle]="{'left.%': s.position}">
+            <div class="slider-text">
+                <h2>Lorem, ipsum dolor.</h2>
+            </div>
+        </div>
+    </div>
+    <button (click)="moveSlider(1)" class="slider-button" style="left: 97.5%;">R</button>
+    <button (click)="moveSlider(0)" class="slider-button">L</button>
+</div>

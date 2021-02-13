@@ -260,8 +260,45 @@ footer ul {
     display: inline-block;
 }
 
+.slider-conteiner {
+    height: 70vh;
+    max-height: 70vh;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    margin: 1% 0%;
+}
 
-/* Media query styles */
+.slider {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.item-slider {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: left 1s;
+}
+
+.slider-text {
+    position: absolute;
+    top: 75%;
+    background-color: black;
+    width: 100%;
+    height: 25%;
+    color: white;
+    text-align: center;
+}
+
+.slider-button {
+    position: absolute;
+    width: 2.5%;
+}
+
+
+/*Slider container*/
 
 @media screen and (max-width: 730px) {
     .first-block {
