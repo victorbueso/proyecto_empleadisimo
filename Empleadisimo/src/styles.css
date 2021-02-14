@@ -289,16 +289,6 @@ footer ul {
     height: 100%;
     width: 100%;
     transition: left 1s;
-    /* animation: noneSlide 1s linear infinite; */
-}
-
-@keyframes noneSlide {
-    0% {
-        left: 10%;
-    }
-    50% {
-        left: 0%
-    }
 }
 
 .slider-text {
