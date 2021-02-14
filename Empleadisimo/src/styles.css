@@ -339,6 +339,14 @@ footer ul {
     left: -1%;
 }
 
+.fa-arrow-circle-left:hover {
+    font-size: 3em;
+}
+
+.fa-arrow-circle-right:hover {
+    font-size: 3em;
+}
+
 @media screen and (max-width: 790px) {
     .image-slider {
         display: none;
