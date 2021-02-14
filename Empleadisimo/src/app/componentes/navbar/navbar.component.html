@@ -37,13 +37,13 @@
 <ng-template #login let-modal>
     <div class="modal-body">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-            <li [ngbNavItem]="1" style="width:50%">
+            <li [ngbNavItem]="0" style="width:50%">
               <a ngbNavLink class="nav-login">Empleador</a>
               <ng-template ngbNavContent>
                   Login empleador
               </ng-template>
             </li>
-            <li [ngbNavItem]="2" style="width:50%">
+            <li [ngbNavItem]="1" style="width:50%">
               <a ngbNavLink class="nav-login">Empleado</a>
               <ng-template ngbNavContent>
                   Login empleado
@@ -56,3 +56,66 @@
 
   
 <!--Modal del registro-->
+
+<ng-template #registro let-modal>
+  <div class="modal-body">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="0" style="width:50%">
+            <a ngbNavLink class="nav-login">Empleado</a>
+            <ng-template ngbNavContent>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="1" style="width:50%">
+            <a ngbNavLink class="nav-login">Empresa</a>
+            <ng-template ngbNavContent>
+            </ng-template>
+          </li>
+        </ul> 
+         
+      <div [ngbNavOutlet]="nav" class="mt-2">
+        
+      </div>
+      <div class="content-fluid" >
+        <div class="row mt-4 mx-auto" style="width:50%; height: 200px; background-color: gray;">
+            <div >
+              <img src="assets/LOGOS/LOGO_AZUL.png" style="width: 100%; height: 100%;" alt="">
+
+            </div>
+        </div>
+        <div class="row mt-1 mx-auto" style="width:50%">
+          <h3 class="mx-auto" style="margin-bottom: 0; color: #054a91;" ><b>Bienvenido</b></h3><br>
+          <p class="mx-auto" style="margin-top: 0; color: #054a91;">Crear una cuenta </p> 
+        </div>
+        <form [formGroup]="formularioRegistro" >
+          <div class="row mt-3 ml-5" style="width: 80%;">
+            <label for="">Correo Electronico:</label>
+            <input formControlName="rgCorreo" [ngClass]="{'input-error': (rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched))}" class="form-control" type="text" required>
+            <div *ngIf="rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched)"  class="error">
+              <span *ngIf="rgCorreo?.errors?.required" >Error el campo es obligatorio</span> 
+              <span *ngIf="rgCorreo?.errors?.email" >debe ingresar un email</span>        
+          </div>
+          </div>
+          <div class="row my-2 ml-5" style="width: 80%;">
+            <label for="">Contrasena:</label>
+            <input formControlName="rgPassword" class="form-control" type="password" name="" id="" >
+            <div *ngIf="rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched)"  class="error">
+              <span *ngIf="rgPassword?.errors?.required" >Error el campo es obligatorio</span> 
+              <span *ngIf="rgPassword?.errors?.minLength" >debe tener un minimo de 6 caracteres</span>        
+            </div>
+          </div>
+          <div class="row my-2 ml-5" style="width: 80%;">
+            <label for="">Confirmar Contrasena:</label>
+            <input formControlName="rgConfPassword" class="form-control" type="password" name="" id="" >
+          </div>
+          <div class="row mx-auto mt-4 mb-3" style="width: 50%;">
+            <button [disabled]="!formularioRegistro.valid" (click)="registrarUsuario()" class="form-control btn btn-primary" type="button">Registrarme</button>
+          </div>
+
+        </form>
+        <div class="row ml-5" style="width: 80%;">
+          <p>¿Ya tienes cuenta?<a class="btn" style="color: #f17300;">Inicia Sesion</a></p>
+        </div>
+        
+      </div>
+  </div>
+</ng-template>
