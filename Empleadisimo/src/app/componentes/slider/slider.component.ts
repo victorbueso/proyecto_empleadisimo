@@ -8,19 +8,38 @@ import { SliderService, sliderData} from '../../servicios/slider.service';
 
 export class SliderComponent{
   
+  flagI: number = 0;
+  flagD: number = 0;  
+  flagC: number = -1;
   slider: sliderData[];
   
   constructor(private _sliderService: SliderService) {
     this.slider = this._sliderService.slider;
+    this.flagI = 0;
+    this.flagD = this._sliderService.slider.length - 1;
+    console.log("A la derecha" + this.flagD);
+    console.log("A la izquierda" + this.flagI);
   }
-  
-  moveSlider(add:number){
-
+  moveSlider(add:number){ 
     for(var i of this.slider){
-      if(add == 1)
+      if(add == 0 && (this.flagI > 0 || this.flagC == 0)){
+        i.position += 100;   
+        if(this.flagC == -1){
+          this.flagC = 0;
+          this.flagD +=1;
+          this.flagI -=1;
+        }
+      }
+
+      if(add == 1 && (this.flagD > 0 || this.flagC == 0)){
         i.position -= 100;
-      else
-        i.position += 100;
+        if(this.flagC == -1){
+          this.flagC = 0;
+          this.flagI +=1;
+          this.flagD -=1;
+        }
+      }
     }
+    this.flagC = -1;
   }
 }

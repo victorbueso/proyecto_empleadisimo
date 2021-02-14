@@ -7,10 +7,9 @@
             <div class="slider-text" [ngClass]="s.classText">
                 <h2>{{ s.title }}</h2>
                 <p>{{ s.description }}</p>
-
             </div>
         </div>
     </div>
-    <button (click)="moveSlider(0)" class="slider-button rotate ml-2"><img src="../../../assets/svg/next.svg" alt=""></button>
-    <button (click)="moveSlider(1)" class="slider-button mr-2" style="left: 97.5%;"><img src="../../../assets/svg/next.svg" alt=""></button>
+    <button (click)="moveSlider(0)" class="slider-button rotate-1 ml-2"><i class="fas fa-arrow-circle-left icono-flecha"></i></button>
+    <button (click)="moveSlider(1)" class="slider-button mr-2 rotate-2 slider-i"><i class="fas fa-arrow-circle-right icono-flecha"></i></button>
 </div>

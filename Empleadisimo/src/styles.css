@@ -260,9 +260,10 @@ footer ul {
     display: inline-block;
 }
 
-.rotate {
+
+/* .rotate {
     transform: rotate(180deg);
-}
+} */
 
 
 /*Slider container*/
@@ -273,6 +274,7 @@ footer ul {
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    min-height: 22.5em;
 }
 
 .slider {
@@ -301,9 +303,14 @@ footer ul {
 
 .slider-button {
     position: absolute;
-    width: 2em;
+    width: auto;
     background-color: transparent;
     border-width: 0px;
+}
+
+.icono-flecha {
+    color: white;
+    font-size: 2em;
 }
 
 .main-title {
@@ -321,6 +328,14 @@ footer ul {
 
 .image-slider img {
     width: 100%;
+}
+
+.slider-i {
+    right: 0%;
+}
+
+.slider-l {
+    left: -1%;
 }
 
 @media screen and (max-width: 730px) {
