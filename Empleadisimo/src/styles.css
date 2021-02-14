@@ -275,6 +275,7 @@ footer ul {
     align-items: center;
     box-sizing: border-box;
     min-height: 22.5em;
+    overflow: hidden;
 }
 
 .slider {
@@ -288,6 +289,16 @@ footer ul {
     height: 100%;
     width: 100%;
     transition: left 1s;
+    /* animation: noneSlide 1s linear infinite; */
+}
+
+@keyframes noneSlide {
+    0% {
+        left: 10%;
+    }
+    50% {
+        left: 0%
+    }
 }
 
 .slider-text {
@@ -336,6 +347,27 @@ footer ul {
 
 .slider-l {
     left: -1%;
+}
+
+@media screen and (max-width: 790px) {
+    .image-slider {
+        display: none;
+    }
+    .slider-text {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        display: flex;
+        height: 100%;
+        top: 0px;
+        padding: 5%;
+    }
+    .main-title {
+        background-color: var(--main-color);
+    }
+    .secondary-title {
+        background-color: var(--secondary-color);
+    }
 }
 
 @media screen and (max-width: 730px) {
