@@ -11,6 +11,8 @@ import { FooterComponent } from './componentes/footer/footer.component';
 import { SliderComponent } from './componentes/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+import { BenefitsComponent } from './componentes/benefits/benefits.component';
+import { ProsComponent } from './componentes/pros/pros.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { HttpClientModule } from '@angular/common/http'
     NavbarComponent,
     FirstBlockComponent,
     FooterComponent,
-    SliderComponent
+    SliderComponent,
+    BenefitsComponent,
+    ProsComponent
   ],
   imports: [
     BrowserModule,
