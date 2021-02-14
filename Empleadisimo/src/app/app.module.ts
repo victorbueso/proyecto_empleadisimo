@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LandingPageComponent } from './componentes/landing-page/landing-page.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
-import { BenefitsComponent } from './components/benefits/benefits.component';
-import { ProsComponent } from './components/pros/pros.component';
+import { BenefitsComponent } from './componentes/benefits/benefits.component';
+import { ProsComponent } from './componentes/pros/pros.component';
 
 @NgModule({
   declarations: [
