@@ -9,6 +9,8 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { FirstBlockComponent } from './componentes/first-block/first-block.component';
 import { FooterComponent } from './componentes/footer/footer.component';
 import { SliderComponent } from './componentes/slider/slider.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import { SliderComponent } from './componentes/slider/slider.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
