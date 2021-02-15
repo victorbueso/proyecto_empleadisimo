@@ -347,6 +347,24 @@ footer ul {
     font-size: 3em;
 }
 
+.container-empleador {
+    height: auto;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 1%;
+    flex-direction: column;
+}
+
+.image-login {
+    height: 100px;
+}
+
+.titles-container {
+    color: var(--main-color);
+}
+
 @media screen and (max-width: 790px) {
     .image-slider {
         display: none;
