@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SliderService, sliderData} from '../../servicios/slider.service'; 
+import { SliderService, sliderData} from '../../services/slider.service'; 
 
 @Component({
   selector: 'app-slider',

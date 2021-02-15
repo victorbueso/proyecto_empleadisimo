@@ -25,7 +25,7 @@
       <form class="form-inline my-2 my-lg-0" style="color:white">
         <span > | </span>
         <button class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
-        <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button">Regístrate</button>
+        <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
       </form>
     </div>
   </nav>
@@ -97,7 +97,7 @@
           </div>
           <div class="row my-2 ml-5" style="width: 80%;">
             <label for="">Contrasena:</label>
-            <input formControlName="rgPassword" class="form-control" type="password" name="" id="" >
+            <input formControlName="rgPassword" class="form-control" type="password" name=""  >
             <div *ngIf="rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched)"  class="error">
               <span *ngIf="rgPassword?.errors?.required" >Error el campo es obligatorio</span> 
               <span *ngIf="rgPassword?.errors?.minLength" >debe tener un minimo de 6 caracteres</span>        
@@ -105,7 +105,7 @@
           </div>
           <div class="row my-2 ml-5" style="width: 80%;">
             <label for="">Confirmar Contrasena:</label>
-            <input formControlName="rgConfPassword" class="form-control" type="password" name="" id="" >
+            <input formControlName="rgConfPassword" class="form-control" type="password" name=""  >
           </div>
           <div class="row mx-auto mt-4 mb-3" style="width: 50%;">
             <button [disabled]="!formularioRegistro.valid" (click)="registrarUsuario()" class="form-control btn btn-primary" type="button">Registrarme</button>
