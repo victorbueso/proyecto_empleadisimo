@@ -365,6 +365,28 @@ footer ul {
     color: var(--main-color);
 }
 
+
+/*links-footer*/
+
+.container-links {
+    height: calc(100vh - 56px);
+    background-color: var(--main-color);
+}
+
+.orange-figure {
+    fill: transparent;
+    stroke: #F17300;
+    stroke-width: 3;
+}
+
+.text-footer {
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 1% 5%;
+    font-family: 'Raleway medium';
+}
+
 @media screen and (max-width: 790px) {
     .image-slider {
         display: none;
@@ -406,7 +428,7 @@ footer ul {
     }
     .information h2 {
         font-size: 1;
-        color: white;
+        color: white !important;
     }
     .btn-outline-secondary {
         border: 1px solid white;

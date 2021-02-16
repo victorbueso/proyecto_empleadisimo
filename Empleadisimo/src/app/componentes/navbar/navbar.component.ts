@@ -1,5 +1,5 @@
 import { importType } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -9,9 +9,11 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit{
 
   public isCollapsed = true;
+  public heigth: number = 0;
+  @ViewChild('nav') elementView?: ElementRef;
   active=0;
 
   //datos para registro de usuario
