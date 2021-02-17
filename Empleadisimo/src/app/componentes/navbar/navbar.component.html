@@ -60,14 +60,17 @@
                                     <label><span>Correo electronico</span></label>
                                     <input formControlName="correo_electronico_empleador" [ngClass]="{'input-error': (correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched))}" type="correo" id="email" class="form-control">
                                     <div *ngIf="correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched)" class="error">
-                                    <span *ngIf="correo_empleador?.errors?.required">Error el campo es obligatorio</span>
-                                    <span *ngIf="correo_empleador?.errors?.email">correo invalido</span>
+                                        <span *ngIf="correo_empleador?.errors?.required">Error el campo es obligatorio</span>
+                                        <span *ngIf="correo_empleador?.errors?.email">correo invalido</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label><span>Contraseña</span></label>
-                                    <div *ngIf="contrasena_empleador?.invalid && (contrasena_empleador?.dirty || contrasena_empleador?.touched)" class="error">
-                                    <span *ngIf="contrasena_empleador?.errors?.required">Error el campo es obligatorio</span>
-                                    <span *ngIf="contrasena_empleador?.errors?.email">contraseña invalido</span>
+                                    <input formControlName="contrasena_empleado" [ngClass]="{'input-error': (contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched))}" type="password" id="contrasena" class="form-control">
+                                    <div *ngIf="contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched)" class="error">
+                                      <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
+                                      <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
+                                    </div>
                                     <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                                 </div>
                                 <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
@@ -92,15 +95,17 @@
                                     <label><span>Correo electronico</span></label>
                                     <input formControlName="correo_electronico_empleado" [ngClass]="{'input-error': (correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched))}" type="correo" id="email" class="form-control">
                                     <div *ngIf="correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched)" class="error">
-                                    <span *ngIf="correo_empleado?.errors?.required">Error el campo es obligatorio</span>
-                                    <span *ngIf="correo_empleado?.errors?.email">correo invalido</span>
+                                     <span *ngIf="correo_empleado?.errors?.required">Error el campo es obligatorio</span>
+                                     <span *ngIf="correo_empleado?.errors?.email">correo invalido</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label><span>Contraseña</span></label>
                                     <input formControlName="contrasena_empleado" [ngClass]="{'input-error': (contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched))}" type="password" id="contrasena" class="form-control">
                                     <div *ngIf="contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched)" class="error">
-                                    <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
-                                    <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
+                                      <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
+                                      <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
+                                    </div>
                                     <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                                 </div>
                                 <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
