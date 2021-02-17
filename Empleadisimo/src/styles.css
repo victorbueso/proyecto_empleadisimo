@@ -218,7 +218,7 @@ footer ul {
 }
 
 .df-list {
-    display: inherit;
+    display: flex;
     flex-direction: row;
     flex-basis: 1;
 }
@@ -230,6 +230,15 @@ footer ul {
 .svg-socialm {
     height: 25px;
     width: 25px;
+}
+
+.email-list {
+    width: 100%;
+}
+
+.df-logo img {
+    width: 90px;
+    height: 70px;
 }
 
 .container-media {
