@@ -39,20 +39,22 @@ export class NavbarComponent implements OnInit{
   );
 
 
+
+ get correo_empleado(){
+    return this.formulariologin_empleado.get('correo_electronico_empleado');
+  }
+
+  get contrasena_empleado(){
+    return this.formulariologin_empleado.get('contrasena_empleado');
+  }
+  
+
   get correo_empleador(){
     return this.formulariologin_empleador.get('correo_electronico_empleador');
   }
 
   get contrasena_empleador(){
     return this.formulariologin_empleador.get('contrasena_empleador');
-  }
-
-  get correo_empleado(){
-    return this.formulariologin_empleado.get('correo_electronico_empleado');
-  }
-
-  get contrasena_empleado(){
-    return this.formulariologin_empleado.get('contrasena_empleado');
   }
 
 
