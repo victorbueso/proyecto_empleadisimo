@@ -10,7 +10,7 @@ import { FooterComponent } from './componentes/footer/footer.component';
 import { SliderComponent } from './componentes/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FooterLinksComponent } from './footer-links/footer-links.component'
+import { FooterLinksComponent } from './componentes/footer-links/footer-links.component'
 
 @NgModule({
   declarations: [

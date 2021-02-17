@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './componentes/landing-page/landing-page.component';
+import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
 
 const routes: Routes = [
-  {
-    path:'',
-    component:LandingPageComponent
-  }
+  { path: 'footer/:id' ,component: FooterLinksComponent},
+  { path: '', component:LandingPageComponent },
 ];
 
 @NgModule({

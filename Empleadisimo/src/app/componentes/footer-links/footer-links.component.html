@@ -1,0 +1,10 @@
+<div class="container-links">
+    <div class="text-footer">
+        <p>
+            {{ info.description }}
+        </p>
+    </div>
+    <svg height="100%" width="100%">
+        <circle *ngFor="let figure of figures" [attr.cx]="figure.cx" [attr.cy]="figure.cy" r="50" class = "orange-figure"/>
+    </svg>
+</div>
