@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit{
   public isCollapsed = true;
   public heigth: number = 0;
   @ViewChild('nav') elementView?: ElementRef;
+  @ViewChild('registro') registro!:ElementRef;
   active=0;
 
   //datos para registro de usuario
@@ -23,6 +24,40 @@ export class NavbarComponent implements OnInit{
     rgConfPassword: new FormControl('',[Validators.required,Validators.minLength(6)])
   }
   );
+
+  //datos para capturar el empleador
+  formulariologin_empleador = new FormGroup({
+    correo_electronico_empleador: new FormControl('',[Validators.required,Validators.email]),
+    contrasena_empleador: new FormControl('',[Validators.required,Validators.minLength(6)])
+  }
+  );
+
+  //datos para capturar el empleado
+  formulariologin_empleado = new FormGroup({
+    correo_electronico_empleado: new FormControl('',[Validators.required,Validators.email]),
+    contrasena_empleado: new FormControl('',[Validators.required,Validators.minLength(6)])
+  }
+  );
+
+
+
+ get correo_empleado(){
+    return this.formulariologin_empleado.get('correo_electronico_empleado');
+  }
+
+  get contrasena_empleado(){
+    return this.formulariologin_empleado.get('contrasena_empleado');
+  }
+  
+
+  get correo_empleador(){
+    return this.formulariologin_empleador.get('correo_electronico_empleador');
+  }
+
+  get contrasena_empleador(){
+    return this.formulariologin_empleador.get('contrasena_empleador');
+  }
+
 
   get rgCorreo(){
     return this.formularioRegistro.get('rgCorreo');
@@ -38,6 +73,10 @@ export class NavbarComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  abrirModal(){
+    this.open(this.registro);
   }
 
   registrarUsuario( ){

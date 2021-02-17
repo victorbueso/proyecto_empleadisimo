@@ -1,11 +1,14 @@
 <nav #nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Logo aquí</a>
+    <a class="navbar-brand" href="#">
+        <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
+        <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
+    </a>
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-
+    <div class="collapse navbar-collapse justify-content-end" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <!--
         <div class="col">
             <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Catálogo</button>
@@ -21,9 +24,9 @@
             <li class="nav-item mr-2 ml-2">
                 <a class="nav-link" href="#">Acerca de</a>
             </li>
-        </ul>
+        </ul>-->
         <form class="form-inline my-2 my-lg-0" style="color:white">
-            <span> | </span>
+           <!--  <span> | </span> -->
             <button class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
             <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
         </form>
@@ -47,14 +50,22 @@
                             <h4>Ingresa a tu cuenta</h4>
                         </div>
                         <div class="form-container">
-                            <form class="form-container">
+                            <form [formGroup]="formulariologin_empleador" class="form-container">
                                 <div class="container-title">
                                     <label><span>Correo electronico</span></label>
-                                    <input type="correo" id="email" class="form-control">
+                                    <input formControlName="correo_electronico_empleador" [ngClass]="{'input-error': (correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched))}" type="correo"  class="form-control">
+                                    <div *ngIf="correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched)" class="error">
+                                        <span *ngIf="correo_empleador?.errors?.required">Error el campo es obligatorio</span>
+                                        <span *ngIf="correo_empleador?.errors?.email">correo invalido</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label><span>Contraseña</span></label>
-                                    <input type="password" id="contrasena" class="form-control">
+                                    <input formControlName="contrasena_empleador" [ngClass]="{'input-error': (contrasena_empleador?.invalid && (contrasena_empleador?.dirty || contrasena_empleador?.touched))}" type="password"  class="form-control">
+                                    <div *ngIf="contrasena_empleador?.invalid && (contrasena_empleador?.dirty || contrasena_empleador?.touched)" class="error">
+                                      <span *ngIf="contrasena_empleador?.errors?.required">Error el campo es obligatorio</span>
+                                      <span *ngIf="contrasena_empleador?.errors?.email">contraseña invalida</span>
+                                    </div>
                                     <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                                 </div>
                                 <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
@@ -74,14 +85,22 @@
                             <h4>Ingresa a tu cuenta</h4>
                         </div>
                         <div class="form-container">
-                            <form class="form-container">
+                            <form [formGroup]="formulariologin_empleado"class="form-container">
                                 <div class="container-title">
                                     <label><span>Correo electronico</span></label>
-                                    <input type="correo" id="email" class="form-control">
+                                    <input formControlName="correo_electronico_empleado" [ngClass]="{'input-error': (correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched))}" type="correo" id="email" class="form-control">
+                                    <div *ngIf="correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched)" class="error">
+                                     <span *ngIf="correo_empleado?.errors?.required">Error el campo es obligatorio</span>
+                                     <span *ngIf="correo_empleado?.errors?.email">correo invalido</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label><span>Contraseña</span></label>
-                                    <input type="password" id="contrasena" class="form-control">
+                                    <input formControlName="contrasena_empleado" [ngClass]="{'input-error': (contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched))}" type="password" id="contrasena" class="form-control">
+                                    <div *ngIf="contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched)" class="error">
+                                      <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
+                                      <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
+                                    </div>
                                     <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                                 </div>
                                 <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
@@ -89,7 +108,7 @@
                             </form>
                         </div>
                     </div>
-                </ng-template>
+                </ng-template> 
             </li>
         </ul>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
