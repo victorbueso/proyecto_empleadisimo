@@ -68,8 +68,8 @@
                                     <label><span>Contraseña</span></label>
                                     <input formControlName="contrasena_empleado" [ngClass]="{'input-error': (contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched))}" type="password" id="contrasena" class="form-control">
                                     <div *ngIf="contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched)" class="error">
-                                      <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
-                                      <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
+                                      <span *ngIf="contrasena_empleador?.errors?.required">Error el campo es obligatorio</span>
+                                      <span *ngIf="contrasena_empleador?.errors?.email">contraseña invalida</span>
                                     </div>
                                     <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                                 </div>
