@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit{
   public isCollapsed = true;
   public heigth: number = 0;
   @ViewChild('nav') elementView?: ElementRef;
+  @ViewChild('registro') registro!:ElementRef;
   active=0;
 
   //datos para registro de usuario
@@ -72,6 +73,10 @@ export class NavbarComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  abrirModal(){
+    this.open(this.registro);
   }
 
   registrarUsuario( ){
