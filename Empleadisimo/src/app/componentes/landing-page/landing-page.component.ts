@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -6,14 +7,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  @Output() onClickButton = new EventEmitter();
-  constructor() { }
+ 
+  constructor(private helperService:HelperService) { }
 
   ngOnInit(): void {
   }
 
   abrirModal(){
-    this.onClickButton.emit();
+    this.helperService.evento.emit();
   }
 
 }

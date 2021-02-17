@@ -2,6 +2,7 @@ import { importType } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -66,13 +67,18 @@ export class NavbarComponent implements OnInit{
     return this.formularioRegistro.get('rgPassword');
   }
   
-  constructor( private modalService:NgbModal,private usuarioService:UsuariosService) { }
+  constructor( private modalService:NgbModal,private usuarioService:UsuariosService,
+    private helperService:HelperService) { }
 
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
   ngOnInit(): void {
+    this.helperService.evento.subscribe( () => {
+      this.abrirModal();
+      console.log('funciona');
+    })
   }
 
   abrirModal(){
