@@ -43,81 +43,52 @@
             <li [ngbNavItem]="0" style="width:50%">
                 <a ngbNavLink class="nav-login">Empleador</a>
                 <ng-template ngbNavContent>
-                    <div class="container-empleador">
-                        <div class="titles-container">
-                            <img class="image-login" src="../../../assets/LOGOS/LOGO_AZUL.png">
-                            <h3>Bienvenido</h3>
-                            <h4>Ingresa a tu cuenta</h4>
-                        </div>
-                        <div class="form-container">
-                            <form [formGroup]="formulariologin_empleador" class="form-container">
-                                <div class="container-title">
-                                    <label><span>Correo electronico</span></label>
-                                    <input formControlName="correo_electronico_empleador" [ngClass]="{'input-error': (correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched))}" type="correo"  class="form-control">
-                                    <div *ngIf="correo_empleador?.invalid && (correo_empleador?.dirty || correo_empleador?.touched)" class="error">
-                                        <span *ngIf="correo_empleador?.errors?.required">Error el campo es obligatorio</span>
-                                        <span *ngIf="correo_empleador?.errors?.email">correo invalido</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label><span>Contraseña</span></label>
-                                    <input formControlName="contrasena_empleador" [ngClass]="{'input-error': (contrasena_empleador?.invalid && (contrasena_empleador?.dirty || contrasena_empleador?.touched))}" type="password"  class="form-control">
-                                    <div *ngIf="contrasena_empleador?.invalid && (contrasena_empleador?.dirty || contrasena_empleador?.touched)" class="error">
-                                      <span *ngIf="contrasena_empleador?.errors?.required">Error el campo es obligatorio</span>
-                                      <span *ngIf="contrasena_empleador?.errors?.email">contraseña invalida</span>
-                                    </div>
-                                    <a href=""><span>¿Olvidaste tu contraseña?</span></a>
-                                </div>
-                                <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
-                                <span>¿No tienes cuenta?<a>Registrate</a></span>
-                            </form>
-                        </div>
-                    </div>
+                    
                 </ng-template>
             </li>
             <li [ngbNavItem]="1" style="width:50%">
                 <a ngbNavLink class="nav-login">Empleado</a>
                 <ng-template ngbNavContent>
-                    <div class="container-empleador">
-                        <div class="titles-container">
-                            <img class="image-login" src="../../../assets/LOGOS/LOGO_AZUL.png">
-                            <h3>Bienvenido</h3>
-                            <h4>Ingresa a tu cuenta</h4>
-                        </div>
-                        <div class="form-container">
-                            <form [formGroup]="formulariologin_empleado"class="form-container">
-                                <div class="container-title">
-                                    <label><span>Correo electronico</span></label>
-                                    <input formControlName="correo_electronico_empleado" [ngClass]="{'input-error': (correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched))}" type="correo" id="email" class="form-control">
-                                    <div *ngIf="correo_empleado?.invalid && (correo_empleado?.dirty || correo_empleado?.touched)" class="error">
-                                     <span *ngIf="correo_empleado?.errors?.required">Error el campo es obligatorio</span>
-                                     <span *ngIf="correo_empleado?.errors?.email">correo invalido</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label><span>Contraseña</span></label>
-                                    <input formControlName="contrasena_empleado" [ngClass]="{'input-error': (contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched))}" type="password" id="contrasena" class="form-control">
-                                    <div *ngIf="contrasena_empleado?.invalid && (contrasena_empleado?.dirty || contrasena_empleado?.touched)" class="error">
-                                      <span *ngIf="contrasena_empleado?.errors?.required">Error el campo es obligatorio</span>
-                                      <span *ngIf="contrasena_empleado?.errors?.email">contraseña invalida</span>
-                                    </div>
-                                    <a href=""><span>¿Olvidaste tu contraseña?</span></a>
-                                </div>
-                                <button class="btn btn-outline-secondary">Iniciar Sesion</button><br>
-                                <span>¿No tienes cuenta?<a>Registrate</a></span>
-                            </form>
-                        </div>
-                    </div>
+                    
                 </ng-template> 
             </li>
         </ul>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        <div class="container-empleador">
+            <div class="titles-container">
+                <img class="image-login" src="../../../assets/LOGOS/LOGO_AZUL.png">
+                <h3>Bienvenido</h3>
+                <h4>Ingresa a tu cuenta</h4>
+            </div>
+            <div class="form-container">
+                <form [formGroup]="formularioLogin" class="form-container">
+                    <div class="container-title">
+                        <label><span>Correo electronico</span></label>
+                        <input formControlName="lgCorreo" [ngClass]="{'input-error': (lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched))}" type="correo"  class="form-control">
+                        <div *ngIf="lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched)" class="error">
+                            <span *ngIf="lgCorreo?.errors?.required">Error el campo es obligatorio</span>
+                            <span *ngIf="lgCorreo?.errors?.email">correo invalido</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label><span>Contraseña</span></label>
+                        <input formControlName="lgPassword" [ngClass]="{'input-error': (lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched))}" type="password"  class="form-control">
+                        <div *ngIf="lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched)" class="error">
+                          <span *ngIf="lgPassword?.errors?.required">Error el campo es obligatorio</span>
+                          <span *ngIf="lgPassword?.errors?.email">contraseña invalida</span>
+                        </div>
+                        <a href=""><span>¿Olvidaste tu contraseña?</span></a>
+                    </div>
+                    <button class="btn btn-outline-secondary" (click)="buttonLogin()" >Iniciar Sesion</button><br>
+                    <span>¿No tienes cuenta?<a>Registrate</a></span>
+                </form>
+            </div>
+        </div>
     </div>
 </ng-template>
 
 
 <!--Modal del registro-->
-
 <ng-template #registro let-modal>
     <div class="modal-body">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
@@ -136,12 +107,12 @@
         <div [ngbNavOutlet]="nav" class="mt-2">
 
         </div>
-        <div class="content-fluid">
-            <div class="row mt-4 mx-auto" style="width:50%; height: 200px; background-color: gray;">
-                <div>
-                    <img src="assets/LOGOS/LOGO_AZUL.png" style="width: 100%; height: 100%;" alt="">
-
-                </div>
+        <div class="content-empleador">
+            <div class="row alert alert-success" *ngIf="registroSuccess">
+                Your registration is successful!
+              </div>
+            <div class="row" >
+                <img src="assets/LOGOS/LOGO_AZUL.png"  class="image-login mx-auto" alt="">
             </div>
             <div class="row mt-1 mx-auto" style="width:50%">
                 <h3 class="mx-auto" style="margin-bottom: 0; color: #054a91;"><b>Bienvenido</b></h3><br>

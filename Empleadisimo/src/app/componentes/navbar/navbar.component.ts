@@ -12,11 +12,15 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class NavbarComponent implements OnInit{
 
+  
   public isCollapsed = true;
   public heigth: number = 0;
   @ViewChild('nav') elementView?: ElementRef;
   @ViewChild('registro') registro!:ElementRef;
+  @ViewChild('login') login!:ElementRef;
   active=0;
+  registroSuccess= false;
+
 
   //datos para registro de usuario
   formularioRegistro = new FormGroup({
@@ -27,36 +31,20 @@ export class NavbarComponent implements OnInit{
   );
 
   //datos para capturar el empleador
-  formulariologin_empleador = new FormGroup({
-    correo_electronico_empleador: new FormControl('',[Validators.required,Validators.email]),
-    contrasena_empleador: new FormControl('',[Validators.required,Validators.minLength(6)])
+  formularioLogin = new FormGroup({
+    lgCorreo: new FormControl('',[Validators.required,Validators.email]),
+    lgPassword: new FormControl('',[Validators.required,Validators.minLength(6)])
   }
   );
 
-  //datos para capturar el empleado
-  formulariologin_empleado = new FormGroup({
-    correo_electronico_empleado: new FormControl('',[Validators.required,Validators.email]),
-    contrasena_empleado: new FormControl('',[Validators.required,Validators.minLength(6)])
-  }
-  );
+  //datos para capturar 
 
-
-
- get correo_empleado(){
-    return this.formulariologin_empleado.get('correo_electronico_empleado');
+ get lgCorreo(){
+    return this.formularioLogin.get('lgCorreo');
   }
 
-  get contrasena_empleado(){
-    return this.formulariologin_empleado.get('contrasena_empleado');
-  }
-  
-
-  get correo_empleador(){
-    return this.formulariologin_empleador.get('correo_electronico_empleador');
-  }
-
-  get contrasena_empleador(){
-    return this.formulariologin_empleador.get('contrasena_empleador');
+  get lgPassword(){
+    return this.formularioLogin.get('lgPassword');
   }
 
 
@@ -70,9 +58,10 @@ export class NavbarComponent implements OnInit{
   constructor( private modalService:NgbModal,private usuarioService:UsuariosService,
     private helperService:HelperService) { }
 
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
-  }
+    open(content:any) {
+      this.registroSuccess= false;
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+    }
 
   ngOnInit(): void {
     this.helperService.evento.subscribe( () => {
@@ -84,6 +73,8 @@ export class NavbarComponent implements OnInit{
   abrirModal(){
     this.open(this.registro);
   }
+
+  buttonLogin(){}
 
   registrarUsuario( ){
 
@@ -98,45 +89,38 @@ export class NavbarComponent implements OnInit{
     }else{
 
       var data = {
-        tipo:this.active,
+        tipoUsuario:this.active,
         correo:this.formularioRegistro.value.rgCorreo,
         password:this.formularioRegistro.value.rgPassword
       }
 
-      this.usuarioService.obtenerTodosUsuarios().subscribe((res:any)=>{
-       var usuarios:Array<any> = res;
-       var a=usuarios.find(x => x.correo === data.correo);
-       if(a!=undefined){
-        this.formularioRegistro.setValue({
-          rgCorreo:null,
-          rgConfPassword:null,
-          rgPassword:null
-        });
-        alert('correo existe en la base de datos');
-        console.log(a);
-       }else{
-         console.log('no lo encontro');
-
-         this.usuarioService.registrarUsuario(data).subscribe(
-           res=>{
-            console.log(res);
-            alert('usuario ingresado exitosamente');
-            this.modalService.dismissAll();
-           },
-           error=>{
-            console.log(error);
-           });
-         
-       }
-      },(error:any)=>{
-        console.log(error);
-      });
-      
-      console.log(data);
-      
+      this.usuarioService.registrarUsuario(data).subscribe(
+        result=>{
+          console.log(result);
+          this.formularioRegistro.setValue({
+            rgCorreo:null,
+            rgConfPassword:null,
+            rgPassword:null
+          });
+          
+          
+          this.registroSuccess= true;
+        },error=>{
+          console.log(error);
+          alert(error.error.message);
+          this.formularioRegistro.setValue({
+            rgCorreo:null,
+            rgConfPassword:null,
+            rgPassword:null
+          });
+        }
+      );
+     
     }
     
   }
+
+
 
 
 }
