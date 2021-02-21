@@ -9,6 +9,11 @@ export class UsuariosService {
 
   constructor(private httpClient:HttpClient) { }
 
+
+  loginUsuario(data:any):Observable<any>{
+    return this.httpClient.post(`http://localhost:3000/usuarios/singin`,data);
+  }
+
   registrarUsuario(data:any):Observable<any>{
     return this.httpClient.post(`http://localhost:3000/usuarios`,data);
   }
@@ -17,3 +22,4 @@ export class UsuariosService {
     return this.httpClient.get(`http://localhost:3000/usuarios`,{});
   }
 }
+ 

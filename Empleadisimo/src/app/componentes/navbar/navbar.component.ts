@@ -74,9 +74,35 @@ export class NavbarComponent implements OnInit{
     this.open(this.registro);
   }
 
-  buttonLogin(){}
+  buttonLogin(){ 
 
-  registrarUsuario( ){
+   // data adquirida por el formulario que sera enviada
+    var data = {
+      lgCorreo:this.formularioLogin.value.lgCorreo,
+      lgContrasena:this.formularioLogin.value.lgContrasena
+    }
+
+  // funcion utilizada para enviar los datos 
+    this.usuarioService.loginUsuario(data).subscribe(
+      result=>{
+        console.log(result);
+        this.formularioLogin.setValue({
+          lgCorreo:null,
+          lgContrasena:null
+        });
+      },error=>{
+        console.log(error);
+        alert(error.error.message);
+        this.formularioLogin.setValue({
+          lgCorreo:null,
+          lgContrasena:null
+        });
+      }
+    );
+
+  }
+
+  registrarUsuario(){
 
     if(this.formularioRegistro.value.rgPassword!=this.formularioRegistro.value.rgConfPassword){
         
