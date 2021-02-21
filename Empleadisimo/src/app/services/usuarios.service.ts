@@ -11,7 +11,7 @@ export class UsuariosService {
 
 
   loginUsuario(data:any):Observable<any>{
-    return this.httpClient.post(`http://localhost:3000/usuarios/singin`,data);
+    return this.httpClient.post(`http://localhost:3000/usuarios/signin`,data);
   }
 
   registrarUsuario(data:any):Observable<any>{

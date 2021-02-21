@@ -78,8 +78,8 @@ export class NavbarComponent implements OnInit{
 
    // data adquirida por el formulario que sera enviada
     var data = {
-      lgCorreo:this.formularioLogin.value.lgCorreo,
-      lgContrasena:this.formularioLogin.value.lgContrasena
+      correo:this.formularioLogin.value.lgCorreo,
+      password:this.formularioLogin.value.lgPassword
     }
 
   // funcion utilizada para enviar los datos 
@@ -88,14 +88,14 @@ export class NavbarComponent implements OnInit{
         console.log(result);
         this.formularioLogin.setValue({
           lgCorreo:null,
-          lgContrasena:null
+          lgPassword:null
         });
       },error=>{
         console.log(error);
         alert(error.error.message);
         this.formularioLogin.setValue({
           lgCorreo:null,
-          lgContrasena:null
+          lgPassword:null
         });
       }
     );
