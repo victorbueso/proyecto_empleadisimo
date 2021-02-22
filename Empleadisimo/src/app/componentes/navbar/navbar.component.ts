@@ -12,7 +12,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class NavbarComponent implements OnInit{
 
-  
+  public pruebaUsuarioLogueado = null;
+
   public isCollapsed = true;
   public heigth: number = 0;
   @ViewChild('nav') elementView?: ElementRef;
@@ -90,6 +91,9 @@ export class NavbarComponent implements OnInit{
           lgCorreo:null,
           lgPassword:null
         });
+        this.pruebaUsuarioLogueado = result.idUser;
+        console.log(this.pruebaUsuarioLogueado);
+        this.modalService.dismissAll();
       },error=>{
         console.log(error);
         alert(error.error.message);
@@ -144,6 +148,12 @@ export class NavbarComponent implements OnInit{
      
     }
     
+  }
+
+
+  buttonLogout(){
+    console.log('logOut');
+    this.pruebaUsuarioLogueado = null;
   }
 
 

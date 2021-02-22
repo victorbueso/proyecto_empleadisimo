@@ -21,7 +21,7 @@ router.post("/signin", async (req, res) => {
     }
     
     const token = jwt.sign({_id: user._id}, 'secretkey');
-    return res.status(200).json({token, 'idUser':user._id});
+    return res.status(200).json({token, 'idUser':user._id, 'tipo':user.tipoUsuario});
 });
 
 //Crear un usuario simple
@@ -51,7 +51,7 @@ router.post('/', async function(req, res){
 
     userRouter.save().then(result => {
         const token = jwt.sign({_id: userRouter._id}, 'secretkey');
-        res.status(200).json({token, 'idUser':userRouter._id});
+        res.status(200).json({token, 'idUser':userRouter._id,'tipo':userRouter.tipoUsuario});
         res.end();
         
 
