@@ -4,14 +4,15 @@ var schema = new mongoose.Schema({
     titulo: String,
     descripcion: String,
     cantidadPago: Number,
-    fechaPublicacion: Date,
-    fechaVencimiento: Date,
-    cv: mongoose.SchemaTypes.Mixed,                     //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
+    fechaPublicacion: String,
+    fechaVencimiento: String,
+    /*cv: mongoose.SchemaTypes.Mixed,  */                   //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
     profesion: Array,
-    duracionPublicacion: String,                        //Masculino: 1, Femenino: 0
-    correo: String,                 
+    duracionPublicacion: String,                        //Masculino: 1, Femenino: 0          
     ubicacion: mongoose.SchemaTypes.Mixed,              //{pais: '', departamento: '', ciudad: ''}
     modalidad: Number,                                  //presencial: 1, semiPresencial: 2, homeOffice: 3
+    idEmpresa: mongoose.Types.ObjectId,
+    usuarios: Array
 });
 
 module.exports = mongoose.model('publicaciones', schema);

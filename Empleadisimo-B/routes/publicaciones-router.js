@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 var publicaciones = require('../models/publicaciones');
 
 //Crear una publicacion
 router.post('/', function(req, res){
-    let publicationsRouter = new usuario({
+    let publicationsRouter = new publicaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
         cantidadPago: req.body.pago,
         fechaPublicacion: req.body.fechaPublicacion,
         fechaVencimiento: req.body.fechaVencimiento,
-        cv: {                                                      //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
+        /*cv: {                                                      //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
             idCV: req.body.idCV,
             nombreCV: req.body.nombreCV,
             fechaCreacion: req.body.fechaCreacion,
@@ -19,16 +20,17 @@ router.post('/', function(req, res){
             tituloEmpleo: req.body.tituloEmpleo,
             descripcionEmpleo: req.body.descripcionEmpleo,
             duracionEmpleo: req.body.duracionEmpleo,
-        },
+        },*/
         profesion: req.body.profesion,
         duracionPublicacion: req.body.duracionPublicacion,
-        correo: req.body.correo,
         ubicacion: {                                               //{pais: '', departamento: '', ciudad: ''}
             pais: req.body.pais,
             departamento: req.body.departamento,
             ciudad: req.body.ciudad,
         },
-        modalidad: req.body.modalidad
+        modalidad: req.body.modalidad,
+        idEmpresa: req.body.idEmpresa,
+        usuarios: []
     });
 
     publicationsRouter.save().then(result => {

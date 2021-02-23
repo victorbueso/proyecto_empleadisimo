@@ -42,11 +42,13 @@ router.post('/', async function(req, res){
         tipoUsuario: req.body.tipoUsuario,              //Usuario: 0, Empresa: 1, Administrador: 2
         fechaNacimiento: null,
         genero: 1,                        //Masculino: 1, Femenino: 0
-        rating: [],
-        ubicacion: {departamento:'',pais:'',ciudad:''},                                    //{pais: '', departamento: '', ciudad: ''}
+        rating: [],                                   //{pais: '', departamento: '', ciudad: ''}
         curriculums: [],                                   //[{idCV: '', nombreCV: '', fechaCreacion: ''}]    
-        fotoPerfil: req.body.fotoPerfil,
-        medioPago: []
+        fotoPerfil: '',
+        medioPago: [],
+        sucursales: [],
+        rubros: [],
+        fechaFundacion: null
     });
 
     userRouter.save().then(result => {
@@ -88,6 +90,78 @@ router.get('/',function(req,res){
         res.end();
     });
 });
+
+//Actualizar usuario empleado
+
+router.put('/updateEmployee/:idUser', async (req, res) =>{
+    await usuario.updateOne({
+        _id: req.params.idUser
+    }, {
+        "nombreCompleto": req.body.nombreCompleto,
+        "correo": req.body.correo,
+        "profesion": req.body.profesion,
+        "fechaNacimiento": req.body.fechaNacimiento,
+        "genero": req.body.genero,
+        "curriculums": req.body.curriculums,
+        "fotoPerfil":req.body.urlFotoPerfil,
+        "medioPago": req.body.medioPago
+    })
+    .then(result => {
+        res.status(200).json({'message': 'Datos actualizados correctamente'});
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+
+
+//Actualizar usuario empresa
+
+router.post('/updateCompany/:idUser', async (req, res) =>{
+    await usuario.updateOne({
+        _id: req.params.idUser
+    }, {
+        "nombreCompleto": req.body.nombreCompleto,
+        "correo": req.body.correo,
+        "fotoPerfil":req.body.urlFotoPerfil,
+        "sucursales": req.body.sucursales,
+        "rubros": req.body.rubros,
+        "fechaFundacion":req.body.fechaFundacion
+    })
+    .then(result => {
+        res.status(200).json({'message': 'Datos actualizados correctamente'});
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+
+//Actualizar solo contraseña
+
+router.post('/updatePassword/:idUser', async (req, res) => {
+    const hash = await bcrypt.hashSync(req.body.newPassword, 10)
+    const user = await usuario.findOne({'_id':req.params.idUser})
+
+    if(!bcrypt.compareSync(req.body.oldPassword, user.password)){
+        return res.status(401).json({"message":'La contraseña anterior no coincide.'});
+    }
+    
+    usuario.updateOne(
+        {_id:req.params.idUser},
+        {
+            password: hash
+        })
+        .then( () => {
+            res.status(200).json({'message': 'Datos actualizados correctamente'});
+            res.end()
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    
+})
 
 //Eliminar un usuario
 router.delete('/:id', function(req,res){
