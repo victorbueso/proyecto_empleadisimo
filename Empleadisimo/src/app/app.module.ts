@@ -10,7 +10,8 @@ import { FooterComponent } from './componentes/footer/footer.component';
 import { SliderComponent } from './componentes/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FooterLinksComponent } from './componentes/footer-links/footer-links.component'
+import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
+import { UpdateInfoComponent } from './componentes/update-info/update-info.component'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
     NavbarComponent,
     FooterComponent,
     SliderComponent,
-    FooterLinksComponent
+    FooterLinksComponent,
+    UpdateInfoComponent
   ],
   imports: [
     BrowserModule,

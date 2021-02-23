@@ -396,6 +396,97 @@ footer ul {
     font-family: 'Raleway medium';
 }
 
+
+/* Basic info */
+
+.container-basic {
+    background: linear-gradient(270deg, #FFFFFF 0%, #0E8ED1 65%);
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    padding: 3%;
+}
+
+.basic-info {
+    box-shadow: 0px 4px 14px 0px #000000b8;
+    background-color: white;
+    border-radius: 15px;
+    display: inherit;
+    padding: 2% 3%;
+    width: 60%;
+}
+
+.title-info {
+    display: inherit;
+    width: 100%;
+}
+
+.basic-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-info img {
+    height: 50px;
+    margin-left: auto;
+}
+
+.basic-form {
+    display: flex;
+    flex-direction: column;
+    --height-forms: 35px;
+    --width-forms: 50%;
+}
+
+.basic-form input,
+select {
+    border-bottom: 2px solid #00000061;
+    height: var(--height-forms);
+    width: var(--width-forms);
+    color: #00000061;
+    border-right: 0px;
+    border-left: 0px;
+    border-top: 0px;
+    margin-top: 5px;
+}
+
+.basic-form input {
+    transition: width .4s;
+}
+
+.basic-form input:hover {
+    border-bottom-color: var(--main-color);
+}
+
+.basic-form input:focus {
+    outline: none;
+    width: 60%;
+    color: black;
+}
+
+.buttons-update {
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding-top: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+.next-button {
+    background-color: transparent;
+    border-width: 1px;
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    padding: 5px;
+}
+
+.skip-button {
+    background-color: transparent;
+    color: #F1730094;
+    border: none;
+}
+
 @media screen and (max-width: 790px) {
     .image-slider {
         display: none;
