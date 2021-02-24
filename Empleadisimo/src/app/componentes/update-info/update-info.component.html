@@ -1,21 +1,24 @@
 <div class="container-basic">
-    <!-- <div class="font-container"></div> -->
     <div class="basic-info">
         <div class="title-info">
-            <a>Datos generales</a>
-            <a>Trabajo</a>
+            <a class="head active-head">Datos generales</a>
+            <a class="head deactive-head">Trabajo</a>
             <img src="../../../assets/LOGOS/LOGO_AZUL_SOLO.png">
         </div>
         <div>
-            <form class="basic-form">
-                <input placeholder="Nombre completo">
-                <input placeholder="Fecha de nacimiento">
-                <input placeholder="Ingrese su numero de telefono">
-                <select class="select-sex">
-                    <option>Seleccione su sexo</option>
+            <form class="basic-form" [formGroup]="forma" (ngSubmit)="save()">
+                <p [ngClass]="{'display-block': invalidName()}" class="error-message">No se ingreso nombre o no es valido</p>
+                <input type="text" [ngClass]="{'input-error': invalidName()}" placeholder="Ingrese su nombre completo" formControlName="name">
+                <p [ngClass]="{'display-block': invalidPhone()}" class="error-message">No se ingreso numero o no es valido</p>
+                <input type="text" [ngClass]="{'input-error': invalidPhone()}" placeholder="Ingrese su numero de telefono" formControlName="phone">
+                <p [ngClass]="{'display-block': invalidSex()}" class="error-message">No se selecciono ninguna opcion</p>
+                <select [ngClass]="{'input-error': invalidSex()}" class="select-sex" formControlName="gender">
+                    <option [defaultSelected]=true value="default" >Seleccione su sexo</option>
                     <option>Masculino</option>
                     <option>Femenino</option>
                 </select>
+                <p [ngClass]="{'display-block': invalidBirth()}" class="error-message">Ingrese su fecha de nacimiento</p>
+                <input [ngClass]="{'input-error': invalidBirth()}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">
                 <div class="buttons-update">
                     <button class="next-button">Siguiente</button>
                     <button class="skip-button">Omitir</button>
