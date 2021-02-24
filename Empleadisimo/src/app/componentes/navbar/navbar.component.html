@@ -27,11 +27,11 @@
         </ul>-->
         <form class="form-inline my-2 my-lg-0" style="color:white">
            <!--  <span> | </span> -->
-
-            <button *ngIf="pruebaUsuarioLogueado ==null" class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
-            <button *ngIf="pruebaUsuarioLogueado ==null" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
             
-            <button *ngIf="pruebaUsuarioLogueado !=null" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="buttonLogout()">Logout</button>
+            <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
+            <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
+            
+            <button *ngIf="!!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="buttonLogout()">Logout</button>
         </form>
     </div>
 </nav>

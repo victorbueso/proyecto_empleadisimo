@@ -1,7 +1,8 @@
-import { importType } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
 import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -56,19 +57,21 @@ export class NavbarComponent implements OnInit{
     return this.formularioRegistro.get('rgPassword');
   }
   
-  constructor( private modalService:NgbModal,private usuarioService:UsuariosService,
-    private helperService:HelperService) { }
+  constructor(private modalService:NgbModal,
+              public usuarioService:UsuariosService,
+              private helperService:HelperService,
+              private cookieService:CookieService,
+              private router:Router) { }
 
-    open(content:any) {
-      this.registroSuccess= false;
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
-    }
+  open(content:any) {
+    this.registroSuccess= false;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
 
   ngOnInit(): void {
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
-      console.log('funciona');
-    })
+    });
   }
 
   abrirModal(){
@@ -86,13 +89,22 @@ export class NavbarComponent implements OnInit{
   // funcion utilizada para enviar los datos 
     this.usuarioService.loginUsuario(data).subscribe(
       result=>{
-        console.log(result);
+        //console.log(result);
         this.formularioLogin.setValue({
           lgCorreo:null,
           lgPassword:null
         });
         this.pruebaUsuarioLogueado = result.idUser;
-        console.log(this.pruebaUsuarioLogueado);
+        //console.log(this.pruebaUsuarioLogueado);
+        this.cookieService.set('token', result.token);
+        this.cookieService.set('idUser', result.idUser);
+        this.cookieService.set('tipo', result.tipo);
+
+        if(result.tipo == 0){
+          this.router.navigate(['employee']);
+        } else if (result.tipo == 1){
+          this.router.navigate(['company']);
+        }
         this.modalService.dismissAll();
       },error=>{
         console.log(error);
@@ -132,8 +144,6 @@ export class NavbarComponent implements OnInit{
             rgConfPassword:null,
             rgPassword:null
           });
-          
-          
           this.registroSuccess= true;
         },error=>{
           console.log(error);
@@ -150,13 +160,11 @@ export class NavbarComponent implements OnInit{
     
   }
 
-
   buttonLogout(){
     console.log('logOut');
+    this.router.navigate(['']);
     this.pruebaUsuarioLogueado = null;
+    this.cookieService.deleteAll();
   }
-
-
-
 
 }

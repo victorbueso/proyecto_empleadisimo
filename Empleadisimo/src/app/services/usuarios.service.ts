@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,7 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient,
+              private cookieService:CookieService) { }
 
 
   loginUsuario(data:any):Observable<any>{
@@ -20,6 +22,10 @@ export class UsuariosService {
 
   obtenerTodosUsuarios():Observable<any>{
     return this.httpClient.get(`http://localhost:3000/usuarios`,{});
+  }
+
+  loggedIn(){
+    return !!this.cookieService.get('token');
   }
 }
  

@@ -10,7 +10,6 @@ router.post("/signin", async (req, res) => {
     const correo = req.body.correo;
     const password = req.body.password;
     const user = await usuario.findOne({'correo':correo})
-
     if(user==null){
         return res.status(401).json({"message":"No se encontró ningún usuario registrado con ese correo electrónico"});
     }
@@ -114,7 +113,6 @@ router.put('/updateEmployee/:idUser', async (req, res) =>{
         res.end();
     })
 });
-
 
 //Actualizar usuario empresa
 

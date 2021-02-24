@@ -11,7 +11,8 @@ import { SliderComponent } from './componentes/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
-import { UpdateInfoComponent } from './componentes/update-info/update-info.component'
+import { UpdateInfoComponent } from './componentes/update-info/update-info.component';
+import { AuthenticationGuard } from './authentication.guard'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { UpdateInfoComponent } from './componentes/update-info/update-info.compo
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
