@@ -1,0 +1,21 @@
+h6 {
+  margin: 3px;
+  margin-bottom: 7px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  color: #fff
+}
+
+.picsum-img-wrappere {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@media (max-width: 600px) {
+  .picsum-img-wrapper {
+    width: 100%;
+    height: 280px;
+  }
+}

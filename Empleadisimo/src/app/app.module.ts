@@ -12,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
 import { UpdateInfoComponent } from './componentes/update-info/update-info.component';
-import { AuthenticationGuard } from './authentication.guard'
+import { AuthenticationGuard } from './authentication.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AuthenticationGuard } from './authentication.guard'
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthenticationGuard
@@ -38,3 +40,4 @@ import { AuthenticationGuard } from './authentication.guard'
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
