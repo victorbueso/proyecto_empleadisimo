@@ -453,6 +453,11 @@ select {
     margin: 10px 0px;
 }
 
+.input-good {
+    border-bottom-color: green;
+    color: green;
+}
+
 .basic-form select:focus,
 input[type="date"] {
     outline: none;
@@ -484,13 +489,20 @@ input[type="date"] {
     border-color: var(--secondary-color);
     color: var(--secondary-color);
     background-color: transparent;
+    border-style: solid;
     border-image: none;
+    border-radius: 3px;
     border-width: 1px;
     padding: 5px;
 }
 
 .next-button:focus {
     outline: none;
+}
+
+.next-button:hover {
+    background-color: var(--secondary-color);
+    color: white;
 }
 
 .skip-button {

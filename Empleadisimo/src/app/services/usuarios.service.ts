@@ -24,6 +24,10 @@ export class UsuariosService {
     return this.httpClient.get(`http://localhost:3000/usuarios`,{});
   }
 
+  updateInfo(userInfo:any, idUser:number):Observable<any>{
+    return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
+  }
+
   loggedIn(){
     return !!this.cookieService.get('token');
   }
