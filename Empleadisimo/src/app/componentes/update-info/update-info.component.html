@@ -10,7 +10,7 @@
                 <p [ngClass]="{'display-block': invalidName()}" class="error-message">No se ingreso nombre o no es valido</p>
                 <input type="text" [ngClass]="{'input-error': invalidName()}" placeholder="Ingrese su nombre completo" formControlName="name">
                 <p [ngClass]="{'display-block': invalidPhone()}" class="error-message">No se ingreso numero o no es valido</p>
-                <input type="text" [ngClass]="{'input-error': invalidPhone()}" placeholder="Ingrese su numero de telefono" formControlName="phone">
+                <input #phone type="text" (keyup)="formatPhone(phone)" [ngClass]="{'input-error': invalidPhone()}" placeholder="Ingrese su numero de telefono" formControlName="phone">
                 <p [ngClass]="{'display-block': invalidSex()}" class="error-message">No se selecciono ninguna opcion</p>
                 <select [ngClass]="{'input-error': invalidSex()}" class="select-sex" formControlName="gender">
                     <option [defaultSelected]=true value="default" >Seleccione su sexo</option>

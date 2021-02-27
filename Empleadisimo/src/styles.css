@@ -453,6 +453,11 @@ select {
     margin: 10px 0px;
 }
 
+.basic-form select:focus,
+input[type="date"] {
+    outline: none;
+}
+
 .basic-form input[type="text"] {
     transition: width .4s;
 }
