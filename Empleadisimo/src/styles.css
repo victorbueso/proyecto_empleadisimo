@@ -500,7 +500,7 @@ input[type="date"] {
 }
 
 .head {
-    padding: 0px 5px;
+    /* padding: 0px 5px; */
     height: 25px;
     box-sizing: border-box;
     cursor: pointer;

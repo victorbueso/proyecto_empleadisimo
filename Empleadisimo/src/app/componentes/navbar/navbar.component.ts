@@ -49,7 +49,6 @@ export class NavbarComponent implements OnInit{
     return this.formularioLogin.get('lgPassword');
   }
 
-
   get rgCorreo(){
     return this.formularioRegistro.get('rgCorreo');
   }
