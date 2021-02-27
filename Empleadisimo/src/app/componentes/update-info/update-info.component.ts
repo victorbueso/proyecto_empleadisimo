@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, Validators, PatternValidator, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, PatternValidator, FormControl, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-update-info',
@@ -45,17 +45,19 @@ export class UpdateInfoComponent implements OnInit{
       }
     }
   }
-  //  dateValidator(control: FormControl): ValidatorFn {
-  //   let dateT = new Date(control.value)
-  //   let dateB = new Date()
-  //   let age = Math.abs(dateT.getFullYear() - dateB.getFullYear());
-  //   if(age < 18){
-  //     return {
-  //       dateValidator: true
-  //     }
-  //   }
-  //   return null;
-  // }
+
+   dateValidator(control: AbstractControl){
+    let dateT = new Date(control.value)
+    let dateB = new Date()
+    let age = Math.abs(dateT.getFullYear() - dateB.getFullYear());
+    if(age < 18){
+      return {
+        dateValidator: true
+      }
+    }
+    return null;
+  }
+
   save(){
     console.log("Estorbas")
   }  

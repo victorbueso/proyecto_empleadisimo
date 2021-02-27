@@ -436,7 +436,7 @@ footer ul {
     display: flex;
     flex-direction: column;
     --height-forms: 35px;
-    --width-forms: 50%;
+    --width-forms: 70%;
 }
 
 .basic-form input,
@@ -468,7 +468,7 @@ input[type="date"] {
 
 .basic-form input[type="text"]:focus {
     outline: none;
-    width: 60%;
+    width: 80%;
     color: black;
 }
 
@@ -481,11 +481,16 @@ input[type="date"] {
 }
 
 .next-button {
-    background-color: transparent;
-    border-width: 1px;
     border-color: var(--secondary-color);
     color: var(--secondary-color);
+    background-color: transparent;
+    border-image: none;
+    border-width: 1px;
     padding: 5px;
+}
+
+.next-button:focus {
+    outline: none;
 }
 
 .skip-button {
@@ -507,7 +512,6 @@ input[type="date"] {
 
 .active-head {
     color: var(--secondary-color);
-    border-right: 1px solid;
     padding-right: 5px;
     margin-right: 5px;
     font-size: 16px;
@@ -533,12 +537,45 @@ input[type="date"] {
     border-color: red !important;
 }
 
+.logo-empleadisimo {
+    cursor: pointer;
+}
+
+.logo-empleadisimo:hover {
+    animation-name: rotate;
+    animation-duration: 1s;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(90deg)
+    }
+    25% {
+        transform: rotate(180deg)
+    }
+    50% {
+        transform: rotate(270deg)
+    }
+    100% {
+        transform: rotate(3690deg)
+    }
+}
+
 @keyframes fade-in {
     from {
         opacity: 0%;
     }
     to {
         opacity: 100%
+    }
+}
+
+@media screen and (max-width:750px) {
+    .basic-form {
+        --width-forms: 90%;
+    }
+    .basic-form input[type="text"]:focus {
+        width: 100%;
     }
 }
 
@@ -613,5 +650,13 @@ input[type="date"] {
         font-size: .7em;
     }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

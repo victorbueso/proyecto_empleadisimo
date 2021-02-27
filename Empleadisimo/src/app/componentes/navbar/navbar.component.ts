@@ -138,12 +138,7 @@ export class NavbarComponent implements OnInit{
 
       this.usuarioService.registrarUsuario(data).subscribe(
         result=>{
-          console.log(result);
-          this.formularioRegistro.setValue({
-            rgCorreo:null,
-            rgConfPassword:null,
-            rgPassword:null
-          });
+          this.router.navigate(['update-info']);
           this.registroSuccess= true;
         },error=>{
           console.log(error);
