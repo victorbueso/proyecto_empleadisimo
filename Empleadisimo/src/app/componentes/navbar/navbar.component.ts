@@ -138,8 +138,28 @@ export class NavbarComponent implements OnInit{
 
       this.usuarioService.registrarUsuario(data).subscribe(
         result=>{
-          this.router.navigate(['update-info']);
+          console.log(result);
           this.registroSuccess= true;
+          this.formularioRegistro.setValue({
+            rgCorreo:null,
+            rgConfPassword:null,
+            rgPassword:null
+          });
+          this.cookieService.set('token', result.token);
+          this.cookieService.set('idUser', result.idUser);
+          this.cookieService.set('tipo', result.tipo);
+         
+          setTimeout(() => 
+            {
+              this.modalService.dismissAll();
+              if(this.cookieService.get('tipo')=='1'){
+                  this.router.navigate(['company/update-info']);
+              }else{
+              this.router.navigate(['update-info']);
+              }
+            },
+            2000);
+
         },error=>{
           console.log(error);
           alert(error.error.message);
