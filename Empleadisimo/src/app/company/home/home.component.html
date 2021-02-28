@@ -1,1 +1,132 @@
-<p>home company works!</p>
+<!-- Sidebar -->
+<div class="wrapper fixed-left">
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-briefcase"></i>Business</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li>
+        <a href=""><i class="fas fa-poll-h"></i>Publicaciones</a>
+      </li>
+      <li>
+        <a href=""><i class="fas fa-city"></i>Sucursales</a>
+      </li>
+      <li>
+        <a href=""><i class="far fa-id-card"></i>Rubros</a>
+      </li>
+      <li>
+        <a href=""><i class="fas fa-file-contract"></i>Contratos</a>
+      </li>
+      <li>
+        <a href=""><i class="fas fa-cogs"></i>Configuraciones</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div id="content">
+    <div style="padding: 0px">
+      <div class="card-body p-0">
+        <h1>Historial de publicaciones
+          <button class="btn btn-primary" style="float: right; margin-bottom: 5px;" (click)="open(contenido)">
+            Nueva publicación
+          </button>
+        </h1>
+      </div>
+      <hr>
+    </div>
+
+    <div style="float: center; margin-left: 45px;">
+      <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
+        <div class="card-body">
+          <h2 class="card-title">Título de oferta<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
+          <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Exercitationem asperiores tempore nihil ex dolor, quisquam quos tenetur obcaecati perspiciatis mollitia optio,
+            sequi quasi quibusdam, voluptatum eligendi corporis. Odit, fugiat animi.
+          </p>
+          <i class="fas fa-map-marked-alt"> Ubicación</i>
+          <p>Personas interesadas<button class="btn btn-primary" style="float: right;">Ver más</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Pantalla modal con formulario para crear publicaciones -->
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title mb-0">Nueva Publicación</h2>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
+
+    <form>
+      <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">
+        <label for="inputAddress"></label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="Título">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1"></label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
+          <label for="inputCalendar">Fecha de vencimiento</label>
+          <input type="date" class="form-control" id="inputCalendar" placeholder="Insertar fecha">
+        </div>
+        <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
+          <label for="inputZip">Salario</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+        <div class="form-group col-md-4" style="margin-bottom: 3px;">
+          <label for="inputState"></label>
+          <select id="inputState" class="form-control">
+            <option selected>Presencial</option>
+            <option>Semi-virtual</option>
+            <option>Virtual</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputProfesion">Profesión</label>
+        <input type="text" class="form-control" id="inputProfesion">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4" style="padding-top: 2px;">
+          <label for="inputCiudad">Ciudad</label>
+          <input type="text" class="form-control" id="inputCiudad" placeholder="Ciudad">
+        </div>
+        <div class="form-group col-md-4" style="padding-top: 2px;">
+          <label for="inputDepartamento">Departamento</label>
+          <input type="text" class="form-control" id="inputDepartamento" placeholder="Departamento">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPais">País</label>
+          <input type="text" class="form-control" id="inputPais" placeholder="País">
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">
+      publicar
+    </button>
+  </div>
+</ng-template>
+
+<!-- Método jQuery para "deslizar" el sidebar (debe estar el navbar anterior, no funcionó)
+<script>
+  $(document).ready(function() {
+    $('#sidebarCollapse').on('click', function() {
+      $('#sidebar, #content').toggleClass('active');
+      $('.collapse.in').toggleClass('in');
+      $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      document.getElementById("bodyContent").style.width="100%";
+    });
+  });
+</script>
+-->
