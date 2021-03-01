@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let db = 'EmpleodDB';
+let db = 'EmpleosDB';
 let port = '27017';
 let host = 'localhost';
 

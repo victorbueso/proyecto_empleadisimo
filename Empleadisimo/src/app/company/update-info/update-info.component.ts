@@ -32,12 +32,40 @@ export class UpdateInfoComponent implements OnInit {
     ciudad:new FormControl('',Validators.required),
     descripcion:new FormControl('',Validators.required)
   });
+
+
+  public imageURL:string='';
+  uploadForm:FormGroup=new FormGroup({  
+    avatar:new FormControl(''),
+    name:new FormControl('')
+  });;
+
   constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService) {
     
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
-    .subscribe(res=>{
+    .subscribe((res:any)=>{
       console.log(res);
       this.usuario= res;
+      var s:string='';
+      if(res.rubros[0]!=null){
+        console.log('Hay rubros');
+        for (let i = 0; i < res.rubros.length; i++) {
+          if(i>=1){
+            s =s+", "+ res.rubros[i];
+          }else{
+            s=res.rubros[i];
+          }
+          
+        }
+      }else{
+        
+      }
+      console.log(s);
+      this.forma.setValue({
+        'name':res.nombreCompleto,
+        'fechaFundacion':res.fechaFundacion,
+        'rubros':s
+      });
 
     },error=>{});
     
@@ -84,5 +112,44 @@ export class UpdateInfoComponent implements OnInit {
   save(){
     console.log("Estorbas")
   }  
+  showPreview(event:any){
+    
+    const file = (event.target as HTMLInputElement).files![0];
+    this.uploadForm.patchValue({
+      avatar: file
+    });
+    this.uploadForm.get('avatar')!.updateValueAndValidity()
+    
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+
+  partirRubros(rubros:string):Array<string>{
+    if(rubros!=''){
+      return rubros.split(", ");
+    }else{
+      return []
+    }
+    
+  }
+  actualizarPerfil(){
+    console.log(this.forma.value.name);
+
+    this.usuario.nombreCompleto= this.forma.value.name;
+    this.usuario.rubros = this.partirRubros(this.forma.value.rubros);
+    this.usuario.fechaFundacion = this.forma.value.fechaFundacion;
+    console.log(this.usuario);
+
+    this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
+    .subscribe(res=>{
+      console.log(res);
+    },error=>{
+      console.log(error);
+    });
+  }
 
 }

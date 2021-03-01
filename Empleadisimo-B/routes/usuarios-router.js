@@ -7,6 +7,7 @@ var  multer = require('multer');
 var  path = require('path');
 var fs = require('fs-extra');
 const uuid = require("uuid");
+const  Mongoose  = require('mongoose');
 
 //login user
 router.post("/signin", async (req, res) => {
@@ -68,9 +69,10 @@ router.post('/', async function(req, res){
 
 //Obtener un usuario
 router.get('/:idUser',  function(req, res){
-    usuario.find({_id:  req.params.idUser})
+    console.log(req.params.idUser);
+    usuario.find({_id:Mongoose.Types.ObjectId(req.params.idUser)})
     .then(result =>{
-        res.send(result);
+        res.send(result[0]);
         res.end();
     }).catch(error =>{
         res.send(error);
@@ -125,7 +127,7 @@ router.post('/updateCompany/:idUser', async (req, res) =>{
     }, {
         "nombreCompleto": req.body.nombreCompleto,
         "correo": req.body.correo,
-        "fotoPerfil":req.body.urlFotoPerfil,
+        "fotoPerfil":req.body.fotoPerfil,
         "sucursales": req.body.sucursales,
         "rubros": req.body.rubros,
         "fechaFundacion":req.body.fechaFundacion

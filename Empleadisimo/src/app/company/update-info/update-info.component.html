@@ -76,7 +76,7 @@
                     </form>
                     <div class="row">
                         <div class="buttons-update">
-                            <button class="next-button">Actualizar Informacion</button>
+                            <button class="next-button" (click)="actualizarPerfil()" >Actualizar Informacion</button>
                             <button class="skip-button">Omitir</button>
                         </div>
                     </div>
@@ -84,15 +84,20 @@
                 
             </div>
             <div class="col-4">
-                <div style="background-color: gray;width: 200px; height: 200px;">
-                    foto de perfil 
-                </div>
-                <div class="row">
-                    Cargar nueva foto:
-                </div>
-                <div class="row">
-                    <input type="file" class="form-control-file" >
-                </div>
+                <form action="" [formGroup]="uploadForm">
+                    <div style="background-color: white;width: 200px; height: 200px;">
+                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                            <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
+                          </div>
+                    </div>
+                    <div class="row">
+                        Cargar nueva foto:
+                    </div>
+                    <div class="row">
+                        <input type="file" accept="image/*" (change)="showPreview($event)" />
+                    </div>
+                </form>
+                
                 
             </div>
 
