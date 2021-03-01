@@ -11,6 +11,7 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [HomeComponent, UpdateInfoComponent],
@@ -23,7 +24,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FontAwesomeModule
   ]
 })
 export class CompanyModule { }

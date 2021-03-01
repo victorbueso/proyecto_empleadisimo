@@ -67,7 +67,7 @@ router.post('/', async function(req, res){
 
 
 //Obtener un usuario
-router.get('/:idUser', verifyToken,function(req, res){
+router.get('/:idUser',  function(req, res){
     usuario.find({_id:  req.params.idUser})
     .then(result =>{
         res.send(result);

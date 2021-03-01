@@ -28,6 +28,10 @@ export class UsuariosService {
     return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
   }
 
+  obtenerUsuario(idUsuario:any){
+    return this.httpClient.get(`http://localhost:3000/usuarios/${idUsuario}`)
+  }
+
   loggedIn(){
     return !!this.cookieService.get('token');
   }

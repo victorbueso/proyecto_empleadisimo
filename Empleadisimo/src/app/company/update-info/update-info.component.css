@@ -6,3 +6,9 @@
     display: flex;
     padding: 3%;
 }
+.visible{
+    display: block;
+}
+.no-visible{
+    display: none;
+}
