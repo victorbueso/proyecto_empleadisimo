@@ -13,4 +13,8 @@ export class PublicacionesService {
   getPosts():Observable<any>{
     return this.httpClient.get(this.url);
   }
+
+  createPost(data: any): Observable<any> {
+    return this.httpClient.post(this.url, data);
+  }
 }

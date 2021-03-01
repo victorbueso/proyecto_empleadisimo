@@ -5,6 +5,7 @@ var publicaciones = require('../models/publicaciones');
 
 //Crear una publicacion
 router.post('/', function(req, res){
+    console.log(req);
     let publicationsRouter = new publicaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
