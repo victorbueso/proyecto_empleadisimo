@@ -16,17 +16,17 @@
 
 @font-face {
     font-family: 'Raleway medium';
-    src: url("assets/fonts/Raleway/static/Raleway-Medium.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-Medium.ttf");
 }
 
 @font-face {
     font-family: 'Raleway semibold';
-    src: url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf");
 }
 
 @font-face {
     font-family: 'Raleway bold';
-    src: url("assets/fonts/Raleway/static/Raleway-Bold.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-Bold.ttf");
 }
 
 
@@ -436,7 +436,7 @@ footer ul {
     display: flex;
     flex-direction: column;
     --height-forms: 35px;
-    --width-forms: 50%;
+    --width-forms: 70%;
 }
 
 .basic-form input,
@@ -449,9 +449,21 @@ select {
     border-left: 0px;
     border-top: 0px;
     margin-top: 5px;
+    box-sizing: border-box;
+    margin: 10px 0px;
 }
 
-.basic-form input {
+.input-good {
+    border-bottom-color: green;
+    color: green;
+}
+
+.basic-form select:focus,
+input[type="date"] {
+    outline: none;
+}
+
+.basic-form input[type="text"] {
     transition: width .4s;
 }
 
@@ -459,9 +471,9 @@ select {
     border-bottom-color: var(--main-color);
 }
 
-.basic-form input:focus {
+.basic-form input[type="text"]:focus {
     outline: none;
-    width: 60%;
+    width: 80%;
     color: black;
 }
 
@@ -474,17 +486,109 @@ select {
 }
 
 .next-button {
-    background-color: transparent;
-    border-width: 1px;
     border-color: var(--secondary-color);
     color: var(--secondary-color);
+    background-color: transparent;
+    border-style: solid;
+    border-image: none;
+    border-radius: 3px;
+    border-width: 1px;
     padding: 5px;
+}
+
+.next-button:focus {
+    outline: none;
+}
+
+.next-button:hover {
+    background-color: var(--secondary-color);
+    color: white;
 }
 
 .skip-button {
     background-color: transparent;
     color: #F1730094;
     border: none;
+}
+
+.head {
+    /* padding: 0px 5px; */
+    height: 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.deactive-head {
+    color: #f173008a;
+}
+
+.active-head {
+    color: var(--secondary-color);
+    padding-right: 5px;
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+.display-block {
+    display: block !important;
+}
+
+.error-message {
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-name: fade-in;
+    animation-duration: 1s;
+    display: none;
+    color: red;
+    opacity: 0%;
+    padding: 0;
+    margin: 0;
+}
+
+.input-error {
+    border-color: red !important;
+}
+
+.logo-empleadisimo {
+    cursor: pointer;
+}
+
+.logo-empleadisimo:hover {
+    animation-name: rotate;
+    animation-duration: 1s;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(90deg)
+    }
+    25% {
+        transform: rotate(180deg)
+    }
+    50% {
+        transform: rotate(270deg)
+    }
+    100% {
+        transform: rotate(3690deg)
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%
+    }
+}
+
+@media screen and (max-width:750px) {
+    .basic-form {
+        --width-forms: 90%;
+    }
+    .basic-form input[type="text"]:focus {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 790px) {
@@ -558,5 +662,13 @@ select {
         font-size: .7em;
     }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

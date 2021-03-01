@@ -31,7 +31,7 @@
             <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
             <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
             
-            <button *ngIf="!!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="buttonLogout()">Logout</button>
+            <button *ngIf="!!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="buttonLogout()">Cerrar sesión</button>
         </form>
     </div>
 </nav>
@@ -112,7 +112,7 @@
         </div>
         <div class="content-empleador">
             <div class="row alert alert-success" *ngIf="registroSuccess">
-                Your registration is successful!
+                Your registration is successful! Espera unos segundos
               </div>
             <div class="row" >
                 <img src="assets/LOGOS/LOGO_AZUL.png"  class="image-login mx-auto" alt="">

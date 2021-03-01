@@ -13,7 +13,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
 import { UpdateInfoComponent } from './componentes/update-info/update-info.component';
 import { AuthenticationGuard } from './authentication.guard';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FontAwesomeModule,
   ],
   providers: [
     AuthenticationGuard
