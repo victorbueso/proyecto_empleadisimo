@@ -14,7 +14,9 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
 import { UpdateInfoComponent } from './componentes/update-info/update-info.component';
 import { AuthenticationGuard } from './authentication.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
 
 @NgModule({
   declarations: [

@@ -1,4 +1,4 @@
-h4 {
+h3 {
   margin: 3px;
   margin-bottom: 7px;
   padding-bottom: 0px;
@@ -30,4 +30,25 @@ h4 {
     background-color: transparent !important;
     border: 1px solid #f17300 !important;
     color: #f17300 !important;
+}
+
+.card-text{
+  max-height: 40px;
+  position: relative;
+  overflow: hidden;
+  font-size: 1rem;
+}
+
+.icon{
+  width: 25px;
+  font-size: 20px;
+  color: #f17300;
+}
+
+h2{
+  font-family: 'Ramabhadra';
+}
+
+.card{
+  font-family: 'Raleway medium';
 }
