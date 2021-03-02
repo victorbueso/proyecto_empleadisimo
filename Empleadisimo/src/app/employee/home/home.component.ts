@@ -13,24 +13,28 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  carousel: SliderEmployeesData[];
+
+  /*Carousel*/
+  images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
+
+  /*Input de búsqueda*/
   filterPosition ='';
   filterLocation ='';
+  /*Font awesome*/
   faMapMarkerAlt = faMapMarkerAlt;
   faCalendarCheck = farCalendarCheck;
+
+  /*Paginación*/
   page_size : number = 5;
   page_number : number = 1;
   pageSizeOptions = [5,10,20,50,100];
 
-  public publicaciones:any;
-  constructor(private _homeEmployeeSliderService: HomeEmployeeSliderService,
-              private _ngcarousel: NgbCarouselConfig,
-              private publicacionesService:PublicacionesService) {
-    this.carousel = this._homeEmployeeSliderService.carousel;
-    _ngcarousel.interval = 10000;
-    _ngcarousel.pauseOnHover = true;
-    _ngcarousel.showNavigationArrows = false;
-    _ngcarousel.showNavigationIndicators = false;
+  public publicaciones:any=[];
+  constructor(private publicacionesService:PublicacionesService,
+              private config:NgbCarouselConfig) {
+    config.showNavigationArrows = true;
+    config.showNavigationIndicators = false;
+   
   }
 
   ngOnInit(): void {
