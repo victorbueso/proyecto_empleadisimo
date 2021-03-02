@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicacionesService } from '../../services/publicaciones.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -10,20 +11,26 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 })
 export class HomeComponent implements OnInit {
   closeResult = '';
+  isNotSelected: string = '0'
+  isSelected: string = '';
 
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
     description: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
     expirationDate: [null, [Validators.required, Validators.pattern("")]],
     salary: [null, [Validators.required, Validators.minLength(2), Validators.pattern("")]],
-    modality: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
+    modality: [null, [Validators.required, Validators.minLength(1), Validators.pattern("")]],
     profession: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
     city: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]],
     department: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]],
     country: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]]
   });
 
-  constructor(private _modal: NgbModal, private fb: FormBuilder, private publicacionesService:PublicacionesService) {}
+  constructor(
+    private _modal: NgbModal,
+    private fb: FormBuilder,
+    private publicacionesService:PublicacionesService,
+    private cookies: CookieService ) {}
 
   ngOnInit(): void {
   }
@@ -99,6 +106,7 @@ export class HomeComponent implements OnInit {
 
   posting() {
     let data = {
+      idEmpresa: this.cookies.get("idUser"),
       titulo: this.formPublications.value.title,
       descripcion: this.formPublications.value.description,
       cantidadPago: parseInt(this.formPublications.value.salary),
@@ -109,15 +117,21 @@ export class HomeComponent implements OnInit {
       pais: this.formPublications.value.country,
       departamento: this.formPublications.value.department,
       ciudad: this.formPublications.value.city,
-      modalidad: parseInt(this.formPublications.value.modality)
+      modalidad: this.formPublications.value.modality
     };
 
     this.publicacionesService.createPost(data).subscribe(res => {
       console.log(res);
       this.formPublications.reset(this.formPublications);
+      console.log()
     }, error => {
       console.log(error);
     });
+    console.log(data);
+  }
+
+  capturarSelect() {
+    this.isSelected = this.isNotSelected;
   }
 
 }

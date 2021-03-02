@@ -88,10 +88,10 @@
         <div class="form-group col-md-4" style="margin-bottom: 3px;">
           <p [ngClass]="{'display-block': modality}" class="error-message">Ingrese una modalidad válida</p>
           <label for="inputState"></label>
-          <select formControlName="modality" id="inputState" class="form-control" required>
-            <option selected>Presencial</option>
-            <option>Semi-virtual</option>
-            <option>Virtual</option>
+          <select formControlName="modality" id="inputState" class="form-control" [(ngModel)]="isNotSelected" (change)="capturarSelect()" required>
+            <option value="1" selected>Presencial</option>
+            <option value="2">Semi-virtual</option>
+            <option value="3">Virtual</option>
           </select>
         </div>
       </div>

@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @NgModule({
   declarations: [HomeComponent, UpdateInfoComponent],
