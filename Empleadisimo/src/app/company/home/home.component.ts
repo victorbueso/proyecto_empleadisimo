@@ -106,18 +106,15 @@ export class HomeComponent implements OnInit {
       fechaVencimiento: this.formPublications.value.expirationDate,
       profesion: this.formPublications.value.profession,
       duracionTrabajo: '',
-      ubicacion: {
-        pais: this.formPublications.value.country,
-        departamento: this.formPublications.value.department,
-        ciudad: this.formPublications.value.city,
-      },
+      pais: this.formPublications.value.country,
+      departamento: this.formPublications.value.department,
+      ciudad: this.formPublications.value.city,
       modalidad: parseInt(this.formPublications.value.modality)
     };
 
     this.publicacionesService.createPost(data).subscribe(res => {
       console.log(res);
       this.formPublications.reset(this.formPublications);
-      console.log(res);
     }, error => {
       console.log(error);
     });

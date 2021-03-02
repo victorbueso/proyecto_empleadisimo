@@ -34,13 +34,14 @@ export class HomeComponent implements OnInit {
               private config:NgbCarouselConfig) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false;
-   
+
   }
 
   ngOnInit(): void {
     this.publicacionesService.getPosts()
     .subscribe( result => {
       this.publicaciones = result;
+      console.log(result);
       console.log(this.publicaciones[0].ubicacion.ciudad);
     }, error => {
       console.log(error);
