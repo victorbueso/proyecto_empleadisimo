@@ -36,6 +36,9 @@ export class UsuariosService {
   uploadProfileImage(idUser:string,data:any):Observable<any>{
     return this.httpClient.put(`http://localhost:3000/usuarios/profilePic/${idUser}`,data);
   }
+  updateProfileImage(idUser:string,data:any):Observable<any>{
+    return this.httpClient.put(`http://localhost:3000/usuarios/updatePic/${idUser}`,data);
+  }
 
   obtenerUsuario(idUsuario:any){
     return this.httpClient.get(`http://localhost:3000/usuarios/${idUsuario}`)

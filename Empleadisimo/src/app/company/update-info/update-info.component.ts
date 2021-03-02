@@ -50,7 +50,12 @@ export class UpdateInfoComponent implements OnInit {
       console.log(res);
       this.usuario= res;
 
-      this.imageURL="http://localhost:3000/usuarios/profilePic/"+this.usuario._id;
+      if(this.usuario.fotoPerfil!=''){
+        this.imageURL = "http://localhost:3000/usuarios/profilePic/"+this.usuario._id;
+      }else{
+        this.imageURL= '';
+      }
+
       if(this.usuario.sucursales[0]==null){
         this.agregarSucursal= true;
       }
@@ -193,12 +198,27 @@ export class UpdateInfoComponent implements OnInit {
   }
 
   upload(){
-    let formData = new FormData();
-    formData.append('image',this.uploadForm.value.avatar);
-    this.usuarioService.uploadProfileImage(this.usuario._id,formData)
-    .subscribe(res=>{
-      console.log(res);
-    });
+    if(this.usuario.profilePic==''&&this.imageURL!=''){
+      let formData = new FormData();
+      formData.append('image',this.uploadForm.value.avatar);
+      this.usuarioService.uploadProfileImage(this.usuario._id,formData)
+      .subscribe(res=>{
+        console.log(res);
+      });
+    }else{
+      if(this.imageURL!="http://localhost:3000/usuarios/profilePic/"+this.usuario._id){
+        let formData = new FormData();
+        formData.append('image',this.uploadForm.value.avatar);
+        this.usuarioService.updateProfileImage(this.usuario._id,formData)
+        .subscribe(res=>{
+          console.log(res);
+          alert('foto de usuario actualizada');
+        });
+      }else{
+          alert('debe seleccionar una imagen para actualizar su foto de perfil');
+      }
+    }
+    
   }
 
 }
