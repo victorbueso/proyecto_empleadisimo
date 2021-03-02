@@ -71,7 +71,7 @@
             <div class="icon">
               <fa-icon [icon]="faCalendarCheck"></fa-icon>
             </div>
-            Publicado el {{publicacion.fechaPublicacion}}
+            Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
             <a class="btn btn-primary">Ver más</a>
