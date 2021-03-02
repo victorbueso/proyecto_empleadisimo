@@ -198,17 +198,21 @@ export class UpdateInfoComponent implements OnInit {
   }
 
   upload(){
-    if(this.usuario.profilePic==''&&this.imageURL!=''){
+    if(this.usuario.fotoPerfil==''&&this.imageURL!=''){
       let formData = new FormData();
+      console.log('se va a agregar la foto ');
       formData.append('image',this.uploadForm.value.avatar);
       this.usuarioService.uploadProfileImage(this.usuario._id,formData)
       .subscribe(res=>{
         console.log(res);
+      },error=>{
+        console.log(error);
       });
     }else{
       if(this.imageURL!="http://localhost:3000/usuarios/profilePic/"+this.usuario._id){
         let formData = new FormData();
         formData.append('image',this.uploadForm.value.avatar);
+        console.log('se va a actualizar la foto');
         this.usuarioService.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
           console.log(res);
