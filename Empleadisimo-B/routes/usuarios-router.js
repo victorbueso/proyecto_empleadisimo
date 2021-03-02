@@ -9,6 +9,7 @@ var fs = require('fs-extra');
 const uuid = require("uuid");
 const  Mongoose  = require('mongoose');
 
+
 //login user
 router.post("/signin", async (req, res) => {
     const correo = req.body.correo;
@@ -181,7 +182,7 @@ router.delete('/:id', function(req,res){
     });
 });
 
-module.exports = router;
+
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization){
@@ -215,6 +216,7 @@ var upload = multer({storage: storage})
 // subir una foto de perfil 
 
 router.put('/profilePic/:idUser',upload.single('image'), async (req, res) =>{
+    console.log(req.file);
     await usuario.updateOne({_id:  req.params.idUser},{"fotoPerfil":req.file.path})
     .then(result =>{
         res.status(200).json({'message': 'Foto de perfil actualizada con exito'});
@@ -250,6 +252,7 @@ router.put('/updatePic/:idUser', upload.single('image'), async (req, res)=>{
     if(FP){
         await fs.unlink(path.resolve(FP.fotoPerfil));
     }
+    
     await usuario.updateOne({_id:  req.params.idUser},{"fotoPerfil":req.file.path})
     .then(result =>{
         res.status(200).json({'message': 'Foto de perfil Renovada'});
@@ -310,3 +313,22 @@ router.put('/updateCV/:idUser', upload.single('curriculums'), async (req, res)=>
     }); 
 
 })
+
+router.get('/profilePic/:idUser', function(req, res){
+    console.log('..',req.params.idUser);
+    usuario.findById(req.params.idUser,{fotoPerfil:1})
+    .then(result=>{
+        console.log('hola');
+        console.log(path.join(__dirname,'..',result.fotoPerfil));
+        res.sendFile(path.join(__dirname,'..',result.fotoPerfil));
+        
+    })
+    .catch();
+    
+    /* res.sendFile(path.join('..',foto.fotoPerfil)); */
+    
+    /* res.sendFile(path.join( '..',`${req.params.fileName}`)); */
+});
+
+
+module.exports = router;

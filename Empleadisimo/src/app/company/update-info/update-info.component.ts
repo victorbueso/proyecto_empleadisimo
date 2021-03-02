@@ -1,6 +1,7 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -11,15 +12,15 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class UpdateInfoComponent implements OnInit {
   faPlus = faPlus;
+  faTrash = faTrash;
+  faEdit = faEdit;
+  faCheck = faCheck;
+
   public agregarSucursal=false;
+  public sucursalEdicion = -1;
   public sucursalesBD:Array<any>=[];
-  public usuario:any;
-  ejemplo = {
-    pais:'Honduras',
-    departamento:'Francisco Morazan',
-    ciudad:'Tegucigalpa',
-    descripcion:'Frente a la UNAH'
-  }
+  public usuario:any = {sucursales:[]};
+  
   forma: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.pattern("[a-zA-Z\\s]{3,}")]],
     fechaFundacion:[null, [Validators.required]],
@@ -40,12 +41,19 @@ export class UpdateInfoComponent implements OnInit {
     name:new FormControl('')
   });;
 
+
+
   constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService) {
     
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
     .subscribe((res:any)=>{
       console.log(res);
       this.usuario= res;
+
+      this.imageURL="http://localhost:3000/usuarios/profilePic/"+this.usuario._id;
+      if(this.usuario.sucursales[0]==null){
+        this.agregarSucursal= true;
+      }
       var s:string='';
       if(res.rubros[0]!=null){
         console.log('Hay rubros');
@@ -119,8 +127,8 @@ export class UpdateInfoComponent implements OnInit {
       avatar: file
     });
     this.uploadForm.get('avatar')!.updateValueAndValidity()
-    
-    // File Preview
+    console.log(this.uploadForm.get('avatar'));
+    // File Preview 
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
@@ -137,18 +145,59 @@ export class UpdateInfoComponent implements OnInit {
     
   }
   actualizarPerfil(){
+    
     console.log(this.forma.value.name);
 
     this.usuario.nombreCompleto= this.forma.value.name;
     this.usuario.rubros = this.partirRubros(this.forma.value.rubros);
     this.usuario.fechaFundacion = this.forma.value.fechaFundacion;
-    console.log(this.usuario);
+    
 
+    console.log(this.usuario);
     this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
     .subscribe(res=>{
+      console.log('respuesta Edicion');
       console.log(res);
     },error=>{
       console.log(error);
+    });
+  }
+
+  formarSucursal(){
+    if(this.sucursalEdicion== -1){
+      console.log(this.sucursalForm.value);
+      this.usuario.sucursales.push(this.sucursalForm.value);
+      this.agregarSucursal = false;
+      this.sucursalEdicion = -1;
+    }else{
+      
+      this.usuario.sucursales[this.sucursalEdicion] = this.sucursalForm.value;
+      this.sucursalEdicion = -1;
+      this.agregarSucursal = false;
+      
+
+    }
+    
+  }
+  deleteSucursal(index:Number){
+    console.log(index);
+    console.log(this.usuario.sucursales);
+    this.usuario.sucursales.splice(index,1);
+  }
+  editSucursal(index:number){
+    console.log(index);
+    console.log(this.usuario.sucursales);
+    this.agregarSucursal = true;
+    this.sucursalForm.setValue(this.usuario.sucursales[index]);
+    this.sucursalEdicion = index;
+  }
+
+  upload(){
+    let formData = new FormData();
+    formData.append('image',this.uploadForm.value.avatar);
+    this.usuarioService.uploadProfileImage(this.usuario._id,formData)
+    .subscribe(res=>{
+      console.log(res);
     });
   }
 

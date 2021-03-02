@@ -33,6 +33,10 @@ export class UsuariosService {
     return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
   }
 
+  uploadProfileImage(idUser:string,data:any):Observable<any>{
+    return this.httpClient.put(`http://localhost:3000/usuarios/profilePic/${idUser}`,data);
+  }
+
   obtenerUsuario(idUsuario:any){
     return this.httpClient.get(`http://localhost:3000/usuarios/${idUsuario}`)
   }

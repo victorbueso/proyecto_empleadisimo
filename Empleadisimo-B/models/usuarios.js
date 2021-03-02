@@ -13,7 +13,7 @@ var schema = new mongoose.Schema({
     curriculum: String,             //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
     fotoPerfil: String,
     medioPago: Array,             //[{_id: '', tipoPago: 'number', datos: 'JSON', tituloMedio: 'String', _idUsuario: ''}]
-    sucursales:String,
+    sucursales:Array,
     rubros: Array,
     fechaFundacion: String
 });
