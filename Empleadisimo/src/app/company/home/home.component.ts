@@ -13,7 +13,9 @@ export class HomeComponent implements OnInit {
   closeResult = '';
   isNotSelected: string = '0'
   isSelected: string = '';
-
+  public publicaciones: any = [];
+  backend: string = 'http://localhost:3000/posts/';
+/*([A-Z][a-z]+)\\s]*/
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
     description: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
@@ -30,9 +32,17 @@ export class HomeComponent implements OnInit {
     private _modal: NgbModal,
     private fb: FormBuilder,
     private publicacionesService:PublicacionesService,
-    private cookies: CookieService ) {}
+    private cookies: CookieService
+  ) {}
 
   ngOnInit(): void {
+    this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
+    .subscribe( result => {
+      this.publicaciones = result;
+      console.log(result);
+    }, error => {
+      console.log(error);
+    })
   }
 
   get title(){
@@ -121,9 +131,8 @@ export class HomeComponent implements OnInit {
     };
 
     this.publicacionesService.createPost(data).subscribe(res => {
-      console.log(res);
       this.formPublications.reset(this.formPublications);
-      console.log()
+      this.ngOnInit();
     }, error => {
       console.log(error);
     });

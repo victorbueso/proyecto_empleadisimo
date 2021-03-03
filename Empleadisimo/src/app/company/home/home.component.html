@@ -36,15 +36,15 @@
       <hr>
     </div>
 
-    <div style="float: center; margin-left: 45px;">
+<!-- Mostrar el historial de publicaciones -->
+    <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px;">
       <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
         <div class="card-body">
-          <h2 class="card-title">Título de oferta<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
-          <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem asperiores tempore nihil ex dolor, quisquam quos tenetur obcaecati perspiciatis mollitia optio,
-            sequi quasi quibusdam, voluptatum eligendi corporis. Odit, fugiat animi.
+          <h2 class="card-title">{{publicacion.title}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
+          <p class="card-text">
+            {{publicacion.descripcion}}
           </p>
-          <i class="fas fa-map-marked-alt"> Ubicación</i>
+          <i class="fas fa-map-marked-alt"> {{publicacion.ubicacion.ciudad}}, {{publicacion.ubicacion.departamento}}, {{publicacion.ubicacion.pais}}</i>
           <p>Personas interesadas<button class="btn btn-primary" style="float: right;">Ver más</button></p>
         </div>
       </div>

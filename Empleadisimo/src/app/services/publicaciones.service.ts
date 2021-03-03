@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class PublicacionesService {
 
   private url = 'http://localhost:3000/publicaciones/'
+  private company = `${this.url}posts/`
   constructor(private httpClient:HttpClient) { }
 
   getPosts():Observable<any>{
@@ -16,5 +17,9 @@ export class PublicacionesService {
 
   createPost(data: any): Observable<any> {
     return this.httpClient.post(this.url, data);
+  }
+
+  getPostCompany(id: string) {
+    return this.httpClient.get(`${this.url}posts/${id}`);
   }
 }
