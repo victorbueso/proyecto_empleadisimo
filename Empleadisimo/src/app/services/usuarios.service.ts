@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ɵangular_packages_router_router_j } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
@@ -27,6 +28,25 @@ export class UsuariosService {
   updateInfo(userInfo:any, idUser:string):Observable<any>{
     console.log(idUser)
     return this.httpClient.put(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
+  }
+  
+  updateInfoCompany(data:any,idUser:string):Observable<any>{
+    return this.httpClient.post(`http://localhost:3000/usuarios/updateCompany/${idUser}`,data);
+  }
+
+  // updateInfo(userInfo:any, idUser:number):Observable<any>{
+  //   return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
+  // }
+
+  uploadProfileImage(idUser:string,data:any):Observable<any>{
+    return this.httpClient.put(`http://localhost:3000/usuarios/profilePic/${idUser}`,data);
+  }
+  updateProfileImage(idUser:string,data:any):Observable<any>{
+    return this.httpClient.put(`http://localhost:3000/usuarios/updatePic/${idUser}`,data);
+  }
+
+  obtenerUsuario(idUsuario:any){
+    return this.httpClient.get(`http://localhost:3000/usuarios/${idUsuario}`)
   }
 
   loggedIn(){

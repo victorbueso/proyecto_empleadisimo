@@ -5,10 +5,11 @@ var publicaciones = require('../models/publicaciones');
 
 //Crear una publicacion
 router.post('/', function(req, res){
+    console.log(req);
     let publicationsRouter = new publicaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
-        cantidadPago: req.body.pago,
+        cantidadPago: req.body.cantidadPago,
         fechaPublicacion: req.body.fechaPublicacion,
         fechaVencimiento: req.body.fechaVencimiento,
         /*cv: {                                                      //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
@@ -22,7 +23,7 @@ router.post('/', function(req, res){
             duracionEmpleo: req.body.duracionEmpleo,
         },*/
         profesion: req.body.profesion,
-        duracionPublicacion: req.body.duracionPublicacion,
+        //duracionPublicacion: req.body.duracionPublicacion,
         ubicacion: {                                               //{pais: '', departamento: '', ciudad: ''}
             pais: req.body.pais,
             departamento: req.body.departamento,

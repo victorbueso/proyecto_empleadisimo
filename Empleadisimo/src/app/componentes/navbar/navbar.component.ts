@@ -147,9 +147,11 @@ export class NavbarComponent implements OnInit{
           this.cookieService.set('token', result.token);
           this.cookieService.set('idUser', result.idUser);
           this.cookieService.set('tipo', result.tipo);
+          
          
           setTimeout(() => 
             {
+              console.log('tipo: '+this.cookieService.get('tipo'));
               this.modalService.dismissAll();
               if(this.cookieService.get('tipo')=='1'){
                   this.router.navigate(['company/update-info']);

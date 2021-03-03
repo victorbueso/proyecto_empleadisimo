@@ -1,11 +1,13 @@
 h2{
     font-family: 'Ramabhadra';
-    color: #054a91
+    color: #054a91;
+    font-size: 24px !important;
 }
 
 h5{
     font-family: 'Raleway bold';
     color:#054a91;
+    font-size: 20px !important;
 }
 
 .benefits{

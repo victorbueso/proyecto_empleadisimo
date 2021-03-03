@@ -5,25 +5,113 @@
             <!-- <a class="head deactive-head">Trabajo</a> -->
             <img src="../../../assets/LOGOS/LOGO_AZUL_SOLO.png" class="logo-empleadisimo">
         </div>
-        <div>
-            <form class="basic-form" [formGroup]="forma" (ngSubmit)="save()">
-                <p [ngClass]="{'display-block': invalidName()}" class="error-message">No se ingreso nombre o no es valido</p>
-                <input type="text" [ngClass]="{'input-error': invalidName()}" placeholder="Ingrese su nombre completo" formControlName="name">
-                <p [ngClass]="{'display-block': invalidPhone()}" class="error-message">No se ingreso numero o no es valido</p>
-                <input #phone type="text" (keyup)="formatPhone(phone)" [ngClass]="{'input-error': invalidPhone()}" placeholder="Ingrese su numero de telefono" formControlName="phone">
-                <p [ngClass]="{'display-block': invalidSex()}" class="error-message">No se selecciono ninguna opcion</p>
-                <select [ngClass]="{'input-error': invalidSex()}" class="select-sex" formControlName="gender">
-                    <option [defaultSelected]=true value="default" >Seleccione su sexo</option>
-                    <option>Masculino</option>
-                    <option>Femenino</option>
-                </select>
-                <p [ngClass]="{'display-block': invalidBirth()}" class="error-message">Ingrese su fecha de nacimiento</p>
-                <input [ngClass]="{'input-error': invalidBirth()}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">
-                <div class="buttons-update">
-                    <button class="next-button">Siguiente</button>
-                    <button class="skip-button">Omitir</button>
+        <div class="row">
+            <div class="col-8">
+
+                <div class="container-fluid basic-form">
+                    <form [formGroup]="forma" >
+                    <div class="row">
+                        <div class="col-8 p-0">
+                            <p [ngClass]="{'display-block': invalidName()}" class="error-message">No se ingreso nombre o no es valido</p>
+                            <input type="text" [ngClass]="{'input-error': invalidName()}" placeholder="Ingrese el nombre de la empresa" formControlName="name">
+                        </div>
+                        
+                    </div>
+                    <!-- <div class="row mb-4">
+                        <div class="col-8 p-0">
+                            <p [ngClass]="{'display-block': invalidPhone()}" class="error-message">No se ingreso numero o no es valido</p>
+                            <input #phone type="text" (keyup)="formatPhone(phone)" [ngClass]="{'input-error': invalidPhone()}" placeholder="Ingrese su numero de telefono" formControlName="phone"> 
+                        </div>
+                    </div> -->
+                    <div class="row mb-0 mt-4">
+                        <label for="">Fecha de Fundacion:</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 p-0">
+                            <p [ngClass]="{'display-block': invalidFechaFundacion()}" class="error-message">Ingrese su fecha de Fundacion</p>
+                            <input [ngClass]="{'input-error': invalidFechaFundacion()}" type="date"  formControlName="fechaFundacion">
+                        </div>
+                       
+                    </div>
+                    <div class="row">
+                        <input type="text" name="" placeholder="Ingrese Rubros ejemplo: Carpinteria, Fontaneria, Automovilismo" formControlName="rubros">
+                    </div>
+                    </form>
+                    <form action="" [formGroup]="sucursalForm">
+                    <div class="row mt-4" >
+                        <div class="col-6 p-0"><label for="" style="font-size:1rem">Agrega una sucursal:</label>  </div>
+                        <div class="col-4 p-0">
+                            <button [ngClass]="{'visible':!agregarSucursal, 'no-visible':agregarSucursal}" (click)="agregarSucursal=!agregarSucursal" class="btn btn-primary-outline"><fa-icon  size="1x" [icon]="faPlus"></fa-icon> </button>
+                            <button [ngClass]="{'visible':agregarSucursal, 'no-visible':!agregarSucursal}" (click)="formarSucursal()" class="btn btn-primary-outline"><fa-icon  size="1x" [icon]="faCheck"></fa-icon> </button>
+                          
+                        </div>
+                            
+                    </div>
+                    <div [ngClass]="{'visible':!agregarSucursal,'no-visible':agregarSucursal}">
+                        <div class="row" *ngFor="let sucursal of usuario.sucursales; let i=index">
+                            <div class="p-0 py-2  col-6">
+                                <label for="">{{sucursal.pais}} {{sucursal.departamento}}  {{sucursal.descripcion}}</label> 
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="btn btn-primary-outline" (click)="editSucursal(i)"><fa-icon class="button btn-primary-outline" size="1x" [icon]="faEdit"></fa-icon>  </button>
+                                <button class="btn btn-primary-outline"  (click)="deleteSucursal(i)" ><fa-icon class="button btn-primary-outline" size="1x" [icon]="faTrash"></fa-icon>   </button>
+                                
+                            
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div [ngClass]="{'visible':agregarSucursal,'no-visible':!agregarSucursal}">
+                        
+                        <div  class="row" >
+                            <div class="col-3 p-0" >
+                                <input type="text" name="" id="" placeholder="Pais"  formControlName="pais" >
+                            </div>
+                            <div class="col-3 p-0" >
+                                <input type="text" name="" id="" placeholder="Departamento" formControlName="departamento"> 
+                            </div>
+                            <div class="col-3 p-0"  >
+                                <input type="text" name="" id="" placeholder="Ciudad" formControlName="ciudad">
+                            </div>
+                            <div class="col-12 p-0"  >
+                                <input type="text" placeholder="Referencia de direccion" formControlName="descripcion">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+    
+                    </form>
+                    <div class="row">
+                        <div class="buttons-update">
+                            <button class="next-button" (click)="actualizarPerfil()" >Actualizar Informacion</button>
+                            <button class="skip-button">Omitir</button>
+                        </div>
+                    </div>
                 </div>
-            </form>
+                
+            </div>
+            <div class="col-4">
+                <form action="" [formGroup]="uploadForm">
+                    <div style="background-color: white;width: 200px; height: 200px;">
+                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                            <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
+                          </div>
+                    </div>
+                    <div class="row">
+                        Cargar nueva foto:
+                    </div>
+                    <div class="row">
+                        <input type="file" accept="image/*" (change)="showPreview($event)" />
+                    </div>
+                    <div class="row mt-4">
+                        <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
+                    </div>
+                </form>
+                
+                
+            </div>
+
         </div>
     </div>
 </div>

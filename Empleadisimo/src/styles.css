@@ -16,17 +16,17 @@
 
 @font-face {
     font-family: 'Raleway medium';
-    src: url("assets/fonts/Raleway/static/Raleway-Medium.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-Medium.ttf");
 }
 
 @font-face {
     font-family: 'Raleway semibold';
-    src: url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-SemiBold.ttf");
 }
 
 @font-face {
     font-family: 'Raleway bold';
-    src: url("assets/fonts/Raleway/static/Raleway-Bold.ttf")
+    src: url("assets/fonts/Raleway/static/Raleway-Bold.ttf");
 }
 
 

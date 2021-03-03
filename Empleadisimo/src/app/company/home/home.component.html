@@ -63,56 +63,65 @@
   </div>
   <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
 
-    <form>
+    <form [formGroup]="formPublications" (ngSubmit)="limpiar()">
       <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">
-        <label for="inputAddress"></label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="Título">
+        <p [ngClass]="{'display-block': title}" class="error-message">No se ingreso título, o no es válido</p>
+        <label for="inputTitle"></label>
+        <input formControlName="title" type="text" class="form-control" id="inputTitle" placeholder="Título" required>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1"></label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción"></textarea>
+        <p [ngClass]="{'display-block': description}" class="error-message">No se ingreso descripción, o no es válida</p>
+        <label for="textareaDescription"></label>
+        <textarea formControlName="description" class="form-control" id="textareaDescription" rows="3" placeholder="Descripción" required></textarea>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
+          <p [ngClass]="{'display-block': expirationDate}" class="error-message">Fecha de vencimiento no válida</p>
           <label for="inputCalendar">Fecha de vencimiento</label>
-          <input type="date" class="form-control" id="inputCalendar" placeholder="Insertar fecha">
+          <input formControlName="expirationDate" type="date" class="form-control" id="inputCalendar" placeholder="Insertar fecha" required>
         </div>
         <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
-          <label for="inputZip">Salario</label>
-          <input type="text" class="form-control" id="inputZip">
+          <p [ngClass]="{'display-block': salary}" class="error-message">Ingrese un salario válido</p>
+          <label for="inputSalario">Salario</label>
+          <input formControlName="salary" type="text" class="form-control" id="inputSalario" required>
         </div>
         <div class="form-group col-md-4" style="margin-bottom: 3px;">
+          <p [ngClass]="{'display-block': modality}" class="error-message">Ingrese una modalidad válida</p>
           <label for="inputState"></label>
-          <select id="inputState" class="form-control">
-            <option selected>Presencial</option>
-            <option>Semi-virtual</option>
-            <option>Virtual</option>
+          <select formControlName="modality" id="inputState" class="form-control" [(ngModel)]="isNotSelected" (change)="capturarSelect()" required>
+            <option value="1" selected>Presencial</option>
+            <option value="2">Semi-virtual</option>
+            <option value="3">Virtual</option>
           </select>
         </div>
       </div>
       <div class="form-group">
+        <p [ngClass]="{'display-block': profession}" class="error-message">No se ingresó una profesión, o no es válida</p>
         <label for="inputProfesion">Profesión</label>
-        <input type="text" class="form-control" id="inputProfesion">
+        <input formControlName="profession" type="text" class="form-control" id="inputProfesion" required>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4" style="padding-top: 2px;">
+          <p [ngClass]="{'display-block': city}" class="error-message">Ingrese una ciudad válida</p>
           <label for="inputCiudad">Ciudad</label>
-          <input type="text" class="form-control" id="inputCiudad" placeholder="Ciudad">
+          <input formControlName="city" type="text" class="form-control" id="inputCiudad" placeholder="Ciudad" required>
         </div>
         <div class="form-group col-md-4" style="padding-top: 2px;">
+          <p [ngClass]="{'display-block': department}" class="error-message">Ingrese un departamento válido</p>
           <label for="inputDepartamento">Departamento</label>
-          <input type="text" class="form-control" id="inputDepartamento" placeholder="Departamento">
+          <input formControlName="department" type="text" class="form-control" id="inputDepartamento" placeholder="Departamento" required>
         </div>
         <div class="form-group col-md-4">
+          <p [ngClass]="{'display-block': country}" class="error-message">Ingrese un país válido</p>
           <label for="inputPais">País</label>
-          <input type="text" class="form-control" id="inputPais" placeholder="País">
+          <input formControlName="country" type="text" class="form-control" id="inputPais" placeholder="País" required>
         </div>
       </div>
     </form>
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="modal.close()">
+    <button [disabled]="formPublications.invalid" type="submit" class="btn btn-primary" (click)="posting()" (click)="modal.close()" (click)="limpiar()">
       publicar
     </button>
   </div>
