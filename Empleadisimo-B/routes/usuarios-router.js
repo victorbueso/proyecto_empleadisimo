@@ -108,7 +108,7 @@ router.put('/updateEmployee/:idUser', async (req, res) =>{
         "fechaNacimiento": req.body.fechaNacimiento,
         "genero": req.body.genero,
         "curriculums": req.body.curriculums,
-        "fotoPerfil":req.body.urlFotoPerfil,
+        /*"fotoPerfil":req.body.urlFotoPerfil,*/
         "medioPago": req.body.medioPago
     })
     .then(result => {
@@ -128,7 +128,7 @@ router.post('/updateCompany/:idUser', async (req, res) =>{
     }, {
         "nombreCompleto": req.body.nombreCompleto,
         "correo": req.body.correo,
-        "fotoPerfil":req.body.fotoPerfil,
+        /*"fotoPerfil":req.body.fotoPerfil,/*/
         "sucursales": req.body.sucursales,
         "rubros": req.body.rubros,
         "fechaFundacion":req.body.fechaFundacion
