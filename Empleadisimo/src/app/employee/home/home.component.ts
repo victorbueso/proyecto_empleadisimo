@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     .subscribe( result => {
       this.publicaciones = result;
       console.log(result);
-      console.log(this.publicaciones[0].ubicacion.ciudad);
+      /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
     })

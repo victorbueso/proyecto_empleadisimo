@@ -7,10 +7,15 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-info',
-  templateUrl: './update-info.component.html'
+  templateUrl: './update-info.component.html',
+  styleUrls: ['./update-info.component.css']
 })
 export class UpdateInfoComponent implements OnInit{
   
+  public successMessage: Boolean=false;
+  public errorMessage : Boolean =false;
+  public message: String = '';
+
   nameV: boolean = false; 
   phoneV: boolean = false;
   birthDateV: boolean = false; 
@@ -89,13 +94,19 @@ export class UpdateInfoComponent implements OnInit{
         console.log('se va a actualizar la foto');
         this.userServices.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
-          this.router.navigate(['employee']);
+          //this.router.navigate(['employee']);
           console.log("Irnos")
           // alert('foto de usuario actualizada');
         });
-      }else{
-          alert('debe seleccionar una imagen para actualizar su foto de perfil');
-      }
+      }/*else{
+        this.message="¡Queremos conocerte! Actualiza tu foto de perfil"
+        this.errorMessage=true;
+        setTimeout( () => {
+          this.message="";
+          this.errorMessage = false;
+        }, 3000);
+          //alert('debe seleccionar una imagen para actualizar su foto de perfil');
+      }*/
     }
     
   }
@@ -162,32 +173,44 @@ export class UpdateInfoComponent implements OnInit{
 
   sendInformation(){
     this.upload()
-    //if(this.forma.invalid){
-    //  this.nameV = this.sendName()!;
-    //  this.phoneV = this.sendPhone()!;
-    //  this.genderV = this.sendSex()!;  
-    //  this.birthDateV = this.sendBirth()!;
-    //}else{
-    //  let infoUser = {
-    //    nombreCompleto: this.forma.get('name')?.value,
-    //    phone: this.forma.get('phone')?.value,
-    //    genero: this.forma.get('gender')?.value,
-    //    fechaNacimiento: this.forma.get('birthDate')?.value
-    //  }
-    //  this.userServices.updateInfo(infoUser, this.cookieService.get('idUser')).subscribe(
-    //    result=>{
-    //      if(result.message === "Datos actualizados correctamente"){
-    //        console.log(4)
-    //        this.router.navigate(['employee']);
-    //        console.log("Este resultado")
-    //        console.log(result)
-    //      } 
-    //    },
-    //    error=>{
-    //      console.log("Error")
-    //      console.log(error)
-    //    }
-    //  )
-    //}
+    if(!this.forma.valid){
+      this.message="¡Ups! Al parecer el formulario no se ha completado."
+      this.errorMessage=true;
+      setTimeout( () => {
+        this.message="";
+        this.errorMessage = false;
+      }, 3000);
+    } else if(this.imageURL==''){
+      this.message="¡Queremos conocerte! Actualiza tu foto de perfil"
+        this.errorMessage=true;
+        setTimeout( () => {
+          this.message="";
+          this.errorMessage = false;
+        }, 3000);
+    }else{
+      let genero;
+      if(this.forma.value.gender == 'Masculino'){
+        genero = 1;
+      } else {
+        genero = 0
+      }
+      let infoUser = {
+        nombreCompleto:this.forma.value.name,
+        profesion: this.forma.value.profesion,
+        fechaNacimiento : this.forma.value.birthDate,
+        genero : genero
+      }
+      this.userServices.updateInfo(infoUser, this.cookieService.get('idUser'))
+      .subscribe( () => {
+        this.successMessage=true;
+        setTimeout( () => {
+          this.successMessage=false;
+          this.router.navigate(['employee']);
+        }, 3000)
+      }, error => {
+        console.log(error);
+      })
+    }
+  
   }  
 }

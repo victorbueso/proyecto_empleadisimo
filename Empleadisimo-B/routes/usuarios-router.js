@@ -103,13 +103,13 @@ router.put('/updateEmployee/:idUser', async(req, res) => {
             _id: req.params.idUser
         }, {
             "nombreCompleto": req.body.nombreCompleto,
-            "correo": req.body.correo,
+            /*"correo": req.body.correo,*/
             "profesion": req.body.profesion,
             "fechaNacimiento": req.body.fechaNacimiento,
             "genero": req.body.genero,
-            "curriculums": req.body.curriculums,
-            /*"fotoPerfil":req.body.urlFotoPerfil,*/
-            "medioPago": req.body.medioPago
+            /*"curriculums": req.body.curriculums,
+            /*"fotoPerfil":req.body.urlFotoPerfil,
+            "medioPago": req.body.medioPago*/
         })
         .then(result => {
             res.status(200).json({ 'message': 'Datos actualizados correctamente' });

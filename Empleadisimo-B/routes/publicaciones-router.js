@@ -80,4 +80,20 @@ router.delete('/:id', function(req,res){
     });
 });
 
+//Obtener publicaciones de una empresa
+router.get('/posts/:idCompany', function(req, res){
+    publicaciones.find(
+        {
+            idEmpresa:mongoose.Types.ObjectId(req.params.idCompany)
+        },
+        {}
+    ).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+
 module.exports = router;

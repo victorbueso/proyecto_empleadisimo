@@ -1,23 +1,47 @@
 <div class="container-basic">
+    
     <div class="basic-info">
+        
         <div class="title-info">
             <a class="head active-head">Datos generales</a>
             <!-- <a class="head deactive-head">Trabajo</a> -->
             <img src="../../../assets/LOGOS/LOGO_AZUL_SOLO.png" class="logo-empleadisimo">
         </div>
+        <div class="row">
+            <div class="col-xl-8">
+                <p>
+                    <ngb-alert type="danger" [ngClass]="{'visible': errorMessage, 'no-visible': !errorMessage}"> {{message}} </ngb-alert>
+                    <ngb-alert type="success" [ngClass]="{'visible': successMessage, 'no-visible': !successMessage}">¡Datos actualizados correctamente! Espera unos segundos...</ngb-alert>
+                </p>
+            </div>
+        </div>
+        <!--Form para imagen-->
         <form action="" [formGroup]="uploadForm">
-            <div style="background-color: white;width: 200px; height: 200px;">
-                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-                    <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
-                </div>
+            <div>
+                <h3 style="font-family: 'Raleway medium';">Foto de perfil</h3>
             </div>
             <div class="row">
-                <input type="file" accept="image/*" (change)="showPreview($event)" />
+                <div class="col-xl-4 col-lg-6 col-md-6 col-xs-6 col-6">
+                    <div style="background-color: white;width: 200px; height: 200px;">    
+                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                            <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-6 col-md-6 col-xs-6 col-6">
+
+                    <div class="row">
+                        <input type="file" accept="image/*" (change)="showPreview($event)" />
+                    </div>
+                    <!--<div class="row mt-4">
+                        <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
+                    </div>-->
+                </div>
             </div>
-            <!-- <div class="row mt-4">
-                <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
-            </div> -->
+            
+            
         </form>
+        <!--Form para datos-->
         <form #form class="basic-form" [formGroup]="forma" (ngSubmit)="sendInformation()">
             <p [ngClass]="{'display-block': invalidName() || this.nameV}" class="error-message">No se ingreso nombre o no es valido</p>
             <input type="text" [ngClass]="{'input-error': invalidName() || nameV}" placeholder="Ingrese su nombre completo" formControlName="name">

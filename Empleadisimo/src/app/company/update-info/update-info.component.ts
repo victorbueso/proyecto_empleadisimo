@@ -1,6 +1,7 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faPlus, faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -20,6 +21,8 @@ export class UpdateInfoComponent implements OnInit {
   public sucursalEdicion = -1;
   public sucursalesBD:Array<any>=[];
   public usuario:any = {sucursales:[]};
+  public errorMessage:Boolean = false;
+  public successMessage:Boolean = false;
   
   forma: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.pattern("[a-zA-Z\\s]{3,}")]],
@@ -43,7 +46,8 @@ export class UpdateInfoComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService,
+              private router:Router) {
     
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
     .subscribe((res:any)=>{
@@ -87,17 +91,12 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
   invalidName(){
     return this.forma.get('name')?.invalid && this.forma.get('name')?.touched; 
   }
 
-  /* invalidPhone(){
-    // console.log("Se esta ejecutando la funcion")
-    return this.forma.get('phone')?.invalid && this.forma.get('phone')?.touched;
-  } */
-
-
-  
   invalidFechaFundacion(){
     return this.forma.get('fechaFundacion')?.invalid && this.forma.get('fechaFundacion')?.touched;
   }
@@ -148,22 +147,37 @@ export class UpdateInfoComponent implements OnInit {
     
   }
   actualizarPerfil(){
+
+    this.successMessage=false;
+    this.errorMessage=false;
     
     console.log(this.forma.value.name);
 
     this.usuario.nombreCompleto= this.forma.value.name;
     this.usuario.rubros = this.partirRubros(this.forma.value.rubros);
     this.usuario.fechaFundacion = this.forma.value.fechaFundacion;
-    
 
-    console.log(this.usuario);
-    this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
-    .subscribe(res=>{
-      console.log('respuesta Edicion');
-      console.log(res);
-    },error=>{
-      console.log(error);
-    });
+    if(this.forma.valid == true){
+      console.log(this.usuario);
+      this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
+      .subscribe(res=>{
+        console.log('respuesta Edicion');
+        console.log(res);
+        this.successMessage=true;
+        setTimeout(() => {
+          this.successMessage=false;
+          this.router.navigate(['company']);
+        }, 3000)
+      },error=>{
+        console.log(error);
+      });
+    } else{
+      this.errorMessage = true;
+      setTimeout(() => {
+        this.errorMessage = false;
+      }, 3000);
+    } 
+
   }
 
   formarSucursal(){
@@ -177,8 +191,6 @@ export class UpdateInfoComponent implements OnInit {
       this.usuario.sucursales[this.sucursalEdicion] = this.sucursalForm.value;
       this.sucursalEdicion = -1;
       this.agregarSucursal = false;
-      
-
     }
     
   }
