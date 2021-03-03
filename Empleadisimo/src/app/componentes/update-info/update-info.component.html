@@ -9,8 +9,8 @@
             <form #form class="basic-form" [formGroup]="forma" (ngSubmit)="sendInformation()">
                 <p [ngClass]="{'display-block': invalidName() || this.nameV}" class="error-message">No se ingreso nombre o no es valido</p>
                 <input type="text" [ngClass]="{'input-error': invalidName() || nameV}" placeholder="Ingrese su nombre completo" formControlName="name">
-                <p [ngClass]="{'display-block': invalidPhone() || phoneV}" class="error-message">No se ingreso numero o no es valido</p>
-                <input #phone type="text" (keyup)="formatPhone(phone)" [ngClass]="{'input-error': invalidPhone() || phoneV}" placeholder="Ingrese su numero de telefono" formControlName="phone">
+                <p [ngClass]="{'display-block': invalidProfesion() || phoneV}" class="error-message">No se ingreso profesion</p>
+                <input #phone type="text" [ngClass]="{'input-error': invalidProfesion() || phoneV}" placeholder="Ingrese su profesion" formControlName="profesion">
                 <p [ngClass]="{'display-block': invalidSex() || genderV}" class="error-message">No se selecciono ninguna opcion</p>
                 <select [ngClass]="{'input-error': invalidSex() || genderV}" class="select-sex" formControlName="gender">
                     <option [defaultSelected]=true value="default" >Seleccione su sexo</option>

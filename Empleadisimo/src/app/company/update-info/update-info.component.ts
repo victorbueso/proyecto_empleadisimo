@@ -122,9 +122,7 @@ export class UpdateInfoComponent implements OnInit {
     return null;
   }
 
-  save(){
-    console.log("Estorbas")
-  }  
+  
   showPreview(event:any){
     
     const file = (event.target as HTMLInputElement).files![0];

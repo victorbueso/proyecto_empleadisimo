@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit} from '@angular/core';
 import { UsuariosService } from '../../services/usuarios.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class UpdateInfoComponent implements OnInit{
   forma: FormGroup = this.fb.group({
 
     name: [null, [Validators.required, Validators.pattern("[a-zA-Z\\s]{3,}")]],
-    phone: [null, [Validators.required, Validators.pattern("^\\d{4}\\-?\\d{4}$")]],
+    profesion: [null, [Validators.required, Validators.pattern("^[a-zA-Z\\s\\.]+$")]],
     birthDate:[null, [Validators.required, this.dateValidator]],
     gender: [null, [Validators.required]]
   
@@ -26,9 +27,8 @@ export class UpdateInfoComponent implements OnInit{
   
   constructor(private fb: FormBuilder, 
               private cookieService: CookieService,
-              private userServices: UsuariosService) { 
-                
-              }
+              private userServices: UsuariosService,
+              private router:Router) {}
 
   ngOnInit(){
   }
@@ -39,10 +39,10 @@ export class UpdateInfoComponent implements OnInit{
     return this.forma.get('name')?.invalid && this.forma.get('name')?.touched; 
   }
 
-  invalidPhone(){
-    if(this.forma.get('phone')?.touched)
+  invalidProfesion(){
+    if(this.forma.get('profesion')?.touched)
       this.phoneV = false;
-    return this.forma.get('phone')?.invalid && this.forma.get('phone')?.touched;
+    return this.forma.get('profesion')?.invalid && this.forma.get('profesion')?.touched;
   }
 
   invalidSex(){
@@ -97,20 +97,20 @@ export class UpdateInfoComponent implements OnInit{
     if(this.forma.invalid){
       this.nameV = this.sendName()!;
       this.phoneV = this.sendPhone()!;
-      this.genderV = this.sendSex()!;
+      this.genderV = this.sendSex()!;  
       this.birthDateV = this.sendBirth()!;
     }else{
       let infoUser = {
-        name: this.forma.get('name')?.value,
+        nombreCompleto: this.forma.get('name')?.value,
         phone: this.forma.get('phone')?.value,
-        gender: this.forma.get('gender')?.value,
-        birthDate: this.forma.get('birthDate')?.value
+        genero: this.forma.get('gender')?.value,
+        fechaNacimiento: this.forma.get('birthDate')?.value
       }
       this.userServices.updateInfo(infoUser, this.cookieService.get('idUser')).subscribe(
         result=>{
           console.log(result)
           if(result.message === "Datos actualizados correctamente"){
-            console.log("Se actualizaron los datos")
+            this.router.navigate(['employee']);
           } 
         },
         error=>{
