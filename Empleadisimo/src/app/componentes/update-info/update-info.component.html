@@ -5,25 +5,36 @@
             <!-- <a class="head deactive-head">Trabajo</a> -->
             <img src="../../../assets/LOGOS/LOGO_AZUL_SOLO.png" class="logo-empleadisimo">
         </div>
-        <div>
-            <form #form class="basic-form" [formGroup]="forma" (ngSubmit)="sendInformation()">
-                <p [ngClass]="{'display-block': invalidName() || this.nameV}" class="error-message">No se ingreso nombre o no es valido</p>
-                <input type="text" [ngClass]="{'input-error': invalidName() || nameV}" placeholder="Ingrese su nombre completo" formControlName="name">
-                <p [ngClass]="{'display-block': invalidProfesion() || phoneV}" class="error-message">No se ingreso profesion</p>
-                <input #phone type="text" [ngClass]="{'input-error': invalidProfesion() || phoneV}" placeholder="Ingrese su profesion" formControlName="profesion">
-                <p [ngClass]="{'display-block': invalidSex() || genderV}" class="error-message">No se selecciono ninguna opcion</p>
-                <select [ngClass]="{'input-error': invalidSex() || genderV}" class="select-sex" formControlName="gender">
+        <form action="" [formGroup]="uploadForm">
+            <div style="background-color: white;width: 200px; height: 200px;">
+                <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+                    <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
+                </div>
+            </div>
+            <div class="row">
+                <input type="file" accept="image/*" (change)="showPreview($event)" />
+            </div>
+            <!-- <div class="row mt-4">
+                <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
+            </div> -->
+        </form>
+        <form #form class="basic-form" [formGroup]="forma" (ngSubmit)="sendInformation()">
+            <p [ngClass]="{'display-block': invalidName() || this.nameV}" class="error-message">No se ingreso nombre o no es valido</p>
+            <input type="text" [ngClass]="{'input-error': invalidName() || nameV}" placeholder="Ingrese su nombre completo" formControlName="name">
+            <p [ngClass]="{'display-block': invalidProfesion() || phoneV}" class="error-message">No se ingreso profesion</p>
+            <input #phone type="text" [ngClass]="{'input-error': invalidProfesion() || phoneV}" placeholder="Ingrese su profesion" formControlName="profesion">
+            <p [ngClass]="{'display-block': invalidSex() || genderV}" class="error-message">No se selecciono ninguna opcion</p>
+            <select [ngClass]="{'input-error': invalidSex() || genderV}" class="select-sex" formControlName="gender">
                     <option [defaultSelected]=true value="default" >Seleccione su sexo</option>
                     <option>Masculino</option>
                     <option>Femenino</option>
                 </select>
-                <p [ngClass]="{'display-block': invalidBirth() || birthDateV}" class="error-message">Fecha de nacimiento no ingresada o invalida</p>
-                <input [ngClass]="{'input-error': invalidBirth() || birthDateV}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">
-                <div class="buttons-update">
-                    <button (onclick)="sendInformation()" class="next-button">Siguiente</button>
-                    <button class="skip-button">Omitir</button>
-                </div>
-            </form>
-        </div>
+            <p [ngClass]="{'display-block': invalidBirth() || birthDateV}" class="error-message">Fecha de nacimiento no ingresada o invalida</p>
+            <input [ngClass]="{'input-error': invalidBirth() || birthDateV}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">
+            <div class="buttons-update">
+                <button (onclick)="sendInformation()" class="next-button">Siguiente</button>
+                <button class="skip-button">Omitir</button>
+            </div>
+        </form>
     </div>
 </div>

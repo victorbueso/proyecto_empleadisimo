@@ -26,17 +26,12 @@ export class UsuariosService {
   }
 
   updateInfo(userInfo:any, idUser:string):Observable<any>{
-    console.log(idUser)
     return this.httpClient.put(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
   }
   
   updateInfoCompany(data:any,idUser:string):Observable<any>{
     return this.httpClient.post(`http://localhost:3000/usuarios/updateCompany/${idUser}`,data);
   }
-
-  // updateInfo(userInfo:any, idUser:number):Observable<any>{
-  //   return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
-  // }
 
   uploadProfileImage(idUser:string,data:any):Observable<any>{
     return this.httpClient.put(`http://localhost:3000/usuarios/profilePic/${idUser}`,data);
