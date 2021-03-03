@@ -24,8 +24,9 @@ export class UsuariosService {
     return this.httpClient.get(`http://localhost:3000/usuarios`,{});
   }
 
-  updateInfo(userInfo:any, idUser:number):Observable<any>{
-    return this.httpClient.post(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
+  updateInfo(userInfo:any, idUser:string):Observable<any>{
+    console.log(idUser)
+    return this.httpClient.put(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
   }
 
   loggedIn(){

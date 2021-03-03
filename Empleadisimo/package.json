@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
+    "angular-material": "^1.2.2",
     "bootstrap": "^4.6.0",
     "moment": "^2.29.1",
     "ngx-cookie-service": "^11.0.2",

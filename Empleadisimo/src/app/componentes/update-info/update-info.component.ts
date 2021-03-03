@@ -26,7 +26,9 @@ export class UpdateInfoComponent implements OnInit{
   
   constructor(private fb: FormBuilder, 
               private cookieService: CookieService,
-              private userServices: UsuariosService) { }
+              private userServices: UsuariosService) { 
+                
+              }
 
   ngOnInit(){
   }
@@ -104,9 +106,12 @@ export class UpdateInfoComponent implements OnInit{
         gender: this.forma.get('gender')?.value,
         birthDate: this.forma.get('birthDate')?.value
       }
-      this.userServices.updateInfo(infoUser, Number(this.cookieService.get('idUser'))).subscribe(
+      this.userServices.updateInfo(infoUser, this.cookieService.get('idUser')).subscribe(
         result=>{
           console.log(result)
+          if(result.message === "Datos actualizados correctamente"){
+            console.log("Se actualizaron los datos")
+          } 
         },
         error=>{
           console.log(error)
