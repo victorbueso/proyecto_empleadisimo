@@ -35,7 +35,7 @@ router.post('/', async function(req, res) {
     const user = await usuario.findOne({ 'correo': correo });
     console.log(user);
     if (user != null) {
-        return res.status(401).json({ "message": "correo en uso" });
+        return res.status(401).json({ "message": "Correo en uso" });
     }
 
     let userRouter = new usuario({

@@ -22,4 +22,15 @@
       border: 2px solid red;
   }
 
+
+.register-link{
+    color: #f17300;
+    font-size: 1rem;
+}
+
+.register-link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    
+}
   

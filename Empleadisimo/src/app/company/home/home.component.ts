@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { CookieService } from 'ngx-cookie-service';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  faMapMarkerAlt = faMapMarkerAlt;
   closeResult = '';
   isNotSelected: string = '0'
   isSelected: string = '';
@@ -17,15 +19,15 @@ export class HomeComponent implements OnInit {
   backend: string = 'http://localhost:3000/posts/';
 /*([A-Z][a-z]+)\\s]*/
   formPublications: FormGroup = this.fb.group({
-    title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
-    description: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
+    title: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
+    description: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
     expirationDate: [null, [Validators.required, Validators.pattern("")]],
     salary: [null, [Validators.required, Validators.minLength(2), Validators.pattern("")]],
     modality: [null, [Validators.required, Validators.minLength(1), Validators.pattern("")]],
-    profession: [null, [Validators.required, Validators.minLength(4), Validators.pattern("[a-zA-Z\\s]{3,}")]],
-    city: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]],
-    department: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]],
-    country: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-Z\\s]{2,}")]]
+    profession: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
+    city: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]],
+    department: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]],
+    country: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]]
   });
 
   constructor(

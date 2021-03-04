@@ -19,6 +19,12 @@
   margin: 0 10px;
 }
 i { margin: 0 7px; }
+
+.items-sidebar{
+  font-family: 'Raleway bold';
+  font-size: 20px;
+}
+
 #sidebarCollapse {
   color: #fff;
   background: transparent;

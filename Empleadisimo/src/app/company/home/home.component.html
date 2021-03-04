@@ -2,24 +2,27 @@
 <div class="wrapper fixed-left">
   <nav id="sidebar">
     <div class="sidebar-header">
-      <h3><i class="fas fa-briefcase"></i>Business</h3>
+      <h3>
+        <a href="" class="d-flex items-sidebar" style="text-decoration: none; color:white"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-briefcase"></i></div>Empresa</a>
+      </h3>
+      
     </div>
 
     <ul class="list-unstyled components">
       <li>
-        <a href=""><i class="fas fa-poll-h"></i>Publicaciones</a>
+        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-poll-h"></i></div>Publicaciones</a>
       </li>
       <li>
-        <a href=""><i class="fas fa-city"></i>Sucursales</a>
+        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-city"></i></div>Sucursales</a>
       </li>
       <li>
-        <a href=""><i class="far fa-id-card"></i>Rubros</a>
+        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="far fa-id-card"></i></div>Rubros</a>
       </li>
       <li>
-        <a href=""><i class="fas fa-file-contract"></i>Contratos</a>
+        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-file-contract"></i></div>Contratos</a>
       </li>
       <li>
-        <a href=""><i class="fas fa-cogs"></i>Configuraciones</a>
+        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-cogs"></i></div>Configuraciones</a>
       </li>
     </ul>
   </nav>
@@ -37,18 +40,27 @@
     </div>
 
 <!-- Mostrar el historial de publicaciones -->
-    <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px;">
-      <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
-        <div class="card-body">
-          <h2 class="card-title">{{publicacion.title}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
-          <p class="card-text">
-            {{publicacion.descripcion}}
-          </p>
-          <i class="fas fa-map-marked-alt"> {{publicacion.ubicacion.ciudad}}, {{publicacion.ubicacion.departamento}}, {{publicacion.ubicacion.pais}}</i>
-          <p>Personas interesadas<button class="btn btn-primary" style="float: right;">Ver más</button></p>
+    <div *ngIf="publicaciones.length==0" class="d-flex text-align-center" style="font-family: 'Raleway semibold';"> No has realizado ninguna publicación :( </div>
+    <div *ngIf="publicaciones.length!=0">
+      <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px; font-family: 'Raleway medium';">
+        <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
+          <div class="card-body">
+            <h2 class="card-title">{{publicacion.titulo}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
+            <p class="card-text">
+              {{publicacion.descripcion}}
+            </p>
+            <div class="d-flex">
+              <div style="width: 20px; font-size: 1rem; color:#f17300">
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+              </div>
+               {{publicacion.ubicacion.ciudad}}, {{publicacion.ubicacion.departamento}}, {{publicacion.ubicacion.pais}}
+            </div> <br>
+            <p> <strong>{{publicacion.usuarios.length}} Personas interesadas </strong><button class="btn btn-primary" style="float: right;">Ver más</button></p>
+          </div>
         </div>
       </div>
     </div>
+   
   </div>
 
 </div>
@@ -122,7 +134,7 @@
   </div>
   <div class="modal-footer">
     <button [disabled]="formPublications.invalid" type="submit" class="btn btn-primary" (click)="posting()" (click)="modal.close()" (click)="limpiar()">
-      publicar
+      Publicar
     </button>
   </div>
 </ng-template>
