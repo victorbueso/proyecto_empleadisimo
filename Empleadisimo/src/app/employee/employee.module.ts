@@ -5,11 +5,12 @@ import { EmployeeRoutingModule } from './employee-routing.module';
 import { HomeComponent } from './home/home.component';
 import { HomeEmployeeSliderService } from '../services/homeEmployeeSlider.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FilterPipe } from '../pipes/filter-location.pipe';
 import { FilterPositionPipe } from '../pipes/filter-position.pipe'
 import { PaginationPipe } from '../pipes/pagination.pipe';
 import { MatPaginatorIntl, MatPaginatorModule } from "@angular/material/paginator";
+import { UpdateInfoComponent } from './update-info/update-info.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomMatPaginatorIntl } from './paginator-es';
@@ -19,7 +20,8 @@ import { CustomMatPaginatorIntl } from './paginator-es';
     HomeComponent,
     FilterPipe, 
     FilterPositionPipe, 
-    PaginationPipe
+    PaginationPipe,
+    UpdateInfoComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,9 @@ import { CustomMatPaginatorIntl } from './paginator-es';
     NgbModule,
     FontAwesomeModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule, 
+    ReactiveFormsModule
+    
   ],
   providers: [
     HomeEmployeeSliderService,

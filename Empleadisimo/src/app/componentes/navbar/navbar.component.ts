@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+
+  faBell = farBell;
+  faCommentDots = farCommentDots;
 
   public successRegistro:Boolean = false;
   public errorRegistro: Boolean = false;
@@ -184,7 +188,7 @@ export class NavbarComponent implements OnInit{
               if(this.cookieService.get('tipo')=='1'){
                   this.router.navigate(['company/update-info']);
               }else{
-              this.router.navigate(['update-info']);
+              this.router.navigate(['employee/update-info']);
               }
             },
             2000);

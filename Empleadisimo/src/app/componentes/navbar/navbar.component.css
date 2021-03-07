@@ -1,11 +1,19 @@
-.navbar-brand{
-    color:white;
+.custom-btn{
+    color: white;
+    font-size: 1.5rem;
 }
 
-.nav-login{
-    color: #054a91 !important;
-    text-align: center;
-    font-family: 'Raleway semibold';
+.custom-btn:hover{
+    color: #f17300;
+}
+
+.dropdown-item{
+    color: #054a91;
+    font-family: 'Raleway medium';
+}
+
+.dropdown-toggle::after{
+    content: unset !important;
 }
 
 .error{
@@ -21,6 +29,20 @@
       
       border: 2px solid red;
   }
+
+.navbar-brand{
+    color:white;
+}
+
+.nav-login{
+    color: #054a91 !important;
+    text-align: center;
+    font-family: 'Raleway semibold';
+}
+
+.nav-link{
+    font-size: 1rem;
+}
 
 
 .register-link{

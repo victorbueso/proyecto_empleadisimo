@@ -47,5 +47,21 @@ export class UsuariosService {
   loggedIn(){
     return !!this.cookieService.get('token');
   }
+
+  isCompanyLogged(){
+    if(this.cookieService.get('tipo')=='1'){
+      return true
+    }
+
+    return false
+  }
+
+  isEmployeeLogged(){
+    if(this.cookieService.get('tipo')=='0'){
+      return true
+    }
+
+    return false
+  }
 }
  

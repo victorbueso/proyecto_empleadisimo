@@ -6,32 +6,125 @@
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
+   
+    <!--Nav general -->
+    <div class="collapse navbar-collapse justify-content-end" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!this.usuarioService.loggedIn()">
+        <form class="form-inline my-2 my-lg-0" style="color:white">
 
-    <div class="collapse navbar-collapse justify-content-end" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-        <!--
-        <div class="col">
-            <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Catálogo</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button ngbDropdownItem>Action - 1</button>
-                    <button ngbDropdownItem>Another Action</button>
-                    <button ngbDropdownItem>Something else is here</button>
+            <button  class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
+            
+        </form>
+    </div>
+
+    <!--Nav de empresa-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!!this.usuarioService.isCompanyLogged()">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+                <div class="col">
+                  <div ngbDropdown class="d-inline-block">
+                    <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Publicaciones</a>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem>Recientes</button>
+                      <button ngbDropdownItem>Vencidas</button>
+                      <div class="dropdown-divider"></div>
+                      <button ngbDropdownItem>Historial</button>
+                    </div>
+                  </div>
+                </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Contratados</a>
+          </li>
+        </ul>
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="faBell"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí van las notificaciones
+                      </div>
+                  </div>
                 </div>
             </div>
-        </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí va el chat
+                      </div>
+                  </div>
+                </div>
+            </div>          
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
+                    <img src="../../../assets/img/pexels-anthony-shkraba-4348401.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <div class="mt-auto ml-2 mb-auto">
+                        Empresa
+                    </div>
+                </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
+                    <button ngbDropdownItem>Mi perfil</button>
+                    <button ngbDropdownItem>Rubros</button>
+                    <button ngbDropdownItem>Sucursales</button>
+                    <button ngbDropdownItem>Configuraciones</button>
+                    <li><hr class="dropdown-divider"></li>
+                    <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+          
+        </form>
+      </div>
 
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item mr-2 ml-2">
-                <a class="nav-link" href="#">Acerca de</a>
-            </li>
-        </ul>-->
-        <form class="form-inline my-2 my-lg-0" style="color:white">
-           <!--  <span> | </span> -->
-            
-            <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
-            <button *ngIf="!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
-            
-            <button *ngIf="!!this.usuarioService.loggedIn()" class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="buttonLogout()">Cerrar sesión</button>
+      <!--Nav de empleados-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!!this.usuarioService.isEmployeeLogged()">
+
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="faBell"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí van las notificaciones
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí va el chat
+                      </div>
+                  </div>
+                </div>
+            </div>     
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
+                    <img src="../../../assets/img/pexels-anthony-shkraba-4348401.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <div class="mt-auto ml-2 mb-auto">
+                        Empleado
+                    </div>
+                </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
+                    <button ngbDropdownItem>Mi perfil</button>
+                    <button ngbDropdownItem>Configuraciones</button>
+                    <li><hr class="dropdown-divider"></li>
+                    <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+          
         </form>
     </div>
 </nav>
