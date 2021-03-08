@@ -1,0 +1,9 @@
+<div class="container-functions">
+    <div class="container-buttons">
+        <button (click)="addCv()" class="function-inactive">Agregar o actualizar cv</button>
+        <!-- <button class="close-button">x</button> -->
+    </div>
+    <div [ngClass]="{'cv-container': true, 'giveMeSomeHeigth': cvUpload, 'blockNone':!cvUpload}">
+        <input type="file" [ngClass]="{'transitionHeigth': true, 'giveMeSomeHeigth': cvUpload, 'blockNone':!cvUpload}">
+    </div>
+</div>

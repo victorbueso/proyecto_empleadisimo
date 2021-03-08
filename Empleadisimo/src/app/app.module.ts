@@ -11,6 +11,7 @@ import { SliderComponent } from './componentes/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterLinksComponent } from './componentes/footer-links/footer-links.component';
+import { CvComponent } from './employee/cv/cv.component'
 /**/
 import { AuthenticationGuard } from './authentication.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +26,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NavbarComponent,
     FooterComponent,
     SliderComponent,
-    FooterLinksComponent
+    FooterLinksComponent,
+    CvComponent
   ],
   imports: [
     BrowserModule,

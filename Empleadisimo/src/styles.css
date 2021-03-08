@@ -558,6 +558,57 @@ input[type="date"] {
     animation-duration: 1s;
 }
 
+
+/* Estilos de funcionalidad subida de cv */
+
+.container-functions {
+    background-color: #054A91;
+    box-sizing: border-box;
+    padding: 16px;
+    height: auto;
+    width: 100vw;
+}
+
+.container-buttons {
+    flex-direction: row;
+    color: white;
+    display: flex;
+    gap: 5px;
+}
+
+.function-inactive {
+    background-color: var(--secondary-color);
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 3px 8px;
+    color: white;
+    border: none;
+}
+
+.close-button {
+    box-sizing: border-box;
+    background-color: gray;
+    border-radius: 50%;
+    color: white;
+    border: none;
+}
+
+.cv-container {
+    transition: height .5s;
+}
+
+.transitionHeigth {
+    transition: height .5s;
+}
+
+.blockNone {
+    height: 0px;
+}
+
+.giveMeSomeHeigth {
+    height: 30px;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(90deg)

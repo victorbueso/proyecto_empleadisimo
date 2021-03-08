@@ -14,6 +14,7 @@ import { UpdateInfoComponent } from './update-info/update-info.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomMatPaginatorIntl } from './paginator-es';
+// import { CvComponent } from './cv/cv.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CustomMatPaginatorIntl } from './paginator-es';
     FilterPositionPipe, 
     PaginationPipe,
     UpdateInfoComponent
+    // CvComponent
   ],
   imports: [
     CommonModule,
