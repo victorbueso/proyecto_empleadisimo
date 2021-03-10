@@ -6,6 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
+import { SocketService } from 'src/app/services/socket.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -31,6 +33,7 @@ export class NavbarComponent implements OnInit{
   @ViewChild('login') login!:ElementRef;
   active=0;
   registroSuccess= false;
+  public notificaciones:Array<any> = [];
 
 
   //datos para registro de usuario
@@ -69,7 +72,8 @@ export class NavbarComponent implements OnInit{
               public usuarioService:UsuariosService,
               private helperService:HelperService,
               private cookieService:CookieService,
-              private router:Router) { }
+              private router:Router,
+              private socketService:SocketService) { }
 
   open(content:any) {
     this.modalService.dismissAll();
@@ -88,6 +92,31 @@ export class NavbarComponent implements OnInit{
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
     });
+    this.socketService.listen('nuevaPublicacion').subscribe(
+      data=>{
+        console.log(data);
+        this.notificaciones.push({
+          _id:data._id,
+          titulo:data.titulo,
+          fechaPublicacion: data.fechaPublicacion
+        });
+    },
+    error=>{
+      console.log(error);
+    });
+    var idUser =this.cookieService.get('idUser')
+    if(idUser!=''){
+      console.log('el usuario escucha');
+      
+      this.socketService.listen(idUser).subscribe(
+        data=>{
+          console.log(data);
+          
+      },
+      error=>{
+        console.log(error);
+      });
+    } 
   }
 
   abrirModal(){
