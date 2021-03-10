@@ -22,4 +22,8 @@ export class PublicacionesService {
   getPostCompany(id: string) {
     return this.httpClient.get(`${this.url}posts/${id}`);
   }
+
+  updatePostUser(data: any): Observable<any> {
+    return this.httpClient.put(this.url, data);
+  }
 }

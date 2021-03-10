@@ -96,4 +96,24 @@ router.get('/posts/:idCompany', function(req, res){
     })
 });
 
+//Actualizar una publicación a la que ha aplicado un usuario
+router.put('/', function(req, res){
+    publicaciones.updateOne(
+        {
+            _id: req.body.idPublicacion
+        },
+        {
+            $addToSet: {
+                usuarios: req.body.idEmpleado
+            }
+        }
+    ).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+
 module.exports = router;

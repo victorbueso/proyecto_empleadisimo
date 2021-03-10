@@ -5,6 +5,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck as farCalendarCheck } from '@fortawesome/free-regular-svg-icons'
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { PageEvent } from '@angular/material/paginator';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -29,9 +30,14 @@ export class HomeComponent implements OnInit {
   page_number : number = 1;
   pageSizeOptions = [5,10,20,50,100];
 
+  /* Saber si un usuario ha aplicado a una publicación de trabajo */
+  apply: Boolean = false;
+
   public publicaciones:any=[];
+
   constructor(private publicacionesService:PublicacionesService,
-              private config:NgbCarouselConfig) {
+              private config:NgbCarouselConfig,
+              private cookies: CookieService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false;
 
@@ -52,6 +58,23 @@ export class HomeComponent implements OnInit {
     this.page_size = e.pageSize;
     this.page_number = e.pageIndex+1;
   }
+
+  updateApplyPostUser(idPublicacion: string) {
+
+    let data = {
+      idEmpleado: this.cookies.get("idUser"),
+      idPublicacion: idPublicacion
+    };
+
+    console.log(data);
+    this.publicacionesService.updatePostUser(data).subscribe(res => {
+      //this.apply = !this.apply;
+      console.log(`El usuario ${res} ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
+    }, error => {
+      console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
+    })
+  }
+
 }
 
 
