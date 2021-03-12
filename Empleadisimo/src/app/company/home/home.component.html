@@ -1,13 +1,13 @@
 <!-- Sidebar -->
 <div class="wrapper fixed-left">
-  
+
   <!--
   <nav id="sidebar">
     <div class="sidebar-header">
       <h3>
         <a href="" class="d-flex items-sidebar" style="text-decoration: none; color:white"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-briefcase"></i></div>Empresa</a>
       </h3>
-      
+
     </div>
 
     <ul class="list-unstyled components">
@@ -62,21 +62,21 @@
         </div>
       </div>
     </div>
-   
+
   </div>
 
 </div>
 
 <!-- Pantalla modal con formulario para crear publicaciones -->
-<ng-template #contenido let-modal>
+<ng-template #contenido let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h2 class="modal-title mb-0">Nueva Publicación</h2>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <button class="close" aria-label="close" type="button" (click)="d()" (click)="limpiar()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
-
+    <ngb-alert type="success" *ngIf="successMessage">{{ successfull }}</ngb-alert>
     <form [formGroup]="formPublications" (ngSubmit)="limpiar()">
       <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">
         <p [ngClass]="{'display-block': title}" class="error-message">No se ingreso título, o no es válido</p>
@@ -135,7 +135,8 @@
 
   </div>
   <div class="modal-footer">
-    <button [disabled]="formPublications.invalid" type="button" class="btn btn-primary" (click)="posting()">
+    <button type="button" class="btn btn-light mr-2" (click)="c()" (click)="limpiar()">Cancelar</button>
+    <button [disabled]="formPublications.invalid" type="submit" class="btn btn-primary" (click)="posting()" (click)="SuccessfullMessage()" (click)="limpiar()">
       Publicar
     </button>
   </div>

@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   pageSizeOptions = [5,10,20,50,100];
 
   /* Saber si un usuario ha aplicado a una publicación de trabajo */
-  apply: Boolean = false;
+  apply: Boolean = true;
 
   public publicaciones:any=[];
 
@@ -59,6 +59,10 @@ export class HomeComponent implements OnInit {
     this.page_number = e.pageIndex+1;
   }
 
+  disApply() {
+      return !this.apply;
+  }
+
   updateApplyPostUser(idPublicacion: string) {
 
     let data = {
@@ -68,7 +72,6 @@ export class HomeComponent implements OnInit {
 
     console.log(data);
     this.publicacionesService.updatePostUser(data).subscribe(res => {
-      //this.apply = !this.apply;
       console.log(`El usuario ${res} ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
     }, error => {
       console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
