@@ -43,8 +43,15 @@
                 <div ngbDropdown class="d-inline-block">
                 <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="faBell"></fa-icon></button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right">
-                      <div>
-                        Aquí van las notificaciones
+                      <div class="row">
+                        <div class="col-8">
+                            <h3>Notificaciones</h3>
+                        </div>
+                        <div class="col-4">
+                            <a>
+                                Mostrar todo
+                            </a>
+                        </div>
                       </div>
                   </div>
                 </div>
@@ -89,10 +96,36 @@
           <div class="row">
             <div>
                 <div ngbDropdown class="d-inline-block">
-                <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic2" ngbDropdownToggle><fa-icon [icon]="faBell"></fa-icon></button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right">
-                      <div>
-                        Aquí van las notificaciones
+                <button class="btn mr-2 ml-2" id="dropdownBasic2" ngbDropdownToggle (click)="openNotifications">
+                        <fa-icon [icon]="faBell"  [ngClass]="{'custom-btn': nuevaNotificacion==false, 'custom-new': nuevaNotificacion==true}"></fa-icon>
+                    </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right dropdown-menu-custom">
+                    <div class="row">
+                        <div class="col-6 mr-1 ml-3">
+                            <h2 class="title-notification">Notificaciones</h2>
+                        </div>
+                        <div class="col-5 mr-2 ml-1 mt-2 d-flex justify-content-end">
+                            <a class="item-link">
+                                Mostrar todo
+                            </a>
+                        </div>
+                        <div class="custom-scrollbar">
+                            <div *ngIf="notificaciones.length == 0"> 
+                                <div class="d-flex justify-content-center">
+                                    No hay notificaciones :c
+                                </div>
+                            </div>
+                            <div *ngIf="notificaciones.length != 0">
+                                <div class="card ml-2 mr-2 mb-1" style="background-color: #f4f4f4" *ngFor="let notification of notificaciones">
+                                    <div class="card-body" (click)="notificacionSeleccionada(notification._id)">
+                                        {{notification.titulo}}
+                                        <div class="d-flex justify-content-end">
+                                            <small>{{notification.fechaPublicacion | slice:0:10}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                       </div>
                   </div>
                 </div>

@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit{
   active=0;
   registroSuccess= false;
   public notificaciones:Array<any> = [];
+  public nuevaNotificacion:Boolean = false;
 
 
   //datos para registro de usuario
@@ -92,13 +93,19 @@ export class NavbarComponent implements OnInit{
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
     });
+    if(!!this.cookieService.get('idUser')){
+      this.obtenerNotificaciones();
+    }
     this.socketService.listen('nuevaPublicacion').subscribe(
-      data=>{
-        console.log(data);
-        this.notificaciones.push({
-          _id:data._id,
+      res => {
+        var data : any;
+        data = res;
+        this.nuevaNotificacion = true;
+        this.notificaciones.unshift({
+          idPublicacion:data._id,
           titulo:data.titulo,
-          fechaPublicacion: data.fechaPublicacion
+          fechaPublicacion: data.fechaPublicacion,
+          estado: false
         });
     },
     error=>{
@@ -121,6 +128,20 @@ export class NavbarComponent implements OnInit{
 
   abrirModal(){
     this.open(this.registro);
+  }
+
+  obtenerNotificaciones(){
+    this.usuarioService.getNotifications(this.cookieService.get('idUser'))
+    .subscribe(res => {
+      console.log("Notificaciones:", res[0].notificaciones);
+      this.notificaciones = res[0].notificaciones
+      this.notificaciones.reverse();
+      if(this.notificaciones[0].estado == false){
+        this.nuevaNotificacion = true;
+      }
+    }, error => {
+      console.log(error);
+    })
   }
 
   buttonLogin(){ 
@@ -148,8 +169,10 @@ export class NavbarComponent implements OnInit{
 
         if(result.tipo == 0){
           this.router.navigate(['employee']);
+          this.ngOnInit();
         } else if (result.tipo == 1){
           this.router.navigate(['company']);
+          this.ngOnInit();
         }
         this.modalService.dismissAll();
       },error=>{
@@ -256,4 +279,15 @@ export class NavbarComponent implements OnInit{
     this.cookieService.deleteAll();
   }
 
+  notificacionSeleccionada(id:string){
+    console.log(id);
+  }
+
+  openNotifications(){
+    this.nuevaNotificacion = false;
+    this.usuarioService.readNotifications(this.cookieService.get('idUser'))
+    .subscribe(res => {
+      console.log(res);
+    }, error => console.log(error))
+  }
 }

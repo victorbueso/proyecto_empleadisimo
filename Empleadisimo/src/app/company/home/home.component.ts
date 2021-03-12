@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,8 @@ export class HomeComponent implements OnInit {
     private _modal: NgbModal,
     private fb: FormBuilder,
     private publicacionesService:PublicacionesService,
-    private cookies: CookieService
+    private cookies: CookieService,
+    private usuariosService:UsuariosService
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +119,7 @@ export class HomeComponent implements OnInit {
   }
 
   posting() {
+    
     let data = {
       idEmpresa: this.cookies.get("idUser"),
       titulo: this.formPublications.value.title,
@@ -133,13 +136,33 @@ export class HomeComponent implements OnInit {
     };
 
     this.publicacionesService.createPost(data).subscribe(res => {
+      let data={
+        idPublicacion : res._id,
+        titulo : res.titulo,
+        fechaPublicacion : res.fechaPublicacion,
+        estado:false
+      }
+      this.guardarNotificacion(data);
+      //console.log(res);
       this.formPublications.reset(this.formPublications);
+      this._modal.dismissAll();
       this.ngOnInit();
     }, error => {
       console.log(error);
     });
     console.log(data);
   }
+
+  guardarNotificacion(data:any){
+    // console.log(data);
+    this.usuariosService.addNotification(data).
+    subscribe(res =>{
+      console.log(res);
+    },
+      error => console.log(error)
+    )
+  }
+  
 
   capturarSelect() {
     this.isSelected = this.isNotSelected;

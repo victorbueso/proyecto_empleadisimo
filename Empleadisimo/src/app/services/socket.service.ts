@@ -13,9 +13,9 @@ export class SocketService {
     this.socket = io(this.url);
    }
   
-   listen(eventName: string):Observable<any>{
-    return new Observable((Subscriber)=>{
-      this.socket.on(eventName,(data:any)=>{
+   listen(eventName: string){
+    return new Observable((Subscriber)  => {
+      this.socket.on(eventName,( data:any ) => {
         Subscriber.next(data);
       })
     })
@@ -23,6 +23,5 @@ export class SocketService {
   
   emit(eventName:string,data:any){
     this.socket.emit(eventName,data);
-
   }
 }

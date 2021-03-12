@@ -3,6 +3,18 @@
     font-size: 1.6rem;
 }
 
+.custom-new{
+    color:#f17300;
+    font-size: 1.6rem;
+}
+
+.custom-scrollbar{
+    width: 92% !important;
+    height: 350px !important;
+    margin-left: 1rem;
+    overflow: auto;
+}
+
 .custom-btn:hover{
     color: #f17300;
 }
@@ -14,6 +26,10 @@
 
 .dropdown-toggle::after{
     content: unset !important;
+}
+
+.dropdown-menu-custom.show{
+    width: 400px !important;
 }
 
 .error{
@@ -56,3 +72,18 @@
     
 }
   
+.title-notification{
+    color:#f17300;
+    font-family: 'Ramabhadra';
+}
+
+/*Scroll personalizado*/
+
+.custom-scrollbar::-webkit-scrollbar{
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb{
+    background: #f17300;
+    border-radius: 5px;
+}

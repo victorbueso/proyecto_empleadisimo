@@ -9,39 +9,53 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
+  private url=" http://localhost:3000/usuarios"
+
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
 
 
   loginUsuario(data:any):Observable<any>{
-    return this.httpClient.post(`http://localhost:3000/usuarios/signin`,data);
+    return this.httpClient.post(`${this.url}/signin`,data);
   }
 
   registrarUsuario(data:any):Observable<any>{
-    return this.httpClient.post(`http://localhost:3000/usuarios`,data);
+    return this.httpClient.post(`${this.url}`,data);
   }
 
   obtenerTodosUsuarios():Observable<any>{
-    return this.httpClient.get(`http://localhost:3000/usuarios`,{});
+    return this.httpClient.get(`${this.url}`,{});
   }
 
   updateInfo(userInfo:any, idUser:string):Observable<any>{
-    return this.httpClient.put(`http://localhost:3000/usuarios/updateEmployee/${idUser}`, userInfo)
+    return this.httpClient.put(`${this.url}/updateEmployee/${idUser}`, userInfo)
   }
   
   updateInfoCompany(data:any,idUser:string):Observable<any>{
-    return this.httpClient.post(`http://localhost:3000/usuarios/updateCompany/${idUser}`,data);
+    return this.httpClient.post(`${this.url}/updateCompany/${idUser}`,data);
   }
 
   uploadProfileImage(idUser:string,data:any):Observable<any>{
-    return this.httpClient.put(`http://localhost:3000/usuarios/profilePic/${idUser}`,data);
+    return this.httpClient.put(`${this.url}/profilePic/${idUser}`,data);
   }
   updateProfileImage(idUser:string,data:any):Observable<any>{
-    return this.httpClient.put(`http://localhost:3000/usuarios/updatePic/${idUser}`,data);
+    return this.httpClient.put(`${this.url}/updatePic/${idUser}`,data);
   }
 
   obtenerUsuario(idUsuario:any){
-    return this.httpClient.get(`http://localhost:3000/usuarios/${idUsuario}`)
+    return this.httpClient.get(`${this.url}/${idUsuario}`)
+  }
+
+  addNotification(data:any):Observable<any>{
+    return this.httpClient.put(`${this.url}/notifications/newPost`, data);
+  }
+
+  getNotifications(idUser:String):Observable<any>{
+    return this.httpClient.get(`${this.url}/notifications/${idUser}`);
+  }
+
+  readNotifications(idUser:String):Observable<any>{
+    return this.httpClient.post(`${this.url}/notifications/read/${idUser}`, {})
   }
 
   loggedIn(){

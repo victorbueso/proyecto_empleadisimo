@@ -7,7 +7,9 @@ var multer = require('multer');
 var path = require('path');
 var fs = require('fs-extra');
 const uuid = require("uuid");
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const usuarios = require('../models/usuarios');
+
 
 
 //login user
@@ -52,7 +54,8 @@ router.post('/', async function(req, res) {
         medioPago: [],
         sucursales: [],
         rubros: [],
-        fechaFundacion: null
+        fechaFundacion: null,
+        notificaciones : []
     });
 
     userRouter.save().then(result => {
@@ -71,7 +74,7 @@ router.post('/', async function(req, res) {
 //Obtener un usuario
 router.get('/:idUser', function(req, res) {
     console.log(req.params.idUser);
-    usuario.find({ _id: Mongoose.Types.ObjectId(req.params.idUser) })
+    usuario.find({ _id: mongoose.Types.ObjectId(req.params.idUser) })
         .then(result => {
             res.send(result[0]);
             res.end();
@@ -324,6 +327,75 @@ router.get('/profilePic/:idUser', function(req, res) {
 
     /* res.sendFile(path.join( '..',`${req.params.fileName}`)); */
 });
+
+
+// Notificaciones 
+
+//Obtener todas las notificaciones de un usuario
+
+router.get('/notifications/:idUser', function(req, res){
+    usuarios.find(
+        {
+            _id : req.params.idUser
+        },
+        {
+            notificaciones:true,
+        }
+    ).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+})
+
+// Notificación de empleo para todos los empleados
+
+    router.put('/notifications/newPost', function(req, res){
+        usuarios.updateMany(
+            {
+                tipoUsuario: 0
+            },
+            {
+                $push : {
+                    "notificaciones" : {
+                        _id : new mongoose.Types.ObjectId(),
+                        idPublicacion : req.body.idPublicacion,
+                        titulo : req.body.titulo,
+                        fechaPublicacion : req.body.fechaPublicacion,
+                        estado : req.body.estado
+                    }
+                }
+            }
+        ).then(result => {
+            res.send(result);
+            res.end();
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    });
+
+// Cambiar estado de notificaciones a leídas
+    router.post('/notifications/read/:idUser', function(req, res){
+        usuarios.updateMany(
+            {
+                _id : req.params.idUser
+            },
+            {
+                $set : {
+                    "notificaciones.$[].estado" : true
+                }
+            }
+        ).then(result => {
+            res.send(result);
+            res.end();
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    })
 
 
 module.exports = router;

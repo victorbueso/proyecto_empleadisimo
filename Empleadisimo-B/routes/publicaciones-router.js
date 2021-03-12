@@ -6,7 +6,6 @@ var publicaciones = require('../models/publicaciones');
 //Crear una publicacion
 router.post('/', function(req, res){
     var io = req.app.get('socketio');
-    console.log(req);
     let publicationsRouter = new publicaciones({
         titulo: req.body.titulo,
         descripcion: req.body.descripcion,
@@ -90,10 +89,7 @@ router.get('/posts/:idCompany', function(req, res){
             idEmpresa:mongoose.Types.ObjectId(req.params.idCompany)
         },
         {}
-    ).then(result => {
-        console.log(req.params.idCompany);
-        
-        
+    ).then(result => { 
         res.send(result);
         res.end();
     }).catch(error => {
@@ -120,7 +116,7 @@ router.put('/', async (req, res)=>{
             }
         }
     ).then(result => {
-        io.emit(publicacion.idEmpresa,`tiene una nueva notificacion en la publicacion  ${req.body.idPublicacion}`);
+        io.emit(publicacion.idEmpresa,`Tiene una nueva notificacion en la publicacion  ${req.body.idPublicacion}`);
         res.send(result);
         res.end();
     }).catch(error => {

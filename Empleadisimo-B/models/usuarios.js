@@ -15,7 +15,8 @@ var schema = new mongoose.Schema({
     medioPago: Array,             //[{_id: '', tipoPago: 'number', datos: 'JSON', tituloMedio: 'String', _idUsuario: ''}]
     sucursales:Array,
     rubros: Array,
-    fechaFundacion: String
+    fechaFundacion: String,
+    notificaciones: Array
 });
 
 module.exports = mongoose.model('usuarios', schema);
