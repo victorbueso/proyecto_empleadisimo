@@ -100,7 +100,7 @@ router.get('/posts/:idCompany', function(req, res){
 
 //Actualizar una publicación a la que ha aplicado un usuario
 router.put('/', async (req, res)=>{
-    var io = req.app.get('socketio');
+    //var io = req.app.get('socketio');
     const publicacion = await publicaciones.findOne({
         _id: req.body.idPublicacion
     })
@@ -115,9 +115,9 @@ router.put('/', async (req, res)=>{
                 usuarios: req.body.idEmpleado
             }
         }
-    ).then(result => {
-        io.emit(publicacion.idEmpresa,`Tiene una nueva notificacion en la publicacion  ${req.body.idPublicacion}`);
-        res.send(result);
+    ).then( () => {
+        //io.emit(publicacion.idEmpresa,{idEmpresa : publicacion.idEmpresa, idPublicacion: req.body.idPublicacion, titulo : publicacion.titulo});
+        res.json({idEmpresa : publicacion.idEmpresa, titulo: publicacion.titulo});
         res.end();
     }).catch(error => {
         res.send(error);

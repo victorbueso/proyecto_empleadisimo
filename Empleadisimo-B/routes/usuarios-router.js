@@ -377,6 +377,38 @@ router.get('/notifications/:idUser', function(req, res){
         })
     });
 
+//Agregar notificación a empresa
+    router.put('/notifications/newPost/company/:idCompany', function(req, res){
+        var io = req.app.get('socketio');
+        usuarios.updateOne(
+            {
+                _id : req.params.idCompany
+            },
+            {
+                $push : {
+                    "notificaciones" : {
+                        _id : new mongoose.Types.ObjectId(),
+                        idPublicacion : req.body.idPublicacion,
+                        titulo : req.body.titulo,
+                        fechaAplicacion : new Date(),
+                        estado: false
+                    }
+                }
+            }
+        ).then(result => {
+            io.emit(req.params.idCompany,{
+                idPublicacion : req.body.idPublicacion,
+                titulo : req.body.titulo,
+                fechaAplicacion : new Date()});
+            res.send(result);
+            res.end();
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    })
+
+
 // Cambiar estado de notificaciones a leídas
     router.post('/notifications/read/:idUser', function(req, res){
         usuarios.updateMany(

@@ -1,3 +1,21 @@
+.card{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    height: 90px;
+}
+
+.card:hover{
+    background-color: #f5f5f5;
+    cursor:pointer
+}
+
+.card-text{
+    height: 40px; 
+    position: relative; 
+    overflow: hidden;
+}
+
 .custom-btn{
     color: white;
     font-size: 1.6rem;
@@ -46,6 +64,41 @@
       border: 2px solid red;
   }
 
+.icon-button{
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}  
+
+.icon-button__badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: #f17300;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-right: 4px;
+  }
+  
+
+.item-link{
+    text-decoration: none;
+}
+
+.item-link:hover{
+    cursor:pointer
+}
+
+
+
 .navbar-brand{
     color:white;
 }
@@ -60,6 +113,9 @@
     font-size: 1rem;
 }
 
+.no-leido{
+    background-color: #f4f4f4
+}
 
 .register-link{
     color: #f17300;
@@ -75,6 +131,7 @@
 .title-notification{
     color:#f17300;
     font-family: 'Ramabhadra';
+    font-size: 1.5rem;
 }
 
 /*Scroll personalizado*/

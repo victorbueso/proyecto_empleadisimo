@@ -34,8 +34,12 @@ export class NavbarComponent implements OnInit{
   active=0;
   registroSuccess= false;
   public notificaciones:Array<any> = [];
+  public notificacionesC : Array<any> = [];
   public nuevaNotificacion:Boolean = false;
-
+  public nuevaNotificacionC:Boolean = false;
+  public noLeido : number = 0;
+  public noLeidoC : number = 0;
+  
 
   //datos para registro de usuario
   formularioRegistro = new FormGroup({
@@ -98,6 +102,7 @@ export class NavbarComponent implements OnInit{
     }
     this.socketService.listen('nuevaPublicacion').subscribe(
       res => {
+        this.noLeido = this.noLeido + 1;
         var data : any;
         data = res;
         this.nuevaNotificacion = true;
@@ -113,12 +118,19 @@ export class NavbarComponent implements OnInit{
     });
     var idUser =this.cookieService.get('idUser')
     if(idUser!=''){
-      console.log('el usuario escucha');
-      
+      console.log('el usuario escucha'); 
       this.socketService.listen(idUser).subscribe(
-        data=>{
-          console.log(data);
-          
+        res =>{
+          this.noLeidoC = this.noLeidoC+ 1;
+          var data : any;
+          data = res;
+          this.nuevaNotificacionC = true;
+          this.notificacionesC.unshift({
+          idPublicacion:data.idPublicacion,
+          titulo:data.titulo,
+          fechaAplicacion: data.fechaAplicacion,
+          estado: false
+        });
       },
       error=>{
         console.log(error);
@@ -133,12 +145,30 @@ export class NavbarComponent implements OnInit{
   obtenerNotificaciones(){
     this.usuarioService.getNotifications(this.cookieService.get('idUser'))
     .subscribe(res => {
-      console.log("Notificaciones:", res[0].notificaciones);
-      this.notificaciones = res[0].notificaciones
-      this.notificaciones.reverse();
-      if(this.notificaciones[0].estado == false){
-        this.nuevaNotificacion = true;
+      if(this.cookieService.get('tipo')=='0'){
+        this.notificaciones = res[0].notificaciones
+        this.notificaciones.reverse();
+        if(this.notificaciones.length != 0 && this.notificaciones[0].estado == false){
+          this.nuevaNotificacion = true;
+        }
+        this.notificaciones.forEach(notificacion => {
+          if(notificacion.estado == false){
+            this.noLeido =+ 1;
+          }
+        })
+      } else if(this.cookieService.get('tipo')=='1'){
+        this.notificacionesC = res[0].notificaciones
+        this.notificacionesC.reverse();
+        if(this.notificacionesC.length != 0 && this.notificacionesC[0].estado == false){
+          this.nuevaNotificacionC = true;
+        }
+        this.notificacionesC.forEach(notificacion => {
+          if(notificacion.estado == false){
+            this.noLeidoC =+ 1;
+          }
+        })
       }
+      
     }, error => {
       console.log(error);
     })
@@ -284,10 +314,18 @@ export class NavbarComponent implements OnInit{
   }
 
   openNotifications(){
-    this.nuevaNotificacion = false;
-    this.usuarioService.readNotifications(this.cookieService.get('idUser'))
-    .subscribe(res => {
-      console.log(res);
-    }, error => console.log(error))
+    if(this.nuevaNotificacion == true || this.nuevaNotificacionC == true){
+      this.nuevaNotificacion = false;
+      this.nuevaNotificacionC = false;
+      this.noLeidoC = 0;
+      this.noLeido = 0;
+      this.usuarioService.readNotifications(this.cookieService.get('idUser'))
+      .subscribe( () => {
+        console.log("Notificaciones leídas");
+        setTimeout( () => {
+          this.obtenerNotificaciones()
+        }, 1000)
+      }, error => console.log(error));
+    }
   }
 }

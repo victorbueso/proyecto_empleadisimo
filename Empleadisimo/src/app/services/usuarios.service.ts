@@ -50,6 +50,10 @@ export class UsuariosService {
     return this.httpClient.put(`${this.url}/notifications/newPost`, data);
   }
 
+  addNotificationCompany(data:any, idCompany:string):Observable<any>{
+    return this.httpClient.put(`${this.url}/notifications/newPost/company/${idCompany}`, data)
+  }
+
   getNotifications(idUser:String):Observable<any>{
     return this.httpClient.get(`${this.url}/notifications/${idUser}`);
   }
