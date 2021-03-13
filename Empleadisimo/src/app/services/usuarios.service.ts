@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsuariosService {
+  uri = "http://localhost:3000/api";
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
@@ -56,11 +57,19 @@ export class UsuariosService {
     return false
   }
 
+  sendPhoto(cv: File){
+    
+    const fd = new FormData();
+    fd.append('myFile', cv);
+    
+    return this.httpClient.post(this.uri + '/photos', fd);
+
+  }
+
   isEmployeeLogged(){
     if(this.cookieService.get('tipo')=='0'){
       return true
     }
-
     return false
   }
 }

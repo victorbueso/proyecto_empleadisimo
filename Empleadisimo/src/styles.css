@@ -609,6 +609,16 @@ input[type="date"] {
     height: 30px;
 }
 
+
+/* ------------------------ Upload CV -------------------------  */
+
+.container-upload-cv {
+    background-color: white;
+    margin: 5px;
+    padding: 1px 0px;
+    box-sizing: border-box;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(90deg)
