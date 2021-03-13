@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
     this.publicacionesService.getPosts()
     .subscribe( result => {
       this.publicaciones = result;
+      this.modifyPublications(this.publicaciones)
       this.publicaciones.reverse();
       console.log(this.publicaciones);
       /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
@@ -77,7 +78,9 @@ export class HomeComponent implements OnInit {
       return !this.apply;
   }
 
-  updateApplyPostUser(idPublicacion: string) {
+  updateApplyPostUser(idPublicacion: string, publicacion: any) {
+    console.log("____________________________________")
+    console.log(this.publicaciones)
     let data = {
       idEmpleado: this.cookies.get("idUser"),
       idPublicacion: idPublicacion
@@ -91,14 +94,23 @@ export class HomeComponent implements OnInit {
       this.usuariosService.addNotificationCompany(notification, res.idEmpresa)
       .subscribe( () => {
       }, error => console.log(error));
-      console.log(`El usuario ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
-      console.log(`El usuario ${res} ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
+      //console.log(`El usuario ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
+      //console.log(`El usuario ${res} ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
     }, error => {
-      console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
+      //console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
     })
+    this.updateButtonStatus(publicacion)
   }
 
-}
+  updateButtonStatus(i: number){
+    this.publicaciones[i]["aplico"] = !this.publicaciones[i]["aplico"]
+  }
 
+  modifyPublications(publicaciones: any){
+    var publicacionModificada = []; 
+    for(var i in publicaciones){
+      publicaciones[i]['aplico'] = false;
+    }
+  }
 
-
+} 
