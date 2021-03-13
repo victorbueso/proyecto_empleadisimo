@@ -558,6 +558,17 @@ input[type="date"] {
     animation-duration: 1s;
 }
 
+/* Este es el boton de aplicar*/
+.non-apply-button{
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.apply-button{
+    background-color: var(--main-color);
+    color: white;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(90deg)
