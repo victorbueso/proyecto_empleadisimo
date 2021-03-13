@@ -49,7 +49,7 @@ router.post('/', async function(req, res) {
         fechaNacimiento: null,
         genero: 1, //Masculino: 1, Femenino: 0
         rating: [], //{pais: '', departamento: '', ciudad: ''}
-        curriculums: [], //[{idCV: '', nombreCV: '', fechaCreacion: ''}]    
+        curriculum: [], //[{idCV: '', nombreCV: '', fechaCreacion: ''}]    
         fotoPerfil: '',
         medioPago: [],
         sucursales: [],
@@ -265,14 +265,41 @@ router.put('/updatePic/:idUser', upload.single('image'), async(req, res) => {
 
 // subir un cv en pdf 
 
-router.put('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
-    await usuario.updateOne({ _id: req.params.idUser }, { "curriculums": req.file.path })
+router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
+    const { titulo } = req.body;
+    const  mimetype = req.file.mimetype;
+
+    if(mimetype !== 'application/pdf'){
+        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
+    }
+
+    let date = new Date()
+
+    const day = date.getDate()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    var fd = '';
+
+    if(month < 10){
+        fd = `${day}-0${month}-${year}`;
+      }else{
+        fd = `${day}-${month}-${year}`;
+      }
+
+    const arrtemp = {titulo: titulo , fecha: fd, rutaArchivo: req.file.path};
+   /* const arr = []
+
+    const cvtemp = usuario.find({_id: req.params.idUser},{curriculum: 1})
+    ;(await cvtemp).push*/
+    
+
+    await usuario.updateOne({ _id: req.params.idUser }, {$push: {curriculum: arrtemp}})
         .then(result => {
             res.status(200).json({ 'message': 'Curriculum en linea' });
             res.end();
         }).catch(error => {
             res.send(error);
-            res.end();
+            res.end()
         });
 });
 
@@ -297,6 +324,12 @@ router.put('/deleteCV/:idUser', async(req, res) => {
 //actualizar un cv en pdf
 
 router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) => {
+    const  mimetype = req.file.mimetype;
+
+    if(mimetype !== 'application/pdf'){
+        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
+    }
+
     const FP = await usuario.findById(req.params.idUser, { curriculums: 1 });
     if (FP) {
         await fs.unlink(path.resolve(FP.curriculums));
@@ -311,6 +344,33 @@ router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) =>
         });
 
 })
+
+
+// obtener las rutas de los cv del empleado
+
+router.get('/CVinfo/:idUser', async(req, res) =>{
+    usuario.find({_id: req.params.idUser},{curriculum: 1}).
+    then(result => {
+    const arr = []
+    for (var i = 0; i< result.length; i++) {
+        arr[i] = result[i].curriculum; 
+    }
+
+    const arr1 = []
+    for (var i = 0; i< arr[0].length; i++) {
+        arr1[i] = arr[0][i].rutaArchivo; 
+    }
+        /*console.log(arr1.length)
+        console.log(arr1.findIndex( x => x.rutaArchivo === "uploads\\f46a165a-0b1a-413c-aec0-98f35f5482f4.pdf"))*/
+        return res.json(arr1);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+})
+
+
 
 router.get('/profilePic/:idUser', function(req, res) {
     console.log('..', req.params.idUser);
