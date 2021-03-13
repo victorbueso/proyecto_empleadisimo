@@ -55,7 +55,7 @@
     <mat-paginator [length]="publicaciones.length" [pageSize]="page_size"
       [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
     </mat-paginator>
-    <div class="col-xl-12 mb-1 mt-1 h-50" *ngFor="let publicacion of publicaciones | filterLocation: filterLocation | filterPosition : filterPosition | pagination:page_size:page_number">
+    <div class="col-xl-12 mb-1 mt-1 h-50" *ngFor="let publicacion of publicaciones | filterLocation: filterLocation | filterPosition : filterPosition | pagination:page_size:page_number; let i = index;">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -80,7 +80,11 @@
             Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
-            <button class="btn btn-warning mr-3" (click)="updateApplyPostUser(publicacion._id)" style="background-color: #f17300;">Aplicar</button>
+            <button
+              [ngClass]="{'disabled': disApply()}" class="btn btn-warning mr-3"
+              (click)="updateApplyPostUser(publicacion._id)"
+              style="background-color: #f17300;">Aplicar
+            </button>
             <a class="btn btn-primary">Ver más</a>
           </div>
         </div>

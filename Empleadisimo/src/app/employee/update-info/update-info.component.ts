@@ -11,40 +11,40 @@ import { Router } from '@angular/router';
   styleUrls: ['./update-info.component.css']
 })
 export class UpdateInfoComponent implements OnInit{
-  
+
   public successMessage: Boolean=false;
   public errorMessage : Boolean =false;
   public message: String = '';
 
-  nameV: boolean = false; 
+  nameV: boolean = false;
   phoneV: boolean = false;
-  birthDateV: boolean = false; 
+  birthDateV: boolean = false;
   genderV: boolean = false;
   public usuario:any={};
   public imageURL:string='';
-  uploadForm:FormGroup=new FormGroup({  
+  uploadForm:FormGroup=new FormGroup({
     avatar:new FormControl(''),
     name:new FormControl('')
   });;
 
   forma: FormGroup = this.fb.group({
-    name: [null, [Validators.required, Validators.pattern("[a-zA-Z\\s]{3,}")]],
-    profesion: [null, [Validators.required, Validators.pattern("^[a-zA-Z\\s\\.]+$")]],
+    name: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    profesion: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
     birthDate:[null, [Validators.required, this.dateValidator]],
-    gender: [null, [Validators.required]]
-  
+    gender: [null, [Validators.required, Validators.minLength(1), Validators.pattern("(Masculino)|(Femenino)")]]
+
   })
-  
-  // constructor(private fb: FormBuilder, 
+
+  // constructor(private fb: FormBuilder,
   //             private cookieService: CookieService,
   //             private userServices: UsuariosService,
   //             private router:Router) {
   //             }
 
   constructor(
-    private fb: FormBuilder, 
-    private userServices: UsuariosService, 
-    private cookieService: CookieService, 
+    private fb: FormBuilder,
+    private userServices: UsuariosService,
+    private cookieService: CookieService,
     private router:Router) {
       userServices.obtenerUsuario(this.cookieService.get('idUser')).subscribe((res:any)=>{
         console.log(res);
@@ -61,7 +61,7 @@ export class UpdateInfoComponent implements OnInit{
   }
 
   showPreview(event:any){
-    
+
     const file = (event.target as HTMLInputElement).files![0];
     this.uploadForm.patchValue({
       avatar: file
@@ -75,7 +75,7 @@ export class UpdateInfoComponent implements OnInit{
     reader.readAsDataURL(file)
   }
 
-  
+
   upload(){
     if(this.usuario.fotoPerfil==''&&this.imageURL!=''){
       let formData = new FormData();
@@ -108,13 +108,13 @@ export class UpdateInfoComponent implements OnInit{
           //alert('debe seleccionar una imagen para actualizar su foto de perfil');
       }*/
     }
-    
+
   }
 
   invalidName(){
     if(this.forma.get('name')?.touched)
       this.nameV = false;
-    return this.forma.get('name')?.invalid && this.forma.get('name')?.touched; 
+    return this.forma.get('name')?.invalid && this.forma.get('name')?.touched;
   }
 
   invalidProfesion(){
@@ -128,13 +128,13 @@ export class UpdateInfoComponent implements OnInit{
       this.genderV = false;
     return this.forma.get('gender')?.invalid && this.forma.get('gender')?.touched;
   }
-  
+
   invalidBirth(){
     if(this.forma.get('birthDate')?.touched)
       this.birthDateV = false;
     return this.forma.get('birthDate')?.invalid && this.forma.get('birthDate')?.touched;
   }
-  
+
   formatPhone(elementHtml: any){
     if(this.forma.get('phone')?.valid){
       if(elementHtml.value[4] != "-"){
@@ -211,6 +211,6 @@ export class UpdateInfoComponent implements OnInit{
         console.log(error);
       })
     }
-  
-  }  
+
+  }
 }

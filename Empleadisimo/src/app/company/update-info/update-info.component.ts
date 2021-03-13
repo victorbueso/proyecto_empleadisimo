@@ -23,23 +23,23 @@ export class UpdateInfoComponent implements OnInit {
   public usuario:any = {sucursales:[]};
   public errorMessage:Boolean = false;
   public successMessage:Boolean = false;
-  
+
   forma: FormGroup = this.fb.group({
-    name: [null, [Validators.required, Validators.pattern("[a-zA-Z\\s]{3,}")]],
-    fechaFundacion:[null, [Validators.required]],
-    rubros:[null,[Validators.required]]
+    name: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    fechaFundacion:[null, [Validators.required, this.dateValidator]],
+    rubros:[null,[Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]]
   });
 
   sucursalForm: FormGroup = new FormGroup({
-    pais: new FormControl('',Validators.required),
-    departamento:new FormControl('',Validators.required),
-    ciudad:new FormControl('',Validators.required),
-    descripcion:new FormControl('',Validators.required)
+    pais: new FormControl('',[Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]),
+    departamento:new FormControl('',[Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]),
+    ciudad:new FormControl('',[Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]),
+    descripcion:new FormControl('',[Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")])
   });
 
 
   public imageURL:string='';
-  uploadForm:FormGroup=new FormGroup({  
+  uploadForm:FormGroup=new FormGroup({
     avatar:new FormControl(''),
     name:new FormControl('')
   });;
@@ -48,7 +48,7 @@ export class UpdateInfoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService,
               private router:Router) {
-    
+
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
     .subscribe((res:any)=>{
       console.log(res);
@@ -72,10 +72,10 @@ export class UpdateInfoComponent implements OnInit {
           }else{
             s=res.rubros[i];
           }
-          
+
         }
       }else{
-        
+
       }
       console.log(s);
       this.forma.setValue({
@@ -85,7 +85,7 @@ export class UpdateInfoComponent implements OnInit {
       });
 
     },error=>{});
-    
+
 
    }
 
@@ -94,13 +94,13 @@ export class UpdateInfoComponent implements OnInit {
 
 
   invalidName(){
-    return this.forma.get('name')?.invalid && this.forma.get('name')?.touched; 
+    return this.forma.get('name')?.invalid && this.forma.get('name')?.touched;
   }
 
   invalidFechaFundacion(){
     return this.forma.get('fechaFundacion')?.invalid && this.forma.get('fechaFundacion')?.touched;
   }
-  
+
   /* formatPhone(elementHtml: any){
     if(this.forma.get('phone')?.valid){
       if(elementHtml.value[4] != "-"){
@@ -121,16 +121,16 @@ export class UpdateInfoComponent implements OnInit {
     return null;
   }
 
-  
+
   showPreview(event:any){
-    
+
     const file = (event.target as HTMLInputElement).files![0];
     this.uploadForm.patchValue({
       avatar: file
     });
     this.uploadForm.get('avatar')!.updateValueAndValidity()
     console.log(this.uploadForm.get('avatar'));
-    // File Preview 
+    // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
@@ -144,13 +144,13 @@ export class UpdateInfoComponent implements OnInit {
     }else{
       return []
     }
-    
+
   }
   actualizarPerfil(){
 
     this.successMessage=false;
     this.errorMessage=false;
-    
+
     console.log(this.forma.value.name);
 
     this.usuario.nombreCompleto= this.forma.value.name;
@@ -176,7 +176,7 @@ export class UpdateInfoComponent implements OnInit {
       setTimeout(() => {
         this.errorMessage = false;
       }, 3000);
-    } 
+    }
 
   }
 
@@ -187,12 +187,12 @@ export class UpdateInfoComponent implements OnInit {
       this.agregarSucursal = false;
       this.sucursalEdicion = -1;
     }else{
-      
+
       this.usuario.sucursales[this.sucursalEdicion] = this.sucursalForm.value;
       this.sucursalEdicion = -1;
       this.agregarSucursal = false;
     }
-    
+
   }
   deleteSucursal(index:Number){
     console.log(index);
@@ -232,7 +232,7 @@ export class UpdateInfoComponent implements OnInit {
           alert('debe seleccionar una imagen para actualizar su foto de perfil');
       }
     }
-    
+
   }
 
 }

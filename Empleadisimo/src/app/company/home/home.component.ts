@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, ModalDismissReasons, NgbAlert, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
+//import {Subject} from 'rxjs';
+//import {debounceTime} from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
+
+//@Component({selector: 'ngbd-alert-selfclosing', templateUrl: './alert-selfclosing.html'})
+
 export class HomeComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   closeResult = '';
@@ -18,17 +23,24 @@ export class HomeComponent implements OnInit {
   isSelected: string = '';
   public publicaciones: any = [];
   backend: string = 'http://localhost:3000/posts/';
-/*([A-Z][a-z]+)\\s]*/
+
+  //private _success = new Subject<string>();
+  //successMessage = '';
+  successMessage = false;
+  successfull = ``;
+
+  //@ViewChild('selfClosingAlert', {static: false}) selfClosingAlert!: NgbAlert;
+
   formPublications: FormGroup = this.fb.group({
-    title: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
-    description: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
-    expirationDate: [null, [Validators.required, Validators.pattern("")]],
-    salary: [null, [Validators.required, Validators.minLength(2), Validators.pattern("")]],
+    title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    description: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    expirationDate: [null, [Validators.required]],
+    salary: [null, [Validators.required, Validators.minLength(2), Validators.pattern("[0-9]{3,}")]],
     modality: [null, [Validators.required, Validators.minLength(1), Validators.pattern("")]],
-    profession: [null, [Validators.required, Validators.minLength(4)/*, Validators.pattern("[a-zA-Z\\s]{3,}")*/]],
-    city: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]],
-    department: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]],
-    country: [null, [Validators.required, Validators.minLength(2)/*, Validators.pattern("[a-zA-Z\\s]{2,}")*/]]
+    profession: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    city: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    department: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
+    country: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]]
   });
 
   constructor(
@@ -36,8 +48,12 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder,
     private publicacionesService:PublicacionesService,
     private cookies: CookieService,
-    private usuariosService:UsuariosService
-  ) {}
+    private usuariosService:UsuariosService,
+    private config: NgbModalConfig
+  ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit(): void {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
@@ -47,6 +63,14 @@ export class HomeComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+  }
+
+  public SuccessfullMessage() {
+    this.successMessage = true;
+    this.successfull = `La publicación se ha realizado exitosamente`;
+    setTimeout(() => {
+      this.successMessage = false;
+    }, 3000);
   }
 
   get title(){
@@ -119,7 +143,7 @@ export class HomeComponent implements OnInit {
   }
 
   posting() {
-    
+
     let data = {
       idEmpresa: this.cookies.get("idUser"),
       titulo: this.formPublications.value.title,
@@ -162,7 +186,7 @@ export class HomeComponent implements OnInit {
       error => console.log(error)
     )
   }
-  
+
 
   capturarSelect() {
     this.isSelected = this.isNotSelected;
