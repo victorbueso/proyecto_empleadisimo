@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit{
   public errorRegistro: Boolean = false;
   public errorLogin: Boolean = false;
   public message : String = "";
+  public imgPerfil : string = '../../../assets/img/user-default.png';
 
   public pruebaUsuarioLogueado = null;
 
@@ -35,6 +36,7 @@ export class NavbarComponent implements OnInit{
   registroSuccess= false;
   public notificaciones:Array<any> = [];
   public notificacionesC : Array<any> = [];
+  public usuarioLoggeado : any = [];
   public nuevaNotificacion:Boolean = false;
   public nuevaNotificacionC:Boolean = false;
   public noLeido : number = 0;
@@ -98,6 +100,7 @@ export class NavbarComponent implements OnInit{
       this.abrirModal();
     });
     if(!!this.cookieService.get('idUser')){
+      this.obtenerUsuarioLoggedo();
       this.obtenerNotificaciones();
     }
     this.socketService.listen('nuevaPublicacion').subscribe(
@@ -140,6 +143,22 @@ export class NavbarComponent implements OnInit{
 
   abrirModal(){
     this.open(this.registro);
+  }
+
+  obtenerUsuarioLoggedo(){
+    this.usuarioService.getUser(this.cookieService.get('idUser'))
+    .subscribe(res => {
+      this.usuarioLoggeado = {
+        id: res._id,
+        nombre: res.nombreCompleto,
+        fotoPerfil : res.fotoPerfil
+      }
+      if(res.fotoPerfil != ''){
+        this.imgPerfil = `http://localhost:3000/${this.usuarioLoggeado.fotoPerfil}`
+      }
+    }, error => {
+      console.log(error);
+    })
   }
 
   obtenerNotificaciones(){

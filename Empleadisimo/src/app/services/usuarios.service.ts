@@ -27,6 +27,10 @@ export class UsuariosService {
     return this.httpClient.get(`${this.url}`,{});
   }
 
+  getUser(idUser:string) : Observable<any> {
+    return this.httpClient.get(`${this.url}/${idUser}`)
+  }
+
   updateInfo(userInfo:any, idUser:string):Observable<any>{
     return this.httpClient.put(`${this.url}/updateEmployee/${idUser}`, userInfo)
   }
