@@ -10,12 +10,13 @@ var schema = new mongoose.Schema({
     genero: Number,                                    //Masculino: 1, Femenino: 0
     rating: Array,                 //[{muyInsatisfecho: 1, insatisfecho: 2, satisfecho: 3, muySatisfecho: 4, excelente: 5}]
     ubicacion: mongoose.SchemaTypes.Mixed,              //{pais: '', departamento: '', ciudad: ''}
-    curriculum: String,             //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
+    curriculum: Array,             //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
     fotoPerfil: String,
     medioPago: Array,             //[{_id: '', tipoPago: 'number', datos: 'JSON', tituloMedio: 'String', _idUsuario: ''}]
     sucursales:Array,
     rubros: Array,
-    fechaFundacion: String
+    fechaFundacion: String,
+    notificaciones: Array
 });
 
 module.exports = mongoose.model('usuarios', schema);

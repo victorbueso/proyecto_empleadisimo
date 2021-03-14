@@ -6,6 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
+import { SocketService } from 'src/app/services/socket.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +33,13 @@ export class NavbarComponent implements OnInit{
   @ViewChild('login') login!:ElementRef;
   active=0;
   registroSuccess= false;
-
+  public notificaciones:Array<any> = [];
+  public notificacionesC : Array<any> = [];
+  public nuevaNotificacion:Boolean = false;
+  public nuevaNotificacionC:Boolean = false;
+  public noLeido : number = 0;
+  public noLeidoC : number = 0;
+  
 
   //datos para registro de usuario
   formularioRegistro = new FormGroup({
@@ -69,7 +77,8 @@ export class NavbarComponent implements OnInit{
               public usuarioService:UsuariosService,
               private helperService:HelperService,
               private cookieService:CookieService,
-              private router:Router) { }
+              private router:Router,
+              private socketService:SocketService) { }
 
   open(content:any) {
     this.modalService.dismissAll();
@@ -88,10 +97,81 @@ export class NavbarComponent implements OnInit{
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
     });
+    if(!!this.cookieService.get('idUser')){
+      this.obtenerNotificaciones();
+    }
+    this.socketService.listen('nuevaPublicacion').subscribe(
+      res => {
+        this.noLeido = this.noLeido + 1;
+        var data : any;
+        data = res;
+        this.nuevaNotificacion = true;
+        this.notificaciones.unshift({
+          idPublicacion:data._id,
+          titulo:data.titulo,
+          fechaPublicacion: data.fechaPublicacion,
+          estado: false
+        });
+    },
+    error=>{
+      console.log(error);
+    });
+    var idUser =this.cookieService.get('idUser')
+    if(idUser!=''){
+      console.log('el usuario escucha'); 
+      this.socketService.listen(idUser).subscribe(
+        res =>{
+          this.noLeidoC = this.noLeidoC+ 1;
+          var data : any;
+          data = res;
+          this.nuevaNotificacionC = true;
+          this.notificacionesC.unshift({
+          idPublicacion:data.idPublicacion,
+          titulo:data.titulo,
+          fechaAplicacion: data.fechaAplicacion,
+          estado: false
+        });
+      },
+      error=>{
+        console.log(error);
+      });
+    } 
   }
 
   abrirModal(){
     this.open(this.registro);
+  }
+
+  obtenerNotificaciones(){
+    this.usuarioService.getNotifications(this.cookieService.get('idUser'))
+    .subscribe(res => {
+      if(this.cookieService.get('tipo')=='0'){
+        this.notificaciones = res[0].notificaciones
+        this.notificaciones.reverse();
+        if(this.notificaciones.length != 0 && this.notificaciones[0].estado == false){
+          this.nuevaNotificacion = true;
+        }
+        this.notificaciones.forEach(notificacion => {
+          if(notificacion.estado == false){
+            this.noLeido =+ 1;
+          }
+        })
+      } else if(this.cookieService.get('tipo')=='1'){
+        this.notificacionesC = res[0].notificaciones
+        this.notificacionesC.reverse();
+        if(this.notificacionesC.length != 0 && this.notificacionesC[0].estado == false){
+          this.nuevaNotificacionC = true;
+        }
+        this.notificacionesC.forEach(notificacion => {
+          if(notificacion.estado == false){
+            this.noLeidoC =+ 1;
+          }
+        })
+      }
+      
+    }, error => {
+      console.log(error);
+    })
   }
 
   buttonLogin(){ 
@@ -119,8 +199,10 @@ export class NavbarComponent implements OnInit{
 
         if(result.tipo == 0){
           this.router.navigate(['employee']);
+          this.ngOnInit();
         } else if (result.tipo == 1){
           this.router.navigate(['company']);
+          this.ngOnInit();
         }
         this.modalService.dismissAll();
       },error=>{
@@ -227,4 +309,23 @@ export class NavbarComponent implements OnInit{
     this.cookieService.deleteAll();
   }
 
+  notificacionSeleccionada(id:string){
+    console.log(id);
+  }
+
+  openNotifications(){
+    if(this.nuevaNotificacion == true || this.nuevaNotificacionC == true){
+      this.nuevaNotificacion = false;
+      this.nuevaNotificacionC = false;
+      this.noLeidoC = 0;
+      this.noLeido = 0;
+      this.usuarioService.readNotifications(this.cookieService.get('idUser'))
+      .subscribe( () => {
+        console.log("Notificaciones leídas");
+        setTimeout( () => {
+          this.obtenerNotificaciones()
+        }, 1000)
+      }, error => console.log(error));
+    }
+  }
 }

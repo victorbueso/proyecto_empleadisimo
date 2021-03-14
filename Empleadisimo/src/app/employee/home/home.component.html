@@ -36,7 +36,7 @@
 <!--Publicaciones-->
 
 <div class="container">
-  
+
   <div class="row justify-content-center  mt-5 mb-5"  *ngIf="publicaciones.length==0">
     <p style="font-family: 'Raleway semibold'; font-size: 1rem;">
       No tenemos publicaciones de trabajo disponibles :(
@@ -46,7 +46,7 @@
     <mat-paginator [length]="publicaciones.length" [pageSize]="page_size"
       [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
     </mat-paginator>
-    <div class="col-xl-12 mb-1 mt-1 h-50" *ngFor="let publicacion of publicaciones | filterLocation: filterLocation | filterPosition : filterPosition | pagination:page_size:page_number">
+    <div class="col-xl-12 mb-1 mt-1 h-50" *ngFor="let publicacion of publicaciones | filterLocation: filterLocation | filterPosition : filterPosition | pagination:page_size:page_number; let i = index;">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -71,6 +71,10 @@
             Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
+            <button
+              [ngClass]="{'non-apply-button': !publicacion['aplico'], 'apply-button': publicacion['aplico']}" class="btn mr-3"
+              (click)="updateApplyPostUser(publicacion._id, i)">Aplicar
+            </button>
             <a class="btn btn-primary">Ver más</a>
           </div>
         </div>

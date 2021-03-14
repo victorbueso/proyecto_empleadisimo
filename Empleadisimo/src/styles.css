@@ -617,6 +617,15 @@ input[type="date"] {
     margin: 5px;
     padding: 1px 0px;
     box-sizing: border-box;
+/* Este es el boton de aplicar*/
+.non-apply-button{
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.apply-button{
+    background-color: var(--main-color);
+    color: white;
 }
 
 @keyframes rotate {
