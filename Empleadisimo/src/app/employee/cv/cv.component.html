@@ -1,0 +1,19 @@
+<div class="container-functions">
+    <div class="container-buttons">
+        <button (click)="addCv()" class="function-inactive">Agregar o actualizar cv</button>
+        <!-- <button class="close-button">x</button> -->
+    </div>
+    <div [ngClass]="{'cv-container': true, 'giveMeSomeHeigth': true, 'blockNone': false}">
+        <div class="container-upload-cv">
+            <form (submit)="uploadPhoto()">
+                <input (change)="onPhotoSelected($event)" type="file" class="d-none" #photoinput>
+                <div (click)="photoinput.click()">
+                    <span>Subir</span>
+                </div>
+                <button>Subir</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- [ngClass]="{ 'd-none': true, 'transitionHeigth': true, 'giveMeSomeHeigth': cvUpload, 'blockNone':!cvUpload}" -->
