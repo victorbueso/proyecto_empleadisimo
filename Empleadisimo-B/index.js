@@ -8,7 +8,7 @@ var publicacionesRouter = require('./routes/publicaciones-router');
 var transaccionesRouter = require('./routes/transacciones-router');
 var contratosRouter = require('./routes/contratos-router');
 var database = require('./modules/database');
-var path = require('path');
+//var path = require('path');
 
 var app = express();
 var server = app.listen(3000, () => {
