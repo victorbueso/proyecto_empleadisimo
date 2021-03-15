@@ -56,3 +56,73 @@
     flex-direction: row;
     display: flex;
 }
+
+.list-container{
+    padding: 5px;
+}
+
+.delete-curriculum{
+    color: red;
+    padding-right: 5px;
+}
+
+.curriculum-file{
+    flex-direction: row;
+    font-size: 20px;
+    display: flex;
+    height: auto;
+}
+
+.container-item{
+    position: relative;
+    padding: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.modify-content{
+    background-color: white;
+    box-sizing: border-box;
+    flex-direction: column;
+    position: absolute;
+    display: none;
+    padding: 5px;
+    height: auto;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+}
+
+.cv-information{
+    font-size: 20px;
+    color: white;
+}
+
+.cv-information:hover+.modify-content{
+    display: flex;
+}
+
+.modify-content:hover{
+    display: flex;
+}
+
+.click-down{
+    margin-right: 5px;
+}
+
+.delete-cv{
+    background-color: red;
+    margin-right: 5px;
+    color: white;
+    border: none;
+}
+
+.buttons-modify{
+    align-self: center;
+}
+
+.open-cv{
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+}

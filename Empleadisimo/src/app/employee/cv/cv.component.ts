@@ -20,13 +20,14 @@ export class CvComponent{
   idEmpleado: string = "";
   curriculums: any = [];
   uploading = false;
+  showCv = false;
   file!: File;
 
   constructor(private userService: UsuariosService,
               private cookiesService: CookieService) {
               this.idEmpleado = this.cookiesService.get("idUser")             
               this.updateCurriculum()
-              }
+            }
 
   onPhotoSelected(event:any): void{
     if(event?.target.files && event.target.files[0]){
@@ -39,16 +40,29 @@ export class CvComponent{
 
   updateCurriculum(){
     this.userService.obtainMyCurriculums(this.idEmpleado).subscribe((res) => {
-      this.curriculums = res
+      this.curriculums = res;
+      console.log(this.curriculums)
     }, err => console.error(err))
   }
 
-  addCv(){
-    this.cvUpload = !this.cvUpload;
-  }
-
+  
   uploadPhoto(){
     this.uploading = !this.uploading
+    this.userService.sendPhoto(this.file, this.idEmpleado).subscribe(res => {
+      this.uploading = !this.uploading;
+      this.updateCurriculum();
+    },
+    err => {
+      console.error(err)
+    })
+  }
+  
+  addCv(){
+    this.cvUpload = !this.cvUpload;    
+  }
+
+  listCv(){
+    this.showCv = !this.showCv;
   }
 
 }
