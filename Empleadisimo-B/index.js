@@ -7,6 +7,8 @@ var publicacionesRouter = require('./routes/publicaciones-router');
 var transaccionesRouter = require('./routes/transacciones-router');
 var contratosRouter = require('./routes/contratos-router');
 var database = require('./modules/database');
+var path = require('path');
+
 var app = express();
 var server = app.listen(3000, () => {
     console.log(`Example app listening on 3000 port!`)
@@ -28,6 +30,7 @@ app.use('/cv', cvRouter);
 app.use('/publicaciones', publicacionesRouter);
 app.use('/transacciones', transaccionesRouter);
 app.use('/contratos', contratosRouter);
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
