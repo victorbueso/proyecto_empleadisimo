@@ -15,6 +15,7 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
 import { AuthenticationGuard } from './authentication.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
 
 
 
@@ -26,6 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterComponent,
     SliderComponent,
     FooterLinksComponent,
+    VerifyaccountComponent
   ],
   imports: [
     BrowserModule,

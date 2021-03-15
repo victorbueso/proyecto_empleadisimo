@@ -34,7 +34,7 @@ export class UsuariosService {
   updateInfo(userInfo:any, idUser:string):Observable<any>{
     return this.httpClient.put(`${this.url}/updateEmployee/${idUser}`, userInfo)
   }
-  
+
   updateInfoCompany(data:any,idUser:string):Observable<any>{
     return this.httpClient.post(`${this.url}/updateCompany/${idUser}`,data);
   }
@@ -94,5 +94,8 @@ export class UsuariosService {
     }
     return false
   }
+
+  sendEmailVerification(data: any): Observable<any> {
+    return this.httpClient.post(`${this.url}/verifyemail`, data);
+  }
 }
- 

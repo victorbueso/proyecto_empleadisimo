@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit{
   public nuevaNotificacionC:Boolean = false;
   public noLeido : number = 0;
   public noLeidoC : number = 0;
-  
+
 
   //datos para registro de usuario
   formularioRegistro = new FormGroup({
@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit{
   }
   );
 
-  //datos para capturar 
+  //datos para capturar
 
  get lgCorreo(){
     return this.formularioLogin.get('lgCorreo');
@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit{
   get rgPassword(){
     return this.formularioRegistro.get('rgPassword');
   }
-  
+
   constructor(private modalService:NgbModal,
               public usuarioService:UsuariosService,
               private helperService:HelperService,
@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit{
     });
     var idUser =this.cookieService.get('idUser')
     if(idUser!=''){
-      console.log('el usuario escucha'); 
+      console.log('el usuario escucha');
       this.socketService.listen(idUser).subscribe(
         res =>{
           this.noLeidoC = this.noLeidoC+ 1;
@@ -138,7 +138,7 @@ export class NavbarComponent implements OnInit{
       error=>{
         console.log(error);
       });
-    } 
+    }
   }
 
   abrirModal(){
@@ -187,13 +187,13 @@ export class NavbarComponent implements OnInit{
           }
         })
       }
-      
+
     }, error => {
       console.log(error);
     })
   }
 
-  buttonLogin(){ 
+  buttonLogin(){
 
    // data adquirida por el formulario que sera enviada
     var data = {
@@ -201,7 +201,7 @@ export class NavbarComponent implements OnInit{
       password:this.formularioLogin.value.lgPassword
     }
 
-  // funcion utilizada para enviar los datos 
+  // funcion utilizada para enviar los datos
     this.usuarioService.loginUsuario(data).subscribe(
       result=>{
         //console.log(result);
@@ -236,7 +236,7 @@ export class NavbarComponent implements OnInit{
           });*/
           this.formularioLogin.reset();
         }, 3000)
-       
+
       }
     );
 
@@ -245,7 +245,7 @@ export class NavbarComponent implements OnInit{
   registrarUsuario(){
 
     if(this.formularioRegistro.value.rgPassword!=this.formularioRegistro.value.rgConfPassword){
-        
+
         this.formularioRegistro.setValue({
           rgCorreo:this.formularioRegistro.value.rgCorreo,
           rgConfPassword:null,
@@ -278,10 +278,11 @@ export class NavbarComponent implements OnInit{
           this.cookieService.set('token', result.token);
           this.cookieService.set('idUser', result.idUser);
           this.cookieService.set('tipo', result.tipo);
-          
+
           this.successRegistro=true;
-         
-          setTimeout(() => 
+
+          this.sendMessage(data.correo, result.token, result.idUser);
+          setTimeout(() =>
             {
               console.log('tipo: '+this.cookieService.get('tipo'));
               this.successRegistro=false;
@@ -316,9 +317,9 @@ export class NavbarComponent implements OnInit{
           });*/
         }
       );
-     
+
     }
-    
+
   }
 
   buttonLogout(){
@@ -346,5 +347,19 @@ export class NavbarComponent implements OnInit{
         }, 1000)
       }, error => console.log(error));
     }
+  }
+
+  sendMessage(data: any, token: any, user: any) {
+    let verifyInfo = {
+      correo: data,
+      token: token,
+      idUser: user
+    }
+
+    this.usuarioService.sendEmailVerification(verifyInfo).subscribe(res => {
+      console.log(res);
+    }, error => {
+      console.log(error);
+    })
   }
 }

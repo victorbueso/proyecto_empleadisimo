@@ -5,13 +5,15 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
 /*import { UpdateInfoComponent } from './componentes/update-info/update-info.component'*/
 
 import { AuthenticationGuard } from './authentication.guard'
+import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
 
 const routes: Routes = [
   { path: 'footer/:id' ,component: FooterLinksComponent },
   { path: '', component:LandingPageComponent },
   /*{ path: 'update-info', component: UpdateInfoComponent },*/
   { path: 'employee', loadChildren: () => import('./employee/employee.module').then(m =>m.EmployeeModule), canActivate:[AuthenticationGuard] },
-  { path: 'company', loadChildren: () => import('./company/company.module').then(m =>m.CompanyModule), canActivate:[AuthenticationGuard] }
+  { path: 'company', loadChildren: () => import('./company/company.module').then(m =>m.CompanyModule), canActivate:[AuthenticationGuard] },
+  { path: 'verifyaccount/:token/:id', component: VerifyaccountComponent }
 ];
 
 @NgModule({

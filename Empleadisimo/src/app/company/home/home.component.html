@@ -68,10 +68,10 @@
 </div>
 
 <!-- Pantalla modal con formulario para crear publicaciones -->
-<ng-template #contenido let-c="close" let-d="dismiss">
+<ng-template #contenido let-modal>
   <div class="modal-header">
     <h2 class="modal-title mb-0">Nueva Publicación</h2>
-    <button class="close" aria-label="close" type="button" (click)="d()" (click)="limpiar()">
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()" (click)="limpiar()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -135,7 +135,7 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light mr-2" (click)="c()" (click)="limpiar()">Cancelar</button>
+    <button type="button" class="btn btn-light mr-2" (click)="modal.close()" (click)="limpiar()">Cancelar</button>
     <button [disabled]="formPublications.invalid" type="submit" class="btn btn-primary" (click)="posting()" (click)="SuccessfullMessage()" (click)="limpiar()">
       Publicar
     </button>

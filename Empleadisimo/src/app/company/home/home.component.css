@@ -138,6 +138,19 @@ a[data-toggle="collapse"] {
   padding: 3%;
 }
 
+.error{
+  padding: 5px;
+  margin:5px;
+  margin-top: 0px;
+  font-size: 1rem;
+  border-radius: 5px;
+  color: red;
+}
+
+.input-error{
+    border: 2px solid red;
+}
+
 @media (max-width:400px) {
   #sidebar {
     margin-top: -20px;
