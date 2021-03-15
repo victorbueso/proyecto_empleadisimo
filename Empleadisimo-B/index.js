@@ -1,6 +1,7 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 var usuariosRouter = require('./routes/usuarios-router');
 var cvRouter = require('./routes/cv-router');
 var publicacionesRouter = require('./routes/publicaciones-router');
@@ -31,6 +32,8 @@ app.use('/publicaciones', publicacionesRouter);
 app.use('/transacciones', transaccionesRouter);
 app.use('/contratos', contratosRouter);
 app.use('/uploads', express.static(path.resolve('uploads')));
+
+app.use('/uploads', express.static(path.resolve('uploads')))
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

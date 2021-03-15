@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
-  private url=" http://localhost:3000/usuarios"
+  private url="http://localhost:3000/usuarios"
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
@@ -25,6 +25,10 @@ export class UsuariosService {
 
   obtenerTodosUsuarios():Observable<any>{
     return this.httpClient.get(`${this.url}`,{});
+  }
+
+  getUser(idUser:string) : Observable<any> {
+    return this.httpClient.get(`${this.url}/${idUser}`)
   }
 
   updateInfo(userInfo:any, idUser:string):Observable<any>{
@@ -74,11 +78,20 @@ export class UsuariosService {
     return false
   }
 
+  sendPhoto(cv: File, idUser: string){
+    
+    const fd = new FormData();
+    fd.append('curriculums', cv);
+    fd.append('titulo', "Este es el titulo")
+    console.log(fd)
+    return this.httpClient.post(`http://localhost:3000/usuarios/CV/${idUser}`, fd);
+
+  }
+
   isEmployeeLogged(){
     if(this.cookieService.get('tipo')=='0'){
       return true
     }
-
     return false
   }
 }

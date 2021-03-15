@@ -73,10 +73,13 @@
 }  
 
 .icon-button__badge {
+    font-size: 0.9rem;
     position: absolute;
     top: -10px;
-    right: -10px;
-    width: 20px;
+    right: -15px;
+    min-width: 20px;
+    padding: 2px;
+    padding-bottom: 6px;
     height: 20px;
     background: #f17300;
     color: #ffffff;

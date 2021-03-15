@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
       this.publicaciones = result;
       this.modifyPublications(this.publicaciones)
       this.publicaciones.reverse();
-      console.log(this.publicaciones);
       /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
@@ -79,8 +78,6 @@ export class HomeComponent implements OnInit {
   }
 
   updateApplyPostUser(idPublicacion: string, publicacion: any) {
-    console.log("____________________________________")
-    console.log(this.publicaciones)
     let data = {
       idEmpleado: this.cookies.get("idUser"),
       idPublicacion: idPublicacion
