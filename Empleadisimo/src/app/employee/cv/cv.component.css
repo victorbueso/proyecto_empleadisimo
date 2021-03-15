@@ -1,0 +1,128 @@
+.container-functions {
+    background-color: #054A91;
+    box-sizing: border-box;
+    padding: 16px;
+    height: auto;
+    width: 100vw;
+}
+
+.container-buttons {
+    flex-direction: row;
+    margin: 0px 5px;
+    color: white;
+    display: flex;
+    gap: 5px;
+}
+
+.function-inactive {
+    background-color: var(--secondary-color);
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 3px 8px;
+    color: white;
+    border: none;
+}
+
+.close-button {
+    box-sizing: border-box;
+    background-color: gray;
+    border-radius: 50%;
+    color: white;
+    border: none;
+}
+
+.cv-container {
+    transition: height .5s;
+}
+
+.transitionHeigth {
+    transition: height .5s;
+}
+
+.blockNone {
+    height: 0px;
+}
+
+.giveMeSomeHeigth {
+    height: 30px;
+}
+
+.employee-search{
+    background-color: var(--main-color);
+    width: 100vw;
+}
+
+.button-upload-cv{
+    flex-direction: row;
+    display: flex;
+}
+
+.list-container{
+    padding: 5px;
+}
+
+.delete-curriculum{
+    color: red;
+    padding-right: 5px;
+}
+
+.curriculum-file{
+    flex-direction: row;
+    font-size: 20px;
+    display: flex;
+    height: auto;
+}
+
+.container-item{
+    position: relative;
+    padding: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.modify-content{
+    background-color: white;
+    box-sizing: border-box;
+    flex-direction: column;
+    position: absolute;
+    display: none;
+    padding: 5px;
+    height: auto;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+}
+
+.cv-information{
+    font-size: 20px;
+    color: white;
+}
+
+.cv-information:hover+.modify-content{
+    display: flex;
+}
+
+.modify-content:hover{
+    display: flex;
+}
+
+.click-down{
+    margin-right: 5px;
+}
+
+.delete-cv{
+    background-color: red;
+    margin-right: 5px;
+    color: white;
+    border: none;
+}
+
+.buttons-modify{
+    align-self: center;
+}
+
+.open-cv{
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+}

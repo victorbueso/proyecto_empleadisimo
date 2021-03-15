@@ -308,12 +308,12 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 // borrar un cv en pdf
 
 router.post('/deleteCV/:idUser', async(req, res) => {
-    const { fp } = req.body
-    console.log(req.body.fp)
+    var fp  = req.body.fp
+    console.log(fp)
     const arr = []
     const arr1 = []
     //var fpd
-
+    
     usuario.find({_id: req.params.idUser},{curriculum: 1}).
     then(result2 => {
         for (var i = 0; i< result2.length; i++) {
@@ -325,29 +325,24 @@ router.post('/deleteCV/:idUser', async(req, res) => {
             arr1[i] = arr[0][i]; 
         }
             
-            fpd = arr1.find(o => o.rutaArchivo === fp) //
+            fpd = arr1.find(o => o.rutaArchivo === fp) 
             
 
-            const df = arr1.findIndex( x => x.rutaArchivo === fp) //
+            const df = arr1.findIndex( x => x.rutaArchivo === fp) 
             arr1.splice(df,1)
             fs.unlink(path.resolve(fpd.rutaArchivo))
 
-            usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then(/*result => {
-                res.status(200).json({ 'message': 'Curriculums removido' });
-                 res.end();
-            }*/).catch(error => {
+            usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
                 res.send(error);
                 res.end()
             });
             res.status(200).json({ 'message': 'Curriculums removido' });
-            //console.log()
-           // return res.json(arr1);
             res.end();
         }).catch(error2 => {
             res.send(error2);
             res.end();
         })
-
+                    
         //fs.unlink(path.resolve(fpd.rutaArchivo))
 
 })

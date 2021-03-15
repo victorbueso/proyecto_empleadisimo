@@ -1,19 +1,36 @@
 <div class="container-functions">
-    <div class="container-buttons">
-        <button (click)="addCv()" class="function-inactive">Agregar o actualizar cv</button>
-        <!-- <button class="close-button">x</button> -->
+    <div class="button-upload-cv">
+        <div class="container-buttons">
+            <button (click)="addCv()" class="function-inactive">Agregar cv</button>
+        </div>
+            <div class="container-buttons">
+            <button (click)="listCv()" class="function-inactive">Mis curriculums</button>
+        </div>
     </div>
-    <div [ngClass]="{'cv-container': true, 'giveMeSomeHeigth': true, 'blockNone': false}">
+    <div *ngIf = cvUpload>
         <div class="container-upload-cv">
             <form (submit)="uploadPhoto()">
                 <input (change)="onPhotoSelected($event)" type="file" class="d-none" #photoinput>
-                <div (click)="photoinput.click()">
-                    <span>Subir</span>
+                <div (click)="photoinput.click()" class="input-file-cv">
+                    <i class="fas fa-file-pdf"></i><span>Seleccione una imagen</span> 
                 </div>
-                <button>Subir</button>
+                <button class="send-photo"><i class="fas fa-file-upload" [ngClass]="{'d-none': uploading}"></i><i class="fas fa-spinner fa-pulse" [ngClass]="{'d-none':!uploading}"></i></button><br>
+                <span>Archivo subido con exito</span>
             </form>
         </div>
     </div>
+    <div *ngIf="showCv" class="list-container">
+        <div *ngFor="let curriculum of curriculums; let i=index" class="container-item">
+            <div class="cv-information">
+                <i class="fas fa-chevron-down click-down"></i><span>Curriculum {{ i }}</span>
+            </div>
+            <div class="modify-content">
+                <span>Nombre archivo:</span>
+                <div class="buttons-modify">
+                    <button class="delete-cv">Eliminar</button>
+                    <a [href]='curriculum' class="open-cv">Abrir</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- [ngClass]="{ 'd-none': true, 'transitionHeigth': true, 'giveMeSomeHeigth': cvUpload, 'blockNone':!cvUpload}" -->

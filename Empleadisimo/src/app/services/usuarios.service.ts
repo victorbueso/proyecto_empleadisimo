@@ -83,9 +83,12 @@ export class UsuariosService {
     const fd = new FormData();
     fd.append('curriculums', cv);
     fd.append('titulo', "Este es el titulo")
-    console.log(fd)
     return this.httpClient.post(`http://localhost:3000/usuarios/CV/${idUser}`, fd);
 
+  }
+
+  obtainMyCurriculums(idUser: string){
+    return this.httpClient.get(`http://localhost:3000/usuarios/CVinfo/${idUser}`);
   }
 
   isEmployeeLogged(){
