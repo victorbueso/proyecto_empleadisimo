@@ -522,7 +522,6 @@ router.post('/verifyemail', function(req, res) {
     email(correo);
     res.status(200).send();
     res.end();
-
 });
 
 
