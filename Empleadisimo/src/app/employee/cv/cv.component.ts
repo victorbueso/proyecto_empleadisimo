@@ -9,31 +9,38 @@ interface HtmlInputEvent extends Event{
 
 @Component({
   selector: 'app-cv',
-  templateUrl: './cv.component.html'
+  templateUrl: './cv.component.html',
+  styleUrls: ['./cv.component.css']
 })
 
 
 export class CvComponent{
-  idEmpleado: string = "";
-  file!: File;
   photoSelected!: string | ArrayBuffer;
   cvUpload: boolean = false;
+  idEmpleado: string = "";
+  curriculums: any = [];
+  uploading = false;
+  file!: File;
 
   constructor(private userService: UsuariosService,
               private cookiesService: CookieService) {
-              this.idEmpleado = this.cookiesService.get("idUser")
-              console.log(this.idEmpleado)
+              this.idEmpleado = this.cookiesService.get("idUser")             
+              this.updateCurriculum()
               }
 
   onPhotoSelected(event:any): void{
     if(event?.target.files && event.target.files[0]){
-      console.log(this.file)
       this.file = <File>event.target.files[0]
       const reader = new FileReader();
       reader.onload = e => this.photoSelected = reader.result!;
       reader.readAsDataURL(this.file); 
-
     }
+  }
+
+  updateCurriculum(){
+    this.userService.obtainMyCurriculums(this.idEmpleado).subscribe((res) => {
+      this.curriculums = res
+    }, err => console.error(err))
   }
 
   addCv(){
@@ -41,9 +48,7 @@ export class CvComponent{
   }
 
   uploadPhoto(){
-    
-    this.userService.sendPhoto(this.file, this.idEmpleado)
-      .subscribe(res => console.log(res), err => console.error(err))
+    this.uploading = !this.uploading
   }
 
 }

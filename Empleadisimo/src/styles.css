@@ -512,7 +512,6 @@ input[type="date"] {
 }
 
 .head {
-    /* padding: 0px 5px; */
     height: 25px;
     box-sizing: border-box;
     cursor: pointer;
@@ -558,58 +557,6 @@ input[type="date"] {
     animation-duration: 1s;
 }
 
-
-/* Estilos de funcionalidad subida de cv */
-
-.container-functions {
-    background-color: #054A91;
-    box-sizing: border-box;
-    padding: 16px;
-    height: auto;
-    width: 100vw;
-}
-
-.container-buttons {
-    flex-direction: row;
-    color: white;
-    display: flex;
-    gap: 5px;
-}
-
-.function-inactive {
-    background-color: var(--secondary-color);
-    box-sizing: border-box;
-    border-radius: 10px;
-    padding: 3px 8px;
-    color: white;
-    border: none;
-}
-
-.close-button {
-    box-sizing: border-box;
-    background-color: gray;
-    border-radius: 50%;
-    color: white;
-    border: none;
-}
-
-.cv-container {
-    transition: height .5s;
-}
-
-.transitionHeigth {
-    transition: height .5s;
-}
-
-.blockNone {
-    height: 0px;
-}
-
-.giveMeSomeHeigth {
-    height: 30px;
-}
-
-
 /* ------------------------ Upload CV -------------------------  */
 
 .container-upload-cv {
@@ -617,6 +564,39 @@ input[type="date"] {
     padding: 1px 0px;
     color: white;
     margin: 5px;
+}
+
+.container-upload-cv form{
+    align-items: center;
+    display: flex;
+}
+
+.input-file-cv{
+    background-color: var(--secondary-color);
+    box-sizing: border-box;
+    border: 1px solid var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    margin: 3px 0px;
+    padding: 5px;
+    width: auto;
+}
+
+.input-file-cv:hover{
+    color: var(--secondary-color);
+    background-color: var(--main-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.input-file-cv i{
+    margin-right: 10px;
+}
+
+.send-photo{
+    border: 1px solid var(--secondary-color);
+    padding: 5px;
+    background-color: transparent;
+    color: var(--secondary-color);
 }
 
 .non-apply-button{
