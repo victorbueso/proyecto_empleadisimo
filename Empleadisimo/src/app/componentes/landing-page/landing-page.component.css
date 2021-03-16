@@ -24,3 +24,47 @@ h5{
     width: 200px; 
     height: 200px
 }
+
+body {
+    --main-color: #054a91;
+    --secondary-color: #f17300;
+}
+
+.first-block {
+    display: flex;
+    flex-direction: row;
+    max-width: 100vw;
+    height: auto;
+}
+
+.f1-left {
+    width: 50vw;
+    display: inherit;
+    align-items: center;
+}
+
+.information {
+    color: var(--main-color);
+    box-sizing: border-box;
+    padding: 0% 5%;
+    text-align: center;
+    width: 100%;
+}
+
+.information h1 {
+    font-size: 2.5em;
+}
+
+.information h2 {
+    font-size: 1.5em;
+}
+
+.f2-rigth {
+    overflow: hidden;
+    height: 90vh;
+    width: 50vw;
+}
+
+.img-block {
+    max-height: 100%;
+}

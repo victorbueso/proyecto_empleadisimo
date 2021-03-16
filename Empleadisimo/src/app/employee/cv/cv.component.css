@@ -77,25 +77,28 @@
     position: relative;
     padding: 5px;
     width: 100%;
-    cursor: pointer;
 }
 
 .modify-content{
     background-color: white;
     box-sizing: border-box;
-    flex-direction: column;
     position: absolute;
     display: none;
-    padding: 5px;
-    height: auto;
+    height: 50px;
+    width: 20%;
     z-index: 1;
     left: 0px;
     top: 0px;
 }
 
 .cv-information{
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     font-size: 20px;
     color: white;
+    display: flex;
+    width: 20%;
 }
 
 .cv-information:hover+.modify-content{
@@ -112,17 +115,85 @@
 
 .delete-cv{
     background-color: red;
-    margin-right: 5px;
     color: white;
     border: none;
+    width: 100%;
+    height: 50%;
 }
+
+.delete-cv:hover
 
 .buttons-modify{
     align-self: center;
+    width: 100%;
+    height: 100%;
+    display: inherit;
+    flex-direction: column;
 }
 
 .open-cv{
     background-color: var(--secondary-color);
+    text-align: center;
     color: white;
     border: none;
+    height: 50%;
+}
+
+.open-cv:hover{
+    text-decoration: none;
+}
+
+.container-upload-cv {
+    box-sizing: border-box;
+    padding: 1px 0px;
+    color: white;
+    margin: 5px;
+}
+
+.container-upload-cv form{
+    align-items: center;
+    display: flex;
+}
+
+.input-file-cv{
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 3px 0px;
+    color: white;
+    padding: 5px;
+    width: auto;
+}
+
+.input-file-cv:hover{
+    color: var(--secondary-color);
+    background-color: var(--main-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.input-file-cv i{
+    margin-right: 10px;
+}
+
+.send-photo{
+    border: 1px solid var(--secondary-color);
+    padding: 5px;
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+.non-apply-button{
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.apply-button{
+    background-color: var(--main-color);
+    color: white;
+}
+
+.home-container-employee{
+    padding: 0px;
+    margin: 0px;
 }

@@ -3,7 +3,8 @@ import { SliderService, sliderData} from '../../services/slider.service';
 
 @Component({
   selector: 'app-slider',
-  templateUrl: './slider.component.html'
+  templateUrl: './slider.component.html',
+  styleUrls: ['./slider.component.css']
 })
 
 export class SliderComponent{

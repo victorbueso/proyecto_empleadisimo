@@ -16,7 +16,7 @@ interface HtmlInputEvent extends Event{
 
 export class CvComponent{
   photoSelected!: string | ArrayBuffer;
-  cvUpload: boolean = false;
+  cvUpload = false;
   idEmpleado: string = "";
   curriculums: any = [];
   uploading = false;
@@ -58,10 +58,12 @@ export class CvComponent{
   }
   
   addCv(){
-    this.cvUpload = !this.cvUpload;    
+    this.showCv = false;
+    this.cvUpload = !this.cvUpload;   
   }
 
   listCv(){
+    this.cvUpload = false;
     this.showCv = !this.showCv;
   }
 
