@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵangular_packages_router_router_j } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -89,6 +89,15 @@ export class UsuariosService {
 
   obtainMyCurriculums(idUser: string){
     return this.httpClient.get(`http://localhost:3000/usuarios/CVinfo/${idUser}`);
+  }
+
+  deleteCurriculum(file: string, idUser: string){
+    const fp = {
+      fp: new HttpHeaders({
+        'fp': file
+      })
+    }
+    return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, fp);
   }
 
   isEmployeeLogged(){
