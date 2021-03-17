@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
     .subscribe( () => {
       this.obtenerPublicaciones();
     }, error => console.log(error))
- 
+
   }
 
   obtenerPublicaciones(){
@@ -62,6 +62,13 @@ export class HomeComponent implements OnInit {
       this.publicaciones = result;
       this.modifyPublications(this.publicaciones)
       this.publicaciones.reverse();
+
+      let user = this.cookies.get('idUser');
+      for (let i in this.publicaciones){
+          if (this.publicaciones[i].usuarios.includes(user)){
+            this.updateButtonStatus(Number(i));
+          }
+      }
       /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
@@ -77,7 +84,7 @@ export class HomeComponent implements OnInit {
       return !this.apply;
   }
 
-  updateApplyPostUser(idPublicacion: string, publicacion: any) {
+  updateApplyPostUser(idPublicacion: string, publicacion: number) {
     let data = {
       idEmpleado: this.cookies.get("idUser"),
       idPublicacion: idPublicacion
@@ -96,7 +103,9 @@ export class HomeComponent implements OnInit {
     }, error => {
       //console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
     })
-    this.updateButtonStatus(publicacion)
+
+    this.updateButtonStatus(publicacion);
+
   }
 
   updateButtonStatus(i: number){
@@ -104,10 +113,10 @@ export class HomeComponent implements OnInit {
   }
 
   modifyPublications(publicaciones: any){
-    var publicacionModificada = []; 
+    var publicacionModificada = [];
     for(var i in publicaciones){
       publicaciones[i]['aplico'] = false;
     }
   }
 
-} 
+}
