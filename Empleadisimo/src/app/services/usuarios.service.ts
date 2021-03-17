@@ -92,12 +92,10 @@ export class UsuariosService {
   }
 
   deleteCurriculum(file: string, idUser: string){
-    const fp = {
-      fp: new HttpHeaders({
-        'fp': file
-      })
+    var data = {
+      'fp': file
     }
-    return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, fp);
+    return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, data);
   }
 
   isEmployeeLogged(){

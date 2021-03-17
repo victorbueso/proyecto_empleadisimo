@@ -159,3 +159,19 @@ a[data-toggle="collapse"] {
     display: none;
   }
 }
+
+.error-message {
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-name: fade-in;
+  animation-duration: 1s;
+  display: none;
+  color: red;
+  opacity: 0%;
+  padding: 0;
+  margin: 0;
+}
+
+.display-block {
+  display: block !important;
+}

@@ -74,11 +74,10 @@ export class CvComponent{
   }
 
   deleteCv(url:string){
-    url = `${ url.slice(22, 29) }\\\\${ url.slice(30) }`
-    console.log(url)
+    url = `${ url.slice(22, 29) }\\${ url.slice(30) }`
     this.userService.deleteCurriculum(url, this.idEmpleado).subscribe(res => {
-      this.updateCurriculum()
-      console.log(this.curriculums)
+      console.log(res)
+      this.updateCurriculum();
     }, err => {
       console.error(err)
     })

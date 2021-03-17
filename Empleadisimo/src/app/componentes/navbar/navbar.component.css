@@ -155,3 +155,8 @@
     display: flex;
 }
 
+.image-login {
+    height: auto;
+    width: 100px;
+    margin: auto;
+}

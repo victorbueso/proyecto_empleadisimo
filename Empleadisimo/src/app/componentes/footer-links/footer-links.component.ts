@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-footer-links',
-  templateUrl: './footer-links.component.html'
+  templateUrl: './footer-links.component.html',
+  styleUrls: ['./footer.component.css']
+
 })
 
 export class FooterLinksComponent{
