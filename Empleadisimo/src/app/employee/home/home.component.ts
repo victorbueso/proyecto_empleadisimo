@@ -18,7 +18,7 @@ import { SocketService } from 'src/app/services/socket.service';
 export class HomeComponent implements OnInit {
 
   /*Carousel*/
-  images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
+  // images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
 
   /*Input de búsqueda*/
   filterPosition ='';
