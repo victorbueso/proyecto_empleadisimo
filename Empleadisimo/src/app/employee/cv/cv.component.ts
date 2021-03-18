@@ -16,10 +16,12 @@ interface HtmlInputEvent extends Event{
 
 export class CvComponent{
   photoSelected!: string | ArrayBuffer;
-  cvUpload = false;
+  titleCurriculum: string = "Seleccione su curriculum";
+  successFile = false;
   idEmpleado: string = "";
   curriculums: any = [];
   uploading = false;
+  cvUpload = false;
   showCv = false;
   file!: File;
 
@@ -34,7 +36,9 @@ export class CvComponent{
       this.file = <File>event.target.files[0]
       const reader = new FileReader();
       reader.onload = e => this.photoSelected = reader.result!;
-      reader.readAsDataURL(this.file); 
+      reader.readAsDataURL(this.file);
+      this.successFile = false;
+      this.titleCurriculum = "Curriculum seleccionado" 
     }
   }
 
@@ -51,6 +55,7 @@ export class CvComponent{
     this.userService.sendPhoto(this.file, this.idEmpleado).subscribe(res => {
       this.uploading = !this.uploading;
       this.updateCurriculum();
+      this.successFile = true;
     },
     err => {
       console.error(err)
