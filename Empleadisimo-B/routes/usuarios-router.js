@@ -305,7 +305,7 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 
 // borrar un cv en pdf
 
-router.post('/deleteCV/:idUser', async(req, res) => {
+router.put('/deleteCV/:idUser', async(req, res) => {
     var fp  = req.body.fp
     console.log(fp)
     const arr = []
@@ -328,7 +328,7 @@ router.post('/deleteCV/:idUser', async(req, res) => {
 
             const df = arr1.findIndex( x => x.rutaArchivo === fp) 
             arr1.splice(df,1)
-            fs.unlink(path.resolve(fpd.rutaArchivo))
+             fs.unlink(path.resolve(fpd.rutaArchivo))
 
             usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
                 res.send(error);
@@ -348,24 +348,53 @@ router.post('/deleteCV/:idUser', async(req, res) => {
 //actualizar un cv en pdf
 
 router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) => {
-    const  mimetype = req.file.mimetype;
+    var fp1 = req.body.fp1;
+    const {ntitulo} = req.body;
 
-    if(mimetype !== 'application/pdf'){
-        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
-    }
+    const arr = []
+    const arr1 = []
 
-    const FP = await usuario.findById(req.params.idUser, { curriculums: 1 });
-    if (FP) {
-        await fs.unlink(path.resolve(FP.curriculums));
-    }
-    await usuario.updateOne({ _id: req.params.idUser }, { "curriculums": req.file.path })
-        .then(result => {
-            res.status(200).json({ 'message': 'Curriculum Renovado' });
+    usuario.find({_id: req.params.idUser},{curriculum: 1}).
+    then(result2 => {
+        for (var i = 0; i< result2.length; i++) {
+            arr[i] = result2[i].curriculum; 
+        }
+    
+        
+        for (var i = 0; i< arr[0].length; i++) {
+            arr1[i] = arr[0][i]; 
+        }
+            
+        let date = new Date()
+
+        const day = date.getDate()
+        const month = date.getMonth() + 1
+        const year = date.getFullYear()
+        var fd = '';
+    
+        if(month < 10){
+            fd = `${day}-0${month}-${year}-U`;
+          }else{
+            fd = `${day}-${month}-${year}-U`;
+          }
+
+            /*fpd = arr1.find(o => o.rutaArchivo === fp1) 
+            fpd.titulo = ntitulo;
+            fpd.fecha = fd*/
+            const df = arr1.findIndex( x => x.rutaArchivo === fp1)
+            arr1[df].titulo = ntitulo
+            arr1[df].fecha = fd
+           
+            usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
+                res.send(error);
+                res.end()
+            });
+            res.status(200).json({ 'message': 'Titulo de CV actualizado exitosamente' });
+            //return res.json(arr1);
+        }).catch(error2 => {
+            res.send(error2);
             res.end();
-        }).catch(error => {
-            res.send(error);
-            res.end();
-        });
+        })
 
 })
 
