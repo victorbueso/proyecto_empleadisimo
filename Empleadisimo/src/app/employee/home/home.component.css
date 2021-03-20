@@ -52,3 +52,11 @@ h2{
 .card{
   font-family: 'Raleway medium';
 }
+
+.home-container-employee{
+  background-color: var(--main-color);
+  width: 100% !important;
+  max-width: 100%;
+  padding: 0px;
+  margin: 0px;
+}

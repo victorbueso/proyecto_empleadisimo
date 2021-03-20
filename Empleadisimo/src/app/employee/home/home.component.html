@@ -1,6 +1,9 @@
-  <div class="container home-container-employee">
+  <div class="home-container-employee">
     <app-cv></app-cv>
-    <form style="background-color: #f17300;">
+  </div>
+  
+  <div class="container">
+    <form class="employee-search" style="background-color: #f17300;">
     <div class="form-group" style="margin-bottom: 0rem;">
       <div class="row justify-content-center pb-4">
 
@@ -69,8 +72,8 @@
           </div>
           <div class="d-flex justify-content-end">
             <button
-              [ngClass]="{'non-apply-button': !publicacion['aplico'], 'apply-button': publicacion['aplico']}" class="btn mr-3"
-              (click)="updateApplyPostUser(publicacion._id, i)">Aplicar
+              [ngClass]="{'non-apply-button': !publicacion['aplico']}" [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
+              (click)="updateApplyPostUser(publicacion._id, i)" (click)="obtenerPublicaciones()">Aplicar
             </button>
             <a class="btn btn-primary">Ver más</a>
           </div>

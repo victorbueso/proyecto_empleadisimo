@@ -147,3 +147,16 @@
     background: #f17300;
     border-radius: 5px;
 }
+
+.titles-container{
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+}
+
+.image-login {
+    height: auto;
+    width: 100px;
+    margin: auto;
+}

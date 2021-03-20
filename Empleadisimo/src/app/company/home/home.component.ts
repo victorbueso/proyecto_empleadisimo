@@ -62,6 +62,8 @@ export class HomeComponent implements OnInit {
       console.log(result);
     }, error => {
       console.log(error);
+
+      this.SuccessfullMessage()
     })
   }
 
@@ -169,7 +171,7 @@ export class HomeComponent implements OnInit {
       this.guardarNotificacion(data);
       //console.log(res);
       this.formPublications.reset(this.formPublications);
-      this._modal.dismissAll();
+      //this._modal.dismissAll();
       this.ngOnInit();
     }, error => {
       console.log(error);

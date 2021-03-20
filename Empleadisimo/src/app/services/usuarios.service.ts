@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵangular_packages_router_router_j } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -34,7 +34,7 @@ export class UsuariosService {
   updateInfo(userInfo:any, idUser:string):Observable<any>{
     return this.httpClient.put(`${this.url}/updateEmployee/${idUser}`, userInfo)
   }
-  
+
   updateInfoCompany(data:any,idUser:string):Observable<any>{
     return this.httpClient.post(`${this.url}/updateCompany/${idUser}`,data);
   }
@@ -83,9 +83,19 @@ export class UsuariosService {
     const fd = new FormData();
     fd.append('curriculums', cv);
     fd.append('titulo', "Este es el titulo")
-    console.log(fd)
     return this.httpClient.post(`http://localhost:3000/usuarios/CV/${idUser}`, fd);
 
+  }
+
+  obtainMyCurriculums(idUser: string){
+    return this.httpClient.get(`http://localhost:3000/usuarios/CVinfo/${idUser}`);
+  }
+
+  deleteCurriculum(file: string, idUser: string){
+    var data = {
+      'fp': file
+    }
+    return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, data);
   }
 
   isEmployeeLogged(){
@@ -94,5 +104,8 @@ export class UsuariosService {
     }
     return false
   }
+
+  sendEmailVerification(data: any): Observable<any> {
+    return this.httpClient.post(`${this.url}/verifyemail`, data);
+  }
 }
- 

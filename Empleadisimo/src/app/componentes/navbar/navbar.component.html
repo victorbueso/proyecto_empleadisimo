@@ -6,14 +6,14 @@
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
-   
+
     <!--Nav general -->
     <div class="collapse navbar-collapse justify-content-end" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!this.usuarioService.loggedIn()">
         <form class="form-inline my-2 my-lg-0" style="color:white">
 
             <button  class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
             <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
-            
+
         </form>
     </div>
 
@@ -57,7 +57,7 @@
                             </a>
                         </div>
                         <div class="custom-scrollbar">
-                            <div *ngIf="notificacionesC.length == 0"> 
+                            <div *ngIf="notificacionesC.length == 0">
                                 <div class="d-flex justify-content-center">
                                     No hay notificaciones :c
                                 </div>
@@ -88,7 +88,7 @@
                       </div>
                   </div>
                 </div>
-            </div>          
+            </div>
             <div>
                 <div ngbDropdown class="d-inline-block">
                   <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
@@ -108,7 +108,7 @@
                 </div>
               </div>
           </div>
-          
+
         </form>
       </div>
 
@@ -135,7 +135,7 @@
                             </a>
                         </div>
                         <div class="custom-scrollbar">
-                            <div *ngIf="notificaciones.length == 0"> 
+                            <div *ngIf="notificaciones.length == 0">
                                 <div class="d-flex justify-content-center">
                                     No hay notificaciones :c
                                 </div>
@@ -166,7 +166,7 @@
                       </div>
                   </div>
                 </div>
-            </div>     
+            </div>
             <div>
                 <div ngbDropdown class="d-inline-block">
                   <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
@@ -184,7 +184,7 @@
                 </div>
               </div>
           </div>
-          
+
         </form>
     </div>
 </nav>
@@ -199,14 +199,14 @@
             <li [ngbNavItem]="0" style="width:50%">
                 <a ngbNavLink class="nav-login">Empleador</a>
                 <ng-template ngbNavContent>
-                    
+
                 </ng-template>
             </li>
             <li [ngbNavItem]="1" style="width:50%">
                 <a ngbNavLink class="nav-login">Empleado</a>
                 <ng-template ngbNavContent>
-                    
-                </ng-template> 
+
+                </ng-template>
             </li>
         </ul>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>-->
@@ -225,7 +225,7 @@
                         </div>
                         <input formControlName="lgCorreo" [ngClass]="{'input-error': (lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched))}" type="correo"  class="form-control">
                         <div *ngIf="lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched)" class="error">
-                            <span *ngIf="lgCorreo?.errors?.required">Error el campo es obligatorio</span>
+                            <span *ngIf="lgCorreo?.errors?.required">Error, el campo es obligatorio</span>
                             <span *ngIf="lgCorreo?.errors?.email">Correo inválido</span>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                         </div>
                         <input formControlName="lgPassword" [ngClass]="{'input-error': (lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched))}" type="password"  class="form-control">
                         <div *ngIf="lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched)" class="error">
-                          <span *ngIf="lgPassword?.errors?.required">Error el campo es obligatorio</span>
+                          <span *ngIf="lgPassword?.errors?.required">Error, el campo es obligatorio</span>
                           <span *ngIf="lgPassword?.errors?.email">contraseña invalida</span>
                         </div>
                         <div class="d-flex justify-content-end mt-1">
@@ -243,7 +243,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button class="btn btn-outline-secondary" (click)="buttonLogin()" >Iniciar Sesion</button><br>
+                        <button class="btn btn-outline-secondary" (click)="buttonLogin()" >Iniciar Sesión</button><br>
                         <div class="d-flex text-align-left mt-3 mb-2">
                             <span>¿No tienes cuenta? <a (click)="open(registro)" class="register-link">Regístrate</a></span>
                         </div>
@@ -279,7 +279,7 @@
             <ngb-alert type="danger" *ngIf="errorRegistro == true">{{message}}</ngb-alert>
             <!--
             <div class="row alert alert-success" *ngIf="registroSuccess">
-               
+
               </div>-->
             <div class="row" >
                 <img src="assets/LOGOS/LOGO_AZUL.png"  class="image-login mx-auto" alt="">
@@ -295,15 +295,15 @@
                     <label for="">Correo Electrónico:</label>
                     <input formControlName="rgCorreo" [ngClass]="{'input-error': (rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched))}" class="form-control" type="text" required>
                     <div *ngIf="rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched)" class="error">
-                        <span *ngIf="rgCorreo?.errors?.required">Error el campo es obligatorio</span>
+                        <span *ngIf="rgCorreo?.errors?.required">Error, el campo es obligatorio</span>
                         <span *ngIf="rgCorreo?.errors?.email">Debe ingresar un email</span>
                     </div>
                 </div>
                 <div class="row my-2 ml-5" style="width: 80%;">
-                    <label for="">Contrasena:</label>
-                    <input formControlName="rgPassword" class="form-control" type="password" name="">
+                    <label for="">Contraseña:</label>
+                    <input formControlName="rgPassword" [ngClass]="{'input-error': (rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched))}" class="form-control" type="password" name="">
                     <div *ngIf="rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched)" class="error">
-                        <span *ngIf="rgPassword?.errors?.required">Error el campo es obligatorio</span>
+                        <span *ngIf="rgPassword?.errors?.required">Error, el campo es obligatorio</span>
                         <span *ngIf="rgPassword?.errors?.minLength">Debe tener un mínimo de 6 caracteres</span>
                     </div>
                 </div>
@@ -317,7 +317,7 @@
 
             </form>
             <div class="row ml-5" style="width: 80%;">
-                <p>¿Ya tienes cuenta?<a class="btn" style="color: #f17300;">Iniciar Sesión</a></p>
+                <p>¿Ya tienes cuenta?<a class="btn" (click)="open(login)" style="color: #f17300;">Iniciar Sesión</a></p>
             </div>
 
         </div>

@@ -9,6 +9,8 @@ var fs = require('fs-extra');
 const uuid = require("uuid");
 const mongoose = require('mongoose');
 const usuarios = require('../models/usuarios');
+const nodemailer = require('nodemailer');
+const email = require('../modules/email');
 
 
 
@@ -542,6 +544,14 @@ router.get('/notifications/:idUser', function(req, res){
             res.end();
         })
     })
+
+/* Enviar correo electrónico de verificación a usuario que se acaba de registrar */
+router.post('/verifyemail', function(req, res) {
+    let correo = req.body;
+    email(correo);
+    res.status(200).send();
+    res.end();
+});
 
 
 module.exports = router;

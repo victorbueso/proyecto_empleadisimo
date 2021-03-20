@@ -1,34 +1,4 @@
-<!-- Sidebar -->
 <div class="wrapper fixed-left">
-
-  <!--
-  <nav id="sidebar">
-    <div class="sidebar-header">
-      <h3>
-        <a href="" class="d-flex items-sidebar" style="text-decoration: none; color:white"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-briefcase"></i></div>Empresa</a>
-      </h3>
-
-    </div>
-
-    <ul class="list-unstyled components">
-      <li>
-        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-poll-h"></i></div>Publicaciones</a>
-      </li>
-      <li>
-        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-city"></i></div>Sucursales</a>
-      </li>
-      <li>
-        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="far fa-id-card"></i></div>Rubros</a>
-      </li>
-      <li>
-        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-file-contract"></i></div>Contratos</a>
-      </li>
-      <li>
-        <a href="" class="d-flex items-sidebar"><div style="width: 50px; font-size: 1.5rem;"><i class="fas fa-cogs"></i></div>Configuraciones</a>
-      </li>
-    </ul>
-  </nav>-->
-
   <div id="content">
     <div style="padding: 0px">
       <div class="card-body p-0">
@@ -41,7 +11,6 @@
       <hr>
   </div>
 
-<!-- Mostrar el historial de publicaciones -->
     <div *ngIf="publicaciones.length==0" class="d-flex text-align-center" style="font-family: 'Raleway semibold';"> No has realizado ninguna publicación :( </div>
     <div *ngIf="publicaciones.length!=0">
       <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px; font-family: 'Raleway medium';">
@@ -68,10 +37,10 @@
 </div>
 
 <!-- Pantalla modal con formulario para crear publicaciones -->
-<ng-template #contenido let-c="close" let-d="dismiss">
+<ng-template #contenido let-modal>
   <div class="modal-header">
     <h2 class="modal-title mb-0">Nueva Publicación</h2>
-    <button class="close" aria-label="close" type="button" (click)="d()" (click)="limpiar()">
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()" (click)="limpiar()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -135,7 +104,7 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light mr-2" (click)="c()" (click)="limpiar()">Cancelar</button>
+    <button type="button" class="btn btn-light mr-2" (click)="modal.close()" (click)="limpiar()">Cancelar</button>
     <button [disabled]="formPublications.invalid" type="submit" class="btn btn-primary" (click)="posting()" (click)="SuccessfullMessage()" (click)="limpiar()">
       Publicar
     </button>

@@ -1,0 +1,121 @@
+
+footer {
+    background-color: var(--main-color);
+    color: white;
+    padding: 3% 5%;
+    width: 100%;
+    margin: 0px;
+}
+
+.link-foo {
+    color: white !important;
+    cursor: pointer;
+}
+
+.link-foo:hover {
+    text-decoration: underline;
+}
+
+.title-footer {
+    border-bottom: 1px solid white;
+    font-family: "Ramabhadra";
+    display: inline-block;
+    margin-bottom: .5em;
+}
+
+footer ul {
+    font-family: "Raleway medium";
+    list-style-type: none;
+    padding: 10px 0px;
+    font-size: .9em;
+}
+
+.ff-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.ff-list {
+    flex-grow: 1;
+}
+
+.sf-list {
+    flex-grow: 1;
+}
+
+.tf-list {
+    flex-grow: 2;
+}
+
+.df-list {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 1;
+}
+
+.follow {
+    color: #FFFCFCB8;
+}
+
+.svg-socialm {
+    height: 25px;
+    width: 25px;
+}
+
+.email-list {
+    width: 100%;
+}
+
+.df-logo img {
+    width: 100px;
+    height: 70px;
+}
+
+.container-media {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.container-media li {
+    margin: .4em;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.ffr {
+    display: none;
+    color: white;
+    align-content: center;
+    text-align: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.footer-items a {
+    padding: 5px;
+    display: inline-block;
+}
+
+/*links-footer*/
+
+.container-links {
+    height: calc(100vh - 56px);
+    background-color: var(--main-color);
+}
+
+.orange-figure {
+    fill: transparent;
+    stroke: #F17300;
+    stroke-width: 3;
+}
+
+.text-footer {
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 1% 5%;
+    font-family: 'Raleway medium';
+}
