@@ -70,13 +70,7 @@ export class UsuariosService {
     return !!this.cookieService.get('token');
   }
 
-  isCompanyLogged(){
-    if(this.cookieService.get('tipo')=='1'){
-      return true
-    }
 
-    return false
-  }
 
   sendPhoto(cv: File, idUser: string){
     
@@ -98,11 +92,26 @@ export class UsuariosService {
     return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, data);
   }
 
+  isCompanyLogged(){
+    if(this.cookieService.get('tipo')=='1'){
+      return true
+    }
+
+    return false
+  }
+  
   isEmployeeLogged(){
     if(this.cookieService.get('tipo')=='0'){
       return true
     }
     return false
+  }
+
+  isAdminLogged(){
+    if(this.cookieService.get('tipo')=='2'){
+      return true
+    }
+    return false;
   }
 
   sendEmailVerification(data: any): Observable<any> {

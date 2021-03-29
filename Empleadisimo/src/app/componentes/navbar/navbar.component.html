@@ -3,7 +3,7 @@
         <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
         <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
     </a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" *ngIf="!this.usuarioService.isAdminLogged()">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -182,6 +182,20 @@
                     <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
                   </div>
                 </div>
+              </div>
+          </div>
+
+        </form>
+    </div>
+
+    <!--Nav de admin-->
+    <div style="display:contents" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <button class="btn btn-outline-primary" style="font-size: 1rem;" (click)="buttonLogout()">
+                    <fa-icon [icon]="faSignOutAlt"></fa-icon>
+                    Cerrar sesión</button>
               </div>
           </div>
 
