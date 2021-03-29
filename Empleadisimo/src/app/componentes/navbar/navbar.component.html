@@ -1,5 +1,13 @@
 <nav #nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+    <button class="navbar-toggler" type="button" (click)="showSidebar()" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <span class="navbar-toggler-icon" style="color: white;">
+        </span>
+      </button>
+    <a class="navbar-brand navbar-brand-admin" href="#" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
+        <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
+    </a>
+    <a class="navbar-brand" href="#" *ngIf="!this.usuarioService.isAdminLogged()">
         <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
         <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
     </a>
@@ -209,21 +217,6 @@
 <!--Modal del login-->
 <ng-template #login let-modal>
     <div class="modal-body">
-     <!--   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-            <li [ngbNavItem]="0" style="width:50%">
-                <a ngbNavLink class="nav-login">Empleador</a>
-                <ng-template ngbNavContent>
-
-                </ng-template>
-            </li>
-            <li [ngbNavItem]="1" style="width:50%">
-                <a ngbNavLink class="nav-login">Empleado</a>
-                <ng-template ngbNavContent>
-
-                </ng-template>
-            </li>
-        </ul>
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>-->
         <div class="container-empleador">
             <ngb-alert type="danger" *ngIf="errorLogin == true">{{message}}</ngb-alert>
             <div class="titles-container">

@@ -174,7 +174,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeido =+ 1;
+            this.noLeido = this.noLeido + 1;
           }
         })
       } else if(this.cookieService.get('tipo')=='1'){
@@ -185,7 +185,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificacionesC.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeidoC =+ 1;
+            this.noLeidoC = this.noLeidoC + 1;
           }
         })
       }
@@ -366,5 +366,9 @@ export class NavbarComponent implements OnInit{
     }, error => {
       console.log(error);
     })
+  }
+
+  showSidebar(){
+    this.helperService.sidebarEvent.emit();
   }
 }
