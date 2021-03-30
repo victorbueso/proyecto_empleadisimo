@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
-  private url="http://localhost:3000/usuarios"
+  private url = "http://localhost:3000/usuarios"
+  chatInformation = {};
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
@@ -108,4 +109,9 @@ export class UsuariosService {
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
+  
+  getCompany(idEmpresa: string):Observable<any>{
+    return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);
+  }
+
 }
