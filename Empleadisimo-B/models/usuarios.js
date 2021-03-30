@@ -16,7 +16,8 @@ var schema = new mongoose.Schema({
     sucursales:Array,
     rubros: Array,
     fechaFundacion: String,
-    notificaciones: Array
+    notificaciones: Array,
+    estado: String
 });
 
 module.exports = mongoose.model('usuarios', schema);

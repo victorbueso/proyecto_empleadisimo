@@ -67,7 +67,8 @@ router.post('/', async function(req, res) {
         sucursales: [],
         rubros: [],
         fechaFundacion: null,
-        notificaciones: []
+        notificaciones: [],
+        estado : 'activo'
     });
 
     userRouter.save().then(result => {
@@ -533,5 +534,42 @@ router.get('/admin/all', function(req, res) {
     });
 });
 
+/* Registro de admins */
+router.post('/admin/newAdmin', async function(req, res) {
+    const correo = req.body.rgCorreo;
+    const hash = await bcrypt.hashSync(req.body.rgPassword, 10)
+    const user = await usuario.findOne({ 'correo': correo });
+
+    if (user != null) {
+        return res.status(401).json({ "message": "Correo en uso" });
+    }
+
+    let userRouter = new usuario({
+        nombreCompleto: req.body.rgNombre,
+        correo: req.body.rgCorreo,
+        password: hash,
+        profesion: [],
+        tipoUsuario: 2, //Usuario: 0, Empresa: 1, Administrador: 2
+        fechaNacimiento: null,
+        genero: 1, //Masculino: 1, Femenino: 0
+        rating: [], //{pais: '', departamento: '', ciudad: ''}
+        curriculum: [], //[{idCV: '', nombreCV: '', fechaCreacion: ''}]    
+        fotoPerfil: '',
+        medioPago: [],
+        sucursales: [],
+        rubros: [],
+        fechaFundacion: null,
+        notificaciones: [],
+        estado : 'activo'
+    });
+
+    userRouter.save().then( () => {
+        res.status(200).json({message : 'Nuevo administrador agregado correctamente.'});
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
 
 module.exports = router;

@@ -121,4 +121,8 @@ export class UsuariosService {
   getAdmins() :Observable<any> {
     return this.httpClient.get(`${this.url}/admin/all`);
   }
+
+  newAdmin(data:any):Observable<any>{
+    return this.httpClient.post(`${this.url}/admin/newAdmin`, data);
+  }
 }
