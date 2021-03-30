@@ -117,4 +117,8 @@ export class UsuariosService {
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
+
+  getAdmins() :Observable<any> {
+    return this.httpClient.get(`${this.url}/admin/all`);
+  }
 }

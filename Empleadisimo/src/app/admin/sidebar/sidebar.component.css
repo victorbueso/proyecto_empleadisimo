@@ -35,6 +35,10 @@
     font-size: 2rem;
 }
 
+li:hover{
+    cursor: pointer;
+}
+
 .navbar-brand{
     margin-left: 1rem;
 }

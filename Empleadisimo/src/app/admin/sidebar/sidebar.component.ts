@@ -30,7 +30,6 @@ export class SidebarComponent implements OnInit {
     this.usuariosService.getUser(this.cookiesService.get('idUser'))
     .subscribe( res => {
       this.usuarioLoggeado = res;
-      console.log(this.usuarioLoggeado)
     }, error => console.log(error));
   }
 
