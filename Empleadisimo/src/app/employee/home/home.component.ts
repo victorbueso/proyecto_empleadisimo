@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ChatService } from "../../services/chat.service";
 
 
 @Component({
@@ -45,7 +46,8 @@ export class HomeComponent implements OnInit {
               private cookies: CookieService,
               private usuariosService : UsuariosService,
               private socketService : SocketService,
-              private router: Router) {
+              private router: Router,
+              private chatService: ChatService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false; 
     this.socketService.listen("connect").subscribe(
@@ -125,11 +127,7 @@ export class HomeComponent implements OnInit {
   }
 
   chat(publication:any){
-    console.log(publication)
-    this.usuariosService.getCompany(publication['idEmpresa']).subscribe(
-      (res) => console.log(res),
-      (err) => console.error(err)
-    )
+    this.chatService.idChat = publication.idEmpresa
     this.router.navigate(['chat']);
   }
 

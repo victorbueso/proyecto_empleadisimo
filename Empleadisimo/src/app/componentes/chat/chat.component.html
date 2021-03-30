@@ -1,9 +1,9 @@
 <div class="chat-container">
     <div class="contact-container">
 
-        <div class="contact pointer">
+        <div *ngIf="informationChat" class="contact pointer">
             <div class="contact-profile">
-                <img class="contact-pp" src="../../../assets/img/1.jpg">
+                <img class="contact-pp" [src]="informationChat['fotoPerfil']">
             </div>
             <div class="information-contact">
                 <span>Lorem ipsum.</span>

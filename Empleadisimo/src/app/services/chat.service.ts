@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http'
 export class ChatService {
 
   url = "http://localhost:3000/usuarios";
-
+  idChat = ""; 
 
   constructor(
     private httpClient: HttpClient
