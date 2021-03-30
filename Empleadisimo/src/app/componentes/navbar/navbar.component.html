@@ -1,9 +1,17 @@
 <nav #nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+    <button class="navbar-toggler" type="button" (click)="showSidebar()" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <span class="navbar-toggler-icon" style="color: white;">
+        </span>
+      </button>
+    <a class="navbar-brand navbar-brand-admin" href="#" *ngIf="!!this.usuarioService.isAdminLogged()">
         <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
         <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
     </a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+    <a class="navbar-brand" href="#" *ngIf="!this.usuarioService.isAdminLogged()">
+        <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
+        <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" *ngIf="!this.usuarioService.isAdminLogged()">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -187,6 +195,20 @@
 
         </form>
     </div>
+
+    <!--Nav de admin-->
+    <div style="display:contents" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <button class="btn btn-outline-primary" style="font-size: 1rem;" (click)="buttonLogout()">
+                    <fa-icon [icon]="faSignOutAlt"></fa-icon>
+                    Cerrar sesión</button>
+              </div>
+          </div>
+
+        </form>
+    </div>
 </nav>
 
 
@@ -195,27 +217,12 @@
 <!--Modal del login-->
 <ng-template #login let-modal>
     <div class="modal-body">
-     <!--   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-            <li [ngbNavItem]="0" style="width:50%">
-                <a ngbNavLink class="nav-login">Empleador</a>
-                <ng-template ngbNavContent>
-
-                </ng-template>
-            </li>
-            <li [ngbNavItem]="1" style="width:50%">
-                <a ngbNavLink class="nav-login">Empleado</a>
-                <ng-template ngbNavContent>
-
-                </ng-template>
-            </li>
-        </ul>
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>-->
         <div class="container-empleador">
             <ngb-alert type="danger" *ngIf="errorLogin == true">{{message}}</ngb-alert>
             <div class="titles-container">
                 <img class="image-login" src="../../../assets/LOGOS/LOGO_AZUL.png">
-                <h1 style="font-family: 'Ramabhadra';">Bienvenido</h1>
-                <h4>Ingresa a tu cuenta</h4>
+                <h1 style="font-family: 'Ramabhadra'; color:#054a91">Bienvenido</h1>
+                <h4 style="color:#054a91">Ingresa a tu cuenta</h4>
             </div>
             <div class="form-container">
                 <form [formGroup]="formularioLogin" class="form-container mr-5 ml-5">
@@ -236,14 +243,16 @@
                         <input formControlName="lgPassword" [ngClass]="{'input-error': (lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched))}" type="password"  class="form-control">
                         <div *ngIf="lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched)" class="error">
                           <span *ngIf="lgPassword?.errors?.required">Error, el campo es obligatorio</span>
-                          <span *ngIf="lgPassword?.errors?.email">contraseña invalida</span>
+                          <span *ngIf="lgPassword?.errors?.email">Contraseña inválida</span>
                         </div>
                         <div class="d-flex justify-content-end mt-1">
                             <a href=""><span>¿Olvidaste tu contraseña?</span></a>
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button class="btn btn-outline-secondary" (click)="buttonLogin()" >Iniciar Sesión</button><br>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-outline-secondary justify-content-center" (click)="buttonLogin()" >Iniciar Sesión</button><br>
+                        </div>
                         <div class="d-flex text-align-left mt-3 mb-2">
                             <span>¿No tienes cuenta? <a (click)="open(registro)" class="register-link">Regístrate</a></span>
                         </div>

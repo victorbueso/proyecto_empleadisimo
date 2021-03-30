@@ -517,4 +517,21 @@ router.post('/verifyemail', function(req, res) {
     res.end();
 });
 
+/* Para sección de admins */
+
+/* Obtener todos los admins */
+
+router.get('/admin/all', function(req, res) {
+    usuario.find({
+        tipoUsuario: 2
+    }, {}).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
+
+
 module.exports = router;

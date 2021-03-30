@@ -7,6 +7,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
 import { SocketService } from 'src/app/services/socket.service';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class NavbarComponent implements OnInit{
 
   faBell = farBell;
   faCommentDots = farCommentDots;
+  faSignOutAlt = faSignOutAlt;
 
   public successRegistro:Boolean = false;
   public errorRegistro: Boolean = false;
@@ -172,7 +174,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeido =+ 1;
+            this.noLeido = this.noLeido + 1;
           }
         })
       } else if(this.cookieService.get('tipo')=='1'){
@@ -183,7 +185,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificacionesC.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeidoC =+ 1;
+            this.noLeidoC = this.noLeidoC + 1;
           }
         })
       }
@@ -221,6 +223,9 @@ export class NavbarComponent implements OnInit{
           this.ngOnInit();
         } else if (result.tipo == 1){
           this.router.navigate(['company']);
+          this.ngOnInit();
+        } else if( result.tipo == 2){
+          this.router.navigate(['admin']);
           this.ngOnInit();
         }
         this.modalService.dismissAll();
@@ -361,5 +366,9 @@ export class NavbarComponent implements OnInit{
     }, error => {
       console.log(error);
     })
+  }
+
+  showSidebar(){
+    this.helperService.sidebarEvent.emit();
   }
 }

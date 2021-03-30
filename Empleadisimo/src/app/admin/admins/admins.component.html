@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xl-6 d-flex mt-auto">
+            <h2>Administradores</h2>
+        </div>
+        <div class="col-xl-6 d-flex justify-content-end">
+            <button class="btn btn-outline-danger" (click)="open(newAdmin)">
+                <fa-icon [icon]="faUserPlus"></fa-icon>
+                Agregar admin</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <table class="col-xl-11 table mr-auto ml-auto">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo electrónico</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let admin of admins; index as i">
+                <tr>
+                    <td>{{admin.nombreCompleto}}</td>
+                    <td>{{admin.correo}}</td>
+                    <td>{{admin.estado}}</td>
+                    <div class="d-flex justify-content-end" *ngIf="admin.estado != 'default'">
+                        <td class="option-btn"> 
+                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="editAdmin(i)"> 
+                                <fa-icon class="icon" [icon]="faUserEdit" ></fa-icon> 
+                            </button> 
+                        </td>
+                        <td class="option-btn" *ngIf="admin.estado == 'bloqueado'"> 
+                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="unblockAdmin(i)"> 
+                                <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
+                            </button> 
+                        </td>
+                        <td class="option-btn" *ngIf="admin.estado == 'activo'"> 
+                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="blockAdmin(i)"> 
+                                <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
+                            </button> 
+                        </td>
+                        <td class="option-btn"> 
+                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="deleteAdmin(i)"> 
+                                <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
+                            </button> 
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #newAdmin let-modal>
+    <div class="modal-body">
+        <h3>Nuevo administrador</h3>
+        <hr>
+      <form>
+        <div class="form-group">
+            <label class="col-form-label">Nombre</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="addAdmin()">Agregar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
