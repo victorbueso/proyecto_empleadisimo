@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   faChartLine = faChartLine;
   public isSidebarCollapsed : Boolean = true;
   public usuarioLoggeado : any = [];
-  public regionVisible : String = 'admins';
+  public regionVisible : String = 'home';
 
   constructor(private usuariosService:UsuariosService,
     private cookiesService:CookieService,
