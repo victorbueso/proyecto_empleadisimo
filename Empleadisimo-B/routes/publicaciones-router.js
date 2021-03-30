@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var publicaciones = require('../models/publicaciones');
 
 //Crear una publicacion
-router.post('/', function(req, res){
+router.post('/', function(req, res) {
     var io = req.app.get('socketio');
     let publicationsRouter = new publicaciones({
         titulo: req.body.titulo,
@@ -24,7 +24,7 @@ router.post('/', function(req, res){
         },*/
         profesion: req.body.profesion,
         //duracionPublicacion: req.body.duracionPublicacion,
-        ubicacion: {                                               //{pais: '', departamento: '', ciudad: ''}
+        ubicacion: { //{pais: '', departamento: '', ciudad: ''}
             pais: req.body.pais,
             departamento: req.body.departamento,
             ciudad: req.body.ciudad,
@@ -36,7 +36,7 @@ router.post('/', function(req, res){
 
     publicationsRouter.save().then(result => {
         res.send(result);
-        io.emit("nuevaPublicacion",result);
+        io.emit("nuevaPublicacion", result);
         res.end();
     }).catch(error => {
         res.send(error);
@@ -45,8 +45,8 @@ router.post('/', function(req, res){
 });
 
 //Obtener una publicacion
-router.get('/:id', function(req,res){
-    publicaciones.find({_id: req.params.id}).then(result => {
+router.get('/:id', function(req, res) {
+    publicaciones.find({ _id: req.params.id }).then(result => {
         res.send(result[0]);
         res.end();
     }).catch(error => {
@@ -56,7 +56,7 @@ router.get('/:id', function(req,res){
 });
 
 //Obtener todas las publicaciones
-router.get('/',function(req,res){
+router.get('/', function(req, res) {
     publicaciones.find().then(result => {
         res.send(result);
         res.end();
@@ -67,12 +67,10 @@ router.get('/',function(req,res){
 });
 
 //Eliminar una publicacion
-router.delete('/:id', function(req,res){
-    publicaciones.remove(
-        {
-            _id: req.params.id
-        }
-    ).then(result => {
+router.delete('/:id', function(req, res) {
+    publicaciones.remove({
+        _id: req.params.id
+    }).then(result => {
         res.send(result);
         res.end();
     }).catch(error => {
@@ -82,14 +80,11 @@ router.delete('/:id', function(req,res){
 });
 
 //Obtener publicaciones de una empresa
-router.get('/posts/:idCompany', function(req, res){
-    
-    publicaciones.find(
-        {
-            idEmpresa:mongoose.Types.ObjectId(req.params.idCompany)
-        },
-        {}
-    ).then(result => { 
+router.get('/posts/:idCompany', function(req, res) {
+
+    publicaciones.find({
+        idEmpresa: mongoose.Types.ObjectId(req.params.idCompany)
+    }, {}).then(result => {
         res.send(result);
         res.end();
     }).catch(error => {
@@ -99,25 +94,22 @@ router.get('/posts/:idCompany', function(req, res){
 });
 
 //Actualizar una publicación a la que ha aplicado un usuario
-router.put('/', async (req, res)=>{
+router.put('/', async(req, res) => {
     //var io = req.app.get('socketio');
     const publicacion = await publicaciones.findOne({
         _id: req.body.idPublicacion
     })
 
-    
-    publicaciones.updateOne(
-        {
-            _id: req.body.idPublicacion
-        },
-        {
-            $addToSet: {
-                usuarios: req.body.idEmpleado
-            }
+
+    publicaciones.updateOne({
+        _id: req.body.idPublicacion
+    }, {
+        $addToSet: {
+            usuarios: req.body.idEmpleado
         }
-    ).then( () => {
+    }).then(() => {
         //io.emit(publicacion.idEmpresa,{idEmpresa : publicacion.idEmpresa, idPublicacion: req.body.idPublicacion, titulo : publicacion.titulo});
-        res.json({idEmpresa : publicacion.idEmpresa, titulo: publicacion.titulo});
+        res.json({ idEmpresa: publicacion.idEmpresa, titulo: publicacion.titulo });
         res.end();
     }).catch(error => {
         res.send(error);
