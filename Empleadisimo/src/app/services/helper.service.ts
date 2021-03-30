@@ -6,6 +6,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class HelperService {
 
   evento = new EventEmitter();
+  sidebarEvent = new EventEmitter();
 
   constructor() { }
 }

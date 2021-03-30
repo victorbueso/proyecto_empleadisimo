@@ -12,7 +12,17 @@ const usuarios = require('../models/usuarios');
 const nodemailer = require('nodemailer');
 const email = require('../modules/email');
 
+// Router para conseguir la informacion de la compañia. 
 
+router.get("/company/:idEmpresa", async function(req, res) {
+
+    var user = await usuario.findById(req.params.idEmpresa);
+    user.password = ""
+    res.json({
+        user
+    })
+    res.end();
+})
 
 //login user
 router.post("/signin", async(req, res) => {
@@ -57,7 +67,7 @@ router.post('/', async function(req, res) {
         sucursales: [],
         rubros: [],
         fechaFundacion: null,
-        notificaciones : []
+        notificaciones: []
     });
 
     userRouter.save().then(result => {
@@ -78,6 +88,7 @@ router.get('/:idUser', function(req, res) {
     console.log(req.params.idUser);
     usuario.find({ _id: mongoose.Types.ObjectId(req.params.idUser) })
         .then(result => {
+            console.log(result[0])
             res.send(result[0]);
             res.end();
         }).catch(error => {
@@ -269,10 +280,10 @@ router.put('/updatePic/:idUser', upload.single('image'), async(req, res) => {
 
 router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
     const { titulo } = req.body;
-    const  mimetype = req.file.mimetype;
+    const mimetype = req.file.mimetype;
 
-    if(mimetype !== 'application/pdf'){
-        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
+    if (mimetype !== 'application/pdf') {
+        return res.json({ message: 'Archivo no soportado, Solo se permiten archivos pdf', })
     }
 
     let date = new Date()
@@ -282,20 +293,20 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
     const year = date.getFullYear()
     var fd = '';
 
-    if(month < 10){
+    if (month < 10) {
         fd = `${day}-0${month}-${year}`;
-      }else{
+    } else {
         fd = `${day}-${month}-${year}`;
-      }
+    }
 
-    const arrtemp = {titulo: titulo , fecha: fd, rutaArchivo: req.file.path};
-   /* const arr = []
+    const arrtemp = { titulo: titulo, fecha: fd, rutaArchivo: req.file.path };
+    /* const arr = []
 
-    const cvtemp = usuario.find({_id: req.params.idUser},{curriculum: 1})
-    ;(await cvtemp).push*/
-    
+     const cvtemp = usuario.find({_id: req.params.idUser},{curriculum: 1})
+     ;(await cvtemp).push*/
 
-    await usuario.updateOne({ _id: req.params.idUser }, {$push: {curriculum: arrtemp}})
+
+    await usuario.updateOne({ _id: req.params.idUser }, { $push: { curriculum: arrtemp } })
         .then(result => {
             res.status(200).json({ 'message': 'Curriculum en linea' });
             res.end();
@@ -308,52 +319,52 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 // borrar un cv en pdf
 
 router.post('/deleteCV/:idUser', async(req, res) => {
-    var fp  = req.body.fp
+    var fp = req.body.fp
     console.log(fp)
     const arr = []
     const arr1 = []
-    //var fpd
-    
-    usuario.find({_id: req.params.idUser},{curriculum: 1}).
+        //var fpd
+
+    usuario.find({ _id: req.params.idUser }, { curriculum: 1 }).
     then(result2 => {
-        for (var i = 0; i< result2.length; i++) {
-            arr[i] = result2[i].curriculum; 
+        for (var i = 0; i < result2.length; i++) {
+            arr[i] = result2[i].curriculum;
         }
-    
-        
-        for (var i = 0; i< arr[0].length; i++) {
-            arr1[i] = arr[0][i]; 
+
+
+        for (var i = 0; i < arr[0].length; i++) {
+            arr1[i] = arr[0][i];
         }
-            
-            fpd = arr1.find(o => o.rutaArchivo === fp) 
-            
 
-            const df = arr1.findIndex( x => x.rutaArchivo === fp) 
-            arr1.splice(df,1)
-            fs.unlink(path.resolve(fpd.rutaArchivo))
+        fpd = arr1.find(o => o.rutaArchivo === fp)
 
-            usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
-                res.send(error);
-                res.end()
-            });
-            res.status(200).json({ 'message': 'Curriculums removido' });
-            res.end();
-        }).catch(error2 => {
-            res.send(error2);
-            res.end();
-        })
-                    
-        //fs.unlink(path.resolve(fpd.rutaArchivo))
+
+        const df = arr1.findIndex(x => x.rutaArchivo === fp)
+        arr1.splice(df, 1)
+        fs.unlink(path.resolve(fpd.rutaArchivo))
+
+        usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
+            res.send(error);
+            res.end()
+        });
+        res.status(200).json({ 'message': 'Curriculums removido' });
+        res.end();
+    }).catch(error2 => {
+        res.send(error2);
+        res.end();
+    })
+
+    //fs.unlink(path.resolve(fpd.rutaArchivo))
 
 })
 
 //actualizar un cv en pdf
 
 router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) => {
-    const  mimetype = req.file.mimetype;
+    const mimetype = req.file.mimetype;
 
-    if(mimetype !== 'application/pdf'){
-        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
+    if (mimetype !== 'application/pdf') {
+        return res.json({ message: 'Archivo no soportado, Solo se permiten archivos pdf', })
     }
 
     const FP = await usuario.findById(req.params.idUser, { curriculums: 1 });
@@ -374,18 +385,18 @@ router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) =>
 
 // obtener las rutas de los cv del empleado
 
-router.get('/CVinfo/:idUser', async(req, res) =>{
-    usuario.find({_id: req.params.idUser},{curriculum: 1}).
+router.get('/CVinfo/:idUser', async(req, res) => {
+    usuario.find({ _id: req.params.idUser }, { curriculum: 1 }).
     then(result => {
-    const arr = []
-    for (var i = 0; i< result.length; i++) {
-        arr[i] = result[i].curriculum; 
-    }
+        const arr = []
+        for (var i = 0; i < result.length; i++) {
+            arr[i] = result[i].curriculum;
+        }
 
-    const arr1 = []
-    for (var i = 0; i< arr[0].length; i++) {
-        arr1[i] = arr[0][i].rutaArchivo; 
-    }
+        const arr1 = []
+        for (var i = 0; i < arr[0].length; i++) {
+            arr1[i] = arr[0][i].rutaArchivo;
+        }
         /*console.log(arr1.length)
         console.log(arr1.findIndex( x => x.rutaArchivo === "uploads\\f46a165a-0b1a-413c-aec0-98f35f5482f4.pdf"))*/
         return res.json(arr1);
@@ -394,10 +405,8 @@ router.get('/CVinfo/:idUser', async(req, res) =>{
         res.send(error);
         res.end();
     })
-  
+
 })
-
-
 
 router.get('/profilePic/:idUser', function(req, res) {
     console.log('..', req.params.idUser);
@@ -415,20 +424,83 @@ router.get('/profilePic/:idUser', function(req, res) {
     /* res.sendFile(path.join( '..',`${req.params.fileName}`)); */
 });
 
-
 // Notificaciones 
 
 //Obtener todas las notificaciones de un usuario
 
-router.get('/notifications/:idUser', function(req, res){
-    usuarios.find(
-        {
-            _id : req.params.idUser
-        },
-        {
-            notificaciones:true,
+router.get('/notifications/:idUser', function(req, res) {
+        usuarios.find({
+            _id: req.params.idUser
+        }, {
+            notificaciones: true,
+        }).then(result => {
+            res.send(result);
+            res.end();
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    })
+    // Notificación de empleo para todos los empleados
+
+router.put('/notifications/newPost', function(req, res) {
+    usuarios.updateMany({
+        tipoUsuario: 0
+    }, {
+        $push: {
+            "notificaciones": {
+                _id: new mongoose.Types.ObjectId(),
+                idPublicacion: req.body.idPublicacion,
+                titulo: req.body.titulo,
+                fechaPublicacion: req.body.fechaPublicacion,
+                estado: req.body.estado
+            }
         }
-    ).then(result => {
+    }).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+//Agregar notificación a empresa
+router.put('/notifications/newPost/company/:idCompany', function(req, res) {
+        var io = req.app.get('socketio');
+        usuarios.updateOne({
+            _id: req.params.idCompany
+        }, {
+            $push: {
+                "notificaciones": {
+                    _id: new mongoose.Types.ObjectId(),
+                    idPublicacion: req.body.idPublicacion,
+                    titulo: req.body.titulo,
+                    fechaAplicacion: new Date(),
+                    estado: false
+                }
+            }
+        }).then(result => {
+            io.emit(req.params.idCompany, {
+                idPublicacion: req.body.idPublicacion,
+                titulo: req.body.titulo,
+                fechaAplicacion: new Date()
+            });
+            res.send(result);
+            res.end();
+        }).catch(error => {
+            res.send(error);
+            res.end();
+        })
+    })
+    // Cambiar estado de notificaciones a leídas
+router.post('/notifications/read/:idUser', function(req, res) {
+    usuarios.updateMany({
+        _id: req.params.idUser
+    }, {
+        $set: {
+            "notificaciones.$[].estado": true
+        }
+    }).then(result => {
         res.send(result);
         res.end();
     }).catch(error => {
@@ -437,91 +509,28 @@ router.get('/notifications/:idUser', function(req, res){
     })
 })
 
-// Notificación de empleo para todos los empleados
-
-    router.put('/notifications/newPost', function(req, res){
-        usuarios.updateMany(
-            {
-                tipoUsuario: 0
-            },
-            {
-                $push : {
-                    "notificaciones" : {
-                        _id : new mongoose.Types.ObjectId(),
-                        idPublicacion : req.body.idPublicacion,
-                        titulo : req.body.titulo,
-                        fechaPublicacion : req.body.fechaPublicacion,
-                        estado : req.body.estado
-                    }
-                }
-            }
-        ).then(result => {
-            res.send(result);
-            res.end();
-        }).catch(error => {
-            res.send(error);
-            res.end();
-        })
-    });
-
-//Agregar notificación a empresa
-    router.put('/notifications/newPost/company/:idCompany', function(req, res){
-        var io = req.app.get('socketio');
-        usuarios.updateOne(
-            {
-                _id : req.params.idCompany
-            },
-            {
-                $push : {
-                    "notificaciones" : {
-                        _id : new mongoose.Types.ObjectId(),
-                        idPublicacion : req.body.idPublicacion,
-                        titulo : req.body.titulo,
-                        fechaAplicacion : new Date(),
-                        estado: false
-                    }
-                }
-            }
-        ).then(result => {
-            io.emit(req.params.idCompany,{
-                idPublicacion : req.body.idPublicacion,
-                titulo : req.body.titulo,
-                fechaAplicacion : new Date()});
-            res.send(result);
-            res.end();
-        }).catch(error => {
-            res.send(error);
-            res.end();
-        })
-    })
-
-
-// Cambiar estado de notificaciones a leídas
-    router.post('/notifications/read/:idUser', function(req, res){
-        usuarios.updateMany(
-            {
-                _id : req.params.idUser
-            },
-            {
-                $set : {
-                    "notificaciones.$[].estado" : true
-                }
-            }
-        ).then(result => {
-            res.send(result);
-            res.end();
-        }).catch(error => {
-            res.send(error);
-            res.end();
-        })
-    })
-
 /* Enviar correo electrónico de verificación a usuario que se acaba de registrar */
 router.post('/verifyemail', function(req, res) {
     let correo = req.body;
     email(correo);
     res.status(200).send();
     res.end();
+});
+
+/* Para sección de admins */
+
+/* Obtener todos los admins */
+
+router.get('/admin/all', function(req, res) {
+    usuario.find({
+        tipoUsuario: 2
+    }, {}).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
 });
 
 

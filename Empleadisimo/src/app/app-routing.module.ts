@@ -12,9 +12,10 @@ const routes: Routes = [
   { path: '', component:LandingPageComponent },
   { path: 'chat', component: ChatComponent},
   /*{ path: 'update-info', component: UpdateInfoComponent },*/
-  { path: 'employee', loadChildren: () => import('./employee/employee.module').then(m =>m.EmployeeModule), canActivate:[AuthenticationGuard] },
-  { path: 'company', loadChildren: () => import('./company/company.module').then(m =>m.CompanyModule), canActivate:[AuthenticationGuard] },
-  { path: 'verifyaccount/:token/:id', component: VerifyaccountComponent },
+  { path: 'employee', loadChildren: () => import('./employee/employee.module').then(m =>m.EmployeeModule), canActivate:[AuthenticationGuard], data:{role: 'employee'} },
+  { path: 'company', loadChildren: () => import('./company/company.module').then(m =>m.CompanyModule), canActivate:[AuthenticationGuard], data:{role: 'company'} },
+  { path: 'admin', loadChildren: ()=> import ('./admin/admin.module').then(m => m.AdminModule), canActivate:[AuthenticationGuard], data:{role: 'admin'}},
+  { path: 'verifyaccount/:token/:id', component: VerifyaccountComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,28 @@
+.admin{
+    font-family:'Ramabhadra'; 
+    font-size: 2rem; 
+    color: #054A91;
+    animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) zoomIn;
+    animation-delay: 0s;
+}
+
+@keyframes zoomIn {
+    0% {opacity: 0;transform: scale(0.5);}
+    100% {opacity: 1; transform: scale(1);
+    }
+} 
+
+
+@media(max-width: 1150px){
+    img{
+        width: 500px !important;
+        height: 500px !important;
+    }
+}
+
+@media(max-width: 600px){
+    img{
+        width: 350px !important;
+        height: 350px !important;
+    }
+}
