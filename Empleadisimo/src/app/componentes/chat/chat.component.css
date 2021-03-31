@@ -63,7 +63,11 @@
     padding: 0px 7px;
     border-radius: 16px;
     border: 1px solid #0000004a;
-    color: #0000004a;
+    color: black;
+}
+
+.input-message:focus{
+    outline: none;
 }
 
 .messages-container {
@@ -139,4 +143,12 @@
     height: 40px;
     border: none;
     width: 40px;
+}
+
+.send-button:focus{
+    outline: none;
+}
+
+.send-button:hover{
+    background-color: #0b3d71;
 }

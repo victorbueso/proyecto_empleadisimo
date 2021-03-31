@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { UsuariosService } from '../../services/usuarios.service'
 import { SocketService } from '../../services/socket.service';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +16,8 @@ export class ChatComponent implements OnInit {
 
   constructor(private chatService: ChatService,
               private userService: UsuariosService,
-              private socketService: SocketService){
+              private socketService: SocketService,
+              private cookie: CookieService){
     this.getInformationChat();
   }
 
@@ -33,10 +36,14 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sendMessage(){
+  sendMessage(content: String){
+    
     this.socketService.emit('sendMessage', {
-      message: "El usuario esta tratando de enviar algo"
+      idUser: this.cookie.get('idUser'),
+      idCompany: this.informationChat['_id'],
+      content
     })
+  
   }
 
 }

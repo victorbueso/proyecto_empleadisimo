@@ -50,14 +50,11 @@ export class HomeComponent implements OnInit {
               private chatService: ChatService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false; 
-    this.socketService.listen("connect").subscribe(
+    this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
       (res) => {
-        this.socketService.listen("Accept").subscribe(
-          (res) => console.log(res),
-          (err) => console.error(err)
-        );
-      },
-      (err) => console.error()
+        console.log("Se hizo el primer paso")
+        this.socketService.emit("ObtainData", res )  
+      }
     )
   }
 
@@ -68,6 +65,8 @@ export class HomeComponent implements OnInit {
       this.obtenerPublicaciones();
     }, error => console.log(error))
   }
+
+
 
   obtenerPublicaciones(){
     this.publicacionesService.getPosts()

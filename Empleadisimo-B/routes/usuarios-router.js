@@ -47,7 +47,7 @@ router.post('/', async function(req, res) {
     const correo = req.body.correo;
     const hash = await bcrypt.hashSync(req.body.password, 10)
     const user = await usuario.findOne({ 'correo': correo });
-    console.log(user);
+    // console.log(user);
     if (user != null) {
         return res.status(401).json({ "message": "Correo en uso" });
     }
@@ -86,10 +86,10 @@ router.post('/', async function(req, res) {
 
 //Obtener un usuario
 router.get('/:idUser', function(req, res) {
-    console.log(req.params.idUser);
+    // console.log(req.params.idUser);
     usuario.find({ _id: mongoose.Types.ObjectId(req.params.idUser) })
         .then(result => {
-            console.log(result[0])
+            // console.log(result[0])
             res.send(result[0]);
             res.end();
         }).catch(error => {
@@ -206,7 +206,7 @@ function verifyToken(req, res, next) {
     }
 
     const payload = jwt.verify(token, 'secretkey')
-    console.log(payload);
+    // console.log(payload);
     req.userId = payload._id;
     next();
 }
@@ -228,7 +228,7 @@ var upload = multer({ storage: storage })
 // subir una foto de perfil 
 
 router.put('/profilePic/:idUser', upload.single('image'), async(req, res) => {
-    console.log(req.file);
+    // console.log(req.file);
     await usuario.updateOne({ _id: req.params.idUser }, { "fotoPerfil": req.file.path })
         .then(result => {
             res.status(200).json({ 'message': 'Foto de perfil actualizada con exito' });
@@ -321,7 +321,7 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 
 router.post('/deleteCV/:idUser', async(req, res) => {
     var fp = req.body.fp
-    console.log(fp)
+    // console.log(fp)
     const arr = []
     const arr1 = []
         //var fpd
@@ -410,11 +410,10 @@ router.get('/CVinfo/:idUser', async(req, res) => {
 })
 
 router.get('/profilePic/:idUser', function(req, res) {
-    console.log('..', req.params.idUser);
+    // console.log('..', req.params.idUser);
     usuario.findById(req.params.idUser, { fotoPerfil: 1 })
         .then(result => {
-            console.log('hola');
-            console.log(path.join(__dirname, '..', result.fotoPerfil));
+            // console.log(path.join(__dirname, '..', result.fotoPerfil));
             res.sendFile(path.join(__dirname, '..', result.fotoPerfil));
 
         })

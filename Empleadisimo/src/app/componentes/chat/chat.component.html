@@ -35,8 +35,8 @@
                 </div>
             </div>
             <div class="send-message pointer">
-                <input type="text" placeholder="Escriba un mensaje" class="input-message">
-                <button (click) = "sendMessage()" class="send-button" >S</button>
+                <input name="input-message" #inputMessage type="text" placeholder="Escriba un mensaje" class="input-message">
+                <button (click) = "sendMessage(inputMessage.value)" class="send-button" >S</button>
             </div>
         </div>
     </div>

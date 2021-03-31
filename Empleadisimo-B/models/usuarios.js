@@ -17,7 +17,6 @@ var schema = new mongoose.Schema({
     rubros: Array,
     fechaFundacion: String,
     notificaciones: Array,
-    socketiD: String,
     estado: String,
 });
 
