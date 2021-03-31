@@ -9,23 +9,26 @@ io.on('connect', (client) => {
         
         var connectedUser = {
             socketId: client.id,
-            email: data['email']
+            email: data['correo']
         }
         
         user.addUser(connectedUser);
-
+        
     })
     
 
     client.on('sendMessage', (data) => {        
     
         const date = new Date();        
-        user.saveChat(
-            data['content'], 
-            `${ date.getDay() }/${ date.getMonth() }/${ date.getFullYear() }`,
-            `${ date.getHours() }:${ date.getMinutes() }`,
-            data['idUser'],
-            )
+        chatInformation = {
+            idUserE : data.idUser,
+            idUserR : data.idCompany,
+            content : data.content,
+        };
+
+
+        user.saveChat(chatInformation);       
+
 
     })
     

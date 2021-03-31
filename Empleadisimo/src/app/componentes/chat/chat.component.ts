@@ -36,6 +36,18 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  obtainConn(){
+    if(this.userService.imOnline == false){
+      this.userService.obtenerUsuario(this.cookie.get('idUser')).subscribe(
+        (res) => {
+          this.socketService.emit("ObtainData", res )  
+          this.userService.imOnline = true;
+        }
+      )
+    }
+  }
+  
+
   sendMessage(content: String){
     
     this.socketService.emit('sendMessage', {

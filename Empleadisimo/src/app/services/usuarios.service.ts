@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class UsuariosService {
 
   private url = "http://localhost:3000/usuarios"
+  public imOnline = false; 
   chatInformation = {};
 
   constructor(private httpClient:HttpClient,

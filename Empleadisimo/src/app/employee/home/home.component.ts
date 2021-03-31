@@ -50,12 +50,7 @@ export class HomeComponent implements OnInit {
               private chatService: ChatService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false; 
-    this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
-      (res) => {
-        console.log("Se hizo el primer paso")
-        this.socketService.emit("ObtainData", res )  
-      }
-    )
+    this.obtainConn();
   }
 
   ngOnInit(): void {
@@ -66,7 +61,16 @@ export class HomeComponent implements OnInit {
     }, error => console.log(error))
   }
 
-
+  obtainConn(){
+    if(this.usuariosService.imOnline == false){
+      this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
+        (res) => {
+          this.socketService.emit("ObtainData", res )  
+          this.usuariosService.imOnline = true;
+        }
+      )
+    }
+  }
 
   obtenerPublicaciones(){
     this.publicacionesService.getPosts()

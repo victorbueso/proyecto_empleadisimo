@@ -1,6 +1,5 @@
-var message = require('../models/messages');
 var mongoose = require('mongoose');
-
+var chat = require('../models/chat');
 class Users{
 
     constructor(){
@@ -8,6 +7,7 @@ class Users{
     }
 
     addUser(user){
+        this.filterbyEmail(user)
         this.users.push(user)
     }
 
@@ -15,20 +15,31 @@ class Users{
         return this.users;
     }   
 
-    saveChat(content, date, hour, idUser){
+    saveChat(chatInformation){
         
-        let newMessage = new message({
-            content, 
-            date, 
-            hour, 
-            idUser
+        var date = new Date();
+        let newChat = new chat({
+            users : [
+                chatInformation.idUserE,
+                chatInformation.idUserR
+            ],
+            messages : {
+                content: chatInformation.content,
+                date : `${ date.getDay() }/${ date.getMonth() }/${ date.getFullYear() }`,
+                hour : `${ date.getHours() }:${ date.getMinutes() }`,
+                idUser : chatInformation.idUserE
+            }        
         })
 
-        newMessage.save()
+        newChat.save()
             .then( res => { 
             })
             .catch( err => {
             })
+    }
+
+    filterbyEmail(user){
+        this.users = this.users.filter(userC => userC['email'] != user['email']);
     }
 
 }
