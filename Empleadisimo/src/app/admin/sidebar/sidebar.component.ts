@@ -3,7 +3,8 @@ import { faUsersCog, faUsers, faChartLine } from '@fortawesome/free-solid-svg-ic
 import { faHandshake} from '@fortawesome/free-regular-svg-icons';
 import { UsuariosService } from '../../services/usuarios.service';
 import { CookieService } from 'ngx-cookie-service';
-import { HelperService} from '../../services/helper.service'
+import { HelperService} from '../../services/helper.service';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,6 +23,18 @@ export class SidebarComponent implements OnInit {
   constructor(private usuariosService:UsuariosService,
     private cookiesService:CookieService,
     private helperService:HelperService) { }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(e:any){
+    {
+      let element = document.querySelector('.sideMenu');
+      if (window.pageYOffset > 0) {
+        element?.classList.add('sideMenu-scrolled');
+      } else {
+        element?.classList.remove('sideMenu-scrolled');
+      }
+    }
+  } 
 
   ngOnInit(): void {
     this.helperService.sidebarEvent.subscribe( () => {

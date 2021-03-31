@@ -1,3 +1,4 @@
+import { ObserversModule } from '@angular/cdk/observers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵangular_packages_router_router_j } from '@angular/router';
@@ -130,5 +131,13 @@ export class UsuariosService {
 
   newAdmin(data:any):Observable<any>{
     return this.httpClient.post(`${this.url}/admin/newAdmin`, data);
+  }
+
+  updateStatusAdmin(data:any, idUser:string):Observable<any>{
+    return this.httpClient.put(`${this.url}/admin/updateStatus/${idUser}`, data);
+  }
+
+  updateInfoAdmin(data:any, idUser:string):Observable<any>{
+    return this.httpClient.post(`${this.url}/admin/updateInfo/${idUser}`, data);
   }
 }

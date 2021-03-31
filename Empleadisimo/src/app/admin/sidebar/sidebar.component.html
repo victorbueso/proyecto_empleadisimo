@@ -1,5 +1,5 @@
 <div class="wrapper d-flex">
-    <div class="sideMenu bg-dark" [ngClass]="{'show-sidebar': isSidebarCollapsed == false, 'hide-sidebar': isSidebarCollapsed == true }">
+    <div class="sideMenu bg-dark" [ngClass]="{'show-sidebar': isSidebarCollapsed == false, 'hide-sidebar': isSidebarCollapsed == true }" (scroll)="onWindowScroll($event)">
         <div class="sidebar">
           <ul class="navbar-nav">
             <li class="nav-item-custom" *ngIf="usuarioLoggeado.length != 0">

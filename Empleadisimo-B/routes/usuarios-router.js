@@ -572,4 +572,62 @@ router.post('/admin/newAdmin', async function(req, res) {
     });
 });
 
+/* Actualizar estado */
+
+router.put('/admin/updateStatus/:idUser', function (req, res){
+    usuario.updateOne({
+        _id : req.params.idUser
+    },
+    {
+        estado : req.body.estado
+    }).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
+
+/* Actualiza información de admin */
+router.post('/admin/updateInfo/:idUser', async function(req, res) {
+    const correo = req.body.rgCorreo;
+    const hash = await bcrypt.hashSync(req.body.rgPassword, 10)
+    const user = await usuario.findOne({ 'correo': correo });
+
+    if (user != null) {
+        return res.status(401).json({ "message": "Correo en uso" });
+    }
+
+    usuario.updateOne(
+        {
+            _id : req.params.idUser
+        },
+        {
+            nombreCompleto : req.body.rgNombre,
+            correo : req.body.rgCorreo,
+            password : hash
+        }).then( () => {
+            res.status(200).json({message: "Datos actualizados correctamente"});
+            res.end()
+        }).catch( error => {
+            res.send(error);
+            res.end();
+        })
+
+    // let userRouter = new usuario({
+    //     nombreCompleto: req.body.rgNombre,
+    //     correo: req.body.rgCorreo,
+    //     password: hash,
+    // });
+
+    // userRouter.save().then( () => {
+    //     res.status(200).json({message : 'Nuevo administrador agregado correctamente.'});
+    //     res.end();
+    // }).catch(error => {
+    //     res.send(error);
+    //     res.end();
+    // });
+});
+
 module.exports = router;
