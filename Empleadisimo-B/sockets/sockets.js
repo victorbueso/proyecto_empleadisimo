@@ -1,7 +1,4 @@
 const { io } = require('../index');
-
-io.on('connectChat', (client) => {
-
-    console.log("Se conecto");
-
+io.on('connect', (client) => {
+    console.log("Se conecto")
 })
