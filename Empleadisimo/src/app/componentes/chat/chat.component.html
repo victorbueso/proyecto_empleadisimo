@@ -6,7 +6,7 @@
                 <img class="contact-pp" [src]="informationChat['fotoPerfil']">
             </div>
             <div class="information-contact">
-                <span>Lorem ipsum.</span>
+                <span>{{ informationChat['nombreCompleto'] }}</span>
                 <p>Lorem, ipsum dolor.</p>
             </div>
         </div>
@@ -34,7 +34,10 @@
                     </div>
                 </div>
             </div>
-            <input type="text" placeholder="Escriba un mensaje" class="input-message">
+            <div class="send-message pointer">
+                <input type="text" placeholder="Escriba un mensaje" class="input-message">
+                <button (click) = "sendMessage()" class="send-button" >S</button>
+            </div>
         </div>
     </div>
 </div>

@@ -59,7 +59,7 @@
     padding: 0px;
     height: 40px;
     margin: 0px;
-    width: 100%;
+    width: calc(100% - 40px);
     padding: 0px 7px;
     border-radius: 16px;
     border: 1px solid #0000004a;
@@ -124,4 +124,19 @@
 .information-contact p {
     padding: 0px;
     margin: 0px;
+}
+
+.send-message{
+    display: flex;
+    justify-content: center;
+}
+
+.send-button{
+    background-color: var(--main-color);
+    border-radius: 50%;
+    margin: 0px 4px;
+    color: white;
+    height: 40px;
+    border: none;
+    width: 40px;
 }

@@ -52,7 +52,6 @@ export class HomeComponent implements OnInit {
     config.showNavigationIndicators = false; 
     this.socketService.listen("connect").subscribe(
       (res) => {
-        console.log("Se esta conectado")
         this.socketService.listen("Accept").subscribe(
           (res) => console.log(res),
           (err) => console.error(err)
