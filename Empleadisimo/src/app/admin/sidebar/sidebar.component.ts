@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsersCog, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faUsersCog, faUsers, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faHandshake} from '@fortawesome/free-regular-svg-icons';
 import { UsuariosService } from '../../services/usuarios.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   faUsersCog = faUsersCog;
   farHandshake = faHandshake;
   faUsers = faUsers;
+  faChartLine = faChartLine;
   public isSidebarCollapsed : Boolean = true;
   public usuarioLoggeado : any = [];
   public regionVisible : String = 'home';

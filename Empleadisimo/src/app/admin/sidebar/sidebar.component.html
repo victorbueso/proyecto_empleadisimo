@@ -24,6 +24,20 @@
                    
             </li>
             <div class="dropdown-divider"></div>
+            <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'dashboard'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'dashboard'}">
+                <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                  <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
+                      <div class="row d-flex">
+                          <div class="icon mr-auto ml-auto">
+                              <fa-icon [icon]="faChartLine"></fa-icon>
+                          </div>
+                          <div class="col-12 text-center">
+                              <span class="text">Dashboard</span>
+                          </div>
+                      </div>
+                  </a>
+                </div>
+            </li>
               <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'admins'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'admins'}">
                   <div class="d-flex" style="padding-right: 20px; width: 100%;">
                     <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
@@ -74,6 +88,9 @@
             <div class="row mr-auto">
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'home', 'd-none': regionVisible!='home'}">
                     <app-home></app-home>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'dashboard', 'd-none': regionVisible!='dashboard'}">
+                    <app-dashboard></app-dashboard>
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'admins', 'd-none': regionVisible!='admins'}">
                     <app-admins></app-admins>
