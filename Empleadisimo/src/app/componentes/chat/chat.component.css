@@ -1,5 +1,5 @@
 .navbar {
-    background-color: var(--primary-color);
+    background-color: var(--main-color);
     width: 100vw;
     height: 10vh;
 }
@@ -14,8 +14,10 @@
     background-color: rgb(196, 196, 196, .40);
     box-sizing: border-box;
     overflow-y: scroll;
-    height: 90vh;
+    height: 100vh;
     width: 40vw;
+    background-color: #0c3968;
+    color: white;
 }
 
 .contact-container::-webkit-scrollbar-track {
@@ -25,12 +27,12 @@
 
 .message-container {
     background-color: rgb(196, 196, 196, .40);
-    height: 90vh;
+    height: 100vh;
     width: 60vw;
 }
 
 .ppc {
-    background-color: var(--secondary-color);
+    background-color: #082039;
     box-sizing: border-box;
     align-items: center;
     padding: 0px 10px;
@@ -57,7 +59,7 @@
     padding: 0px;
     height: 40px;
     margin: 0px;
-    width: 100%;
+    width: calc(100% - 40px);
     padding: 0px 7px;
     border-radius: 16px;
     border: 1px solid #0000004a;
@@ -85,7 +87,7 @@
 }
 
 .sendit {
-    background-color: var(--primary-color);
+    background-color: var(--main-color);
 }
 
 .reciveit {
@@ -122,4 +124,19 @@
 .information-contact p {
     padding: 0px;
     margin: 0px;
+}
+
+.send-message{
+    display: flex;
+    justify-content: center;
+}
+
+.send-button{
+    background-color: var(--main-color);
+    border-radius: 50%;
+    margin: 0px 4px;
+    color: white;
+    height: 40px;
+    border: none;
+    width: 40px;
 }

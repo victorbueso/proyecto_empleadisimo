@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 
 @Injectable({
@@ -9,6 +9,7 @@ import {io} from 'socket.io-client';
 export class SocketService {
   socket:any;
   private url = 'http://localhost:3000/';
+
   constructor() {
     this.socket = io(this.url);
    }
@@ -21,7 +22,9 @@ export class SocketService {
     })
   }
   
+
   emit(eventName:string,data:any){
     this.socket.emit(eventName,data);
   }
+
 }

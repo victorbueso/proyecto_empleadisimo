@@ -23,6 +23,14 @@ h3 {
     color: #f17300;
 }
 
+.input-error{
+    box-shadow: 0 0 0 0.2rem rgba(255,0,0,50%);
+}
+
+.modal-text{
+    font-family: 'Raleway medium';
+}
+
 .option-btn{
     padding-top: 5px;
     width: 50px !important;

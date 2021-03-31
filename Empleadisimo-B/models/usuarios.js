@@ -17,7 +17,11 @@ var schema = new mongoose.Schema({
     rubros: Array,
     fechaFundacion: String,
     notificaciones: Array,
+<<<<<<< HEAD
     socketiD: String
+=======
+    estado: String
+>>>>>>> 0dc053582c3f3788dd3bbc502f5e7711ce7425d7
 });
 
 module.exports = mongoose.model('usuarios', schema);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck as farCalendarCheck } from '@fortawesome/free-regular-svg-icons'
@@ -8,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ChatService } from "../../services/chat.service";
 
 
 @Component({
@@ -35,16 +37,28 @@ export class HomeComponent implements OnInit {
   /* Saber si un usuario ha aplicado a una publicación de trabajo */
   apply: Boolean = true;
 
+  public informationChat = {};
+
   public publicaciones: Array<any> = [];
 
   constructor(private publicacionesService:PublicacionesService,
               private config:NgbCarouselConfig,
               private cookies: CookieService,
               private usuariosService : UsuariosService,
-              private socketService : SocketService) {
+              private socketService : SocketService,
+              private router: Router,
+              private chatService: ChatService) {
     config.showNavigationArrows = true;
-    config.showNavigationIndicators = false;
-
+    config.showNavigationIndicators = false; 
+    this.socketService.listen("connect").subscribe(
+      (res) => {
+        this.socketService.listen("Accept").subscribe(
+          (res) => console.log(res),
+          (err) => console.error(err)
+        );
+      },
+      (err) => console.error()
+    )
   }
 
   ngOnInit(): void {
@@ -53,7 +67,6 @@ export class HomeComponent implements OnInit {
     .subscribe( () => {
       this.obtenerPublicaciones();
     }, error => console.log(error))
-
   }
 
   obtenerPublicaciones(){
@@ -110,6 +123,11 @@ export class HomeComponent implements OnInit {
 
   updateButtonStatus(i: number){
     this.publicaciones[i]["aplico"] = !this.publicaciones[i]["aplico"]
+  }
+
+  chat(publication:any){
+    this.chatService.idChat = publication.idEmpresa
+    this.router.navigate(['chat']);
   }
 
   modifyPublications(publicaciones: any){

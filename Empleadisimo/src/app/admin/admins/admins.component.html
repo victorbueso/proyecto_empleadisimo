@@ -3,8 +3,8 @@
         <div class="col-xl-6 d-flex mt-auto">
             <h2>Administradores</h2>
         </div>
-        <div class="col-xl-6 d-flex justify-content-end">
-            <button class="btn btn-outline-danger" (click)="open(newAdmin)">
+        <div class="col-xl-6 d-flex justify-content-end" >
+            <button class="btn btn-outline-danger" (click)="open(newAdmin, '', '')" [ngClass]="{'d-none': !this.systemLoggeado}">
                 <fa-icon [icon]="faUserPlus"></fa-icon>
                 Agregar admin</button>
         </div>
@@ -27,22 +27,22 @@
                     <td>{{admin.estado}}</td>
                     <div class="d-flex justify-content-end" *ngIf="admin.estado != 'default'">
                         <td class="option-btn"> 
-                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="editAdmin(i)"> 
+                            <button class="btn" [disabled]="!this.systemLoggeado" style="padding:0px" (click)="open(newAdmin, admin._id, 'actualizar')" ngbTooltip="Editar usuario"> 
                                 <fa-icon class="icon" [icon]="faUserEdit" ></fa-icon> 
                             </button> 
                         </td>
                         <td class="option-btn" *ngIf="admin.estado == 'bloqueado'"> 
-                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="unblockAdmin(i)"> 
+                            <button class="btn" [disabled]="!this.systemLoggeado" style="padding:0px" (click)="unblockAdmin(admin._id)" ngbTooltip="Desbloquear usuario"> 
                                 <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
                             </button> 
                         </td>
                         <td class="option-btn" *ngIf="admin.estado == 'activo'"> 
-                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="blockAdmin(i)"> 
+                            <button class="btn" [disabled]="!this.systemLoggeado" style="padding:0px" (click)="open(block, admin._id, '')" ngbTooltip="Bloquear usuario"> 
                                 <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
                             </button> 
                         </td>
                         <td class="option-btn"> 
-                            <button class="btn" [disabled]="this.systemLoggeado" style="padding:0px" (click)="deleteAdmin(i)"> 
+                            <button class="btn" [disabled]="!this.systemLoggeado" style="padding:0px" (click)="open(delete, admin._id, '')" ngbTooltip="Eliminar usuario"> 
                                 <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
                             </button> 
                         </td>
@@ -57,27 +57,78 @@
     <div class="modal-body">
         <h3>Nuevo administrador</h3>
         <hr>
-      <form>
+        <ngb-alert type="success" *ngIf="!!successBool">{{message}}</ngb-alert>
+        <ngb-alert type="danger" *ngIf="!!errorBool">{{message}}</ngb-alert>
+      <form [formGroup]="formularioRegistro">
+        
         <div class="form-group">
             <label class="col-form-label">Nombre</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="text" class="form-control input-error" id="exampleInputEmail1" formControlName="rgNombre" 
+            [ngClass]="{'input-error': (this.formularioRegistro.get('rgNombre')?.invalid && (this.formularioRegistro.get('rgNombre')?.dirty || this.formularioRegistro.get('rgNombre')?.touched))}">
+            <div class="d-none" [ngClass]="{'d-block': (this.formularioRegistro.get('rgNombre')?.invalid && (this.formularioRegistro.get('rgNombre')?.dirty || this.formularioRegistro.get('rgNombre')?.touched))}">
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgNombre')?.errors?.required">Campo obligatorio</small>
+            </div>
+           
         </div>
         <div class="form-group">
             <label class="col-form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="exampleInputPassword1">
+            <input type="email" class="form-control" id="exampleInputPassword1" formControlName="rgCorreo"
+            [ngClass]="{'input-error': (this.formularioRegistro.get('rgCorreo')?.invalid && (this.formularioRegistro.get('rgCorreo')?.dirty || this.formularioRegistro.get('rgCorreo')?.touched))}"> 
+            <div class="d-none" [ngClass]="{'d-block': (this.formularioRegistro.get('rgCorreo')?.invalid && (this.formularioRegistro.get('rgCorreo')?.dirty || this.formularioRegistro.get('rgCorreo')?.touched))}">
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgCorreo')?.errors?.required">Campo obligatorio</small>
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgCorreo')?.errors?.email">El dato ingresado debe ser un correo electrónico</small>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-form-label">Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword2" formControlName="rgPassword"
+            [ngClass]="{'input-error': (this.formularioRegistro.get('rgPassword')?.invalid && (this.formularioRegistro.get('rgPassword')?.dirty || this.formularioRegistro.get('rgPassword')?.touched))}">
+            <div class="d-none" [ngClass]="{'d-block': (this.formularioRegistro.get('rgPassword')?.invalid && (this.formularioRegistro.get('rgPassword')?.dirty || this.formularioRegistro.get('rgPassword')?.touched))}">
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgPassword')?.errors?.required">Campo obligatorio</small>
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgPassword')?.errors?.minLength">La contraseña debe tener mínimo 6 caracteres</small>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-form-label">Confirmar contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword3" formControlName="rgConfirmPassword"
+            [ngClass]="{'input-error': (this.formularioRegistro.get('rgConfirmPassword')?.invalid && (this.formularioRegistro.get('rgConfirmPassword')?.dirty || this.formularioRegistro.get('rgConfirmPassword')?.touched))}">
+            <div class="d-none" [ngClass]="{'d-block': (this.formularioRegistro.get('rgConfirmPassword')?.invalid && (this.formularioRegistro.get('rgConfirmPassword')?.dirty || this.formularioRegistro.get('rgConfirmPassword')?.touched))}">
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgConfirmPassword')?.errors?.required">Campo obligatorio</small>
+                <small style="color:red" *ngIf="this.formularioRegistro.get('rgConfirmPassword')?.errors?.minLength">La contraseña debe tener mínimo 6 caracteres</small>
+            </div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="addAdmin()">Agregar</button>
+      <button type="button" class="btn btn-primary" (click)="addAdmin()" [disabled]="!this.formularioRegistro.valid" *ngIf="!editBool">Agregar</button>
+      <button type="button" class="btn btn-primary" (click)="editAdmin()" [disabled]="!this.formularioRegistro.valid" *ngIf="!!editBool">Guardar cambios</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
+
+<!-- Advertencia de bloquear usuario -->
+  <ng-template #block let-modal>
+    <div class="modal-body">
+        <p class="modal-text">
+            Al bloquear un usuario este no podrá iniciar sesión en el sitio, ¿deseas continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="blockAdmin()">Sí, bloquear</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
+
+<!-- Advertencia de eliminar usuario -->
+
+  <ng-template #delete let-modal>
+    <div class="modal-body">
+        <p class="modal-text">
+            Una vez eliminado, el usuario ya no tendrá acceso a esta sección, ¿deseas continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deleteAdmin()">Sí, eliminar</button>
       <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
     </div>
   </ng-template>

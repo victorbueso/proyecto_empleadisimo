@@ -1,3 +1,4 @@
+import { ObserversModule } from '@angular/cdk/observers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵangular_packages_router_router_j } from '@angular/router';
@@ -9,7 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
-  private url="http://localhost:3000/usuarios"
+  private url = "http://localhost:3000/usuarios"
+  chatInformation = {};
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
@@ -117,8 +119,25 @@ export class UsuariosService {
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
+  
+  getCompany(idEmpresa: string):Observable<any>{
+    return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);
+  }
+
 
   getAdmins() :Observable<any> {
     return this.httpClient.get(`${this.url}/admin/all`);
+  }
+
+  newAdmin(data:any):Observable<any>{
+    return this.httpClient.post(`${this.url}/admin/newAdmin`, data);
+  }
+
+  updateStatusAdmin(data:any, idUser:string):Observable<any>{
+    return this.httpClient.put(`${this.url}/admin/updateStatus/${idUser}`, data);
+  }
+
+  updateInfoAdmin(data:any, idUser:string):Observable<any>{
+    return this.httpClient.post(`${this.url}/admin/updateInfo/${idUser}`, data);
   }
 }
