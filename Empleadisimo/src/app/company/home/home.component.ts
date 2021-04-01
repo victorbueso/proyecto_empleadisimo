@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
     config.backdrop = 'static';
     config.keyboard = false;
     this.obtainConn();
+    this.listenMessage();
   }
 
   ngOnInit(): void {
@@ -74,11 +75,18 @@ export class HomeComponent implements OnInit {
     if(this.usuariosService.imOnline == false){
       this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
         (res) => {
-          this.socketService.emit("ObtainData", res )  
+          this.socketService.emit("ObtainData", res ) 
           this.usuariosService.imOnline = true;
         }
       )
     }
+  }
+
+  listenMessage(){
+    this.socketService.listen('recieveMessage').subscribe(
+      (res) => console.log(res),
+      (err) => console.error(err)
+    )
   }
 
   public SuccessfullMessage() {

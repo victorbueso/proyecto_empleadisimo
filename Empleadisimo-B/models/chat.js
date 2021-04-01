@@ -6,22 +6,8 @@ let Schema = mongoose.Schema({
         require: true
     },
     messages: {
-        content : {
-            type: String,
-            require: true
-        },
-        date: {
-            type: String, 
-            require: true
-        },
-        hour:{
-            type: String, 
-            require: true
-        },
-        idUser: {
-            type: String, 
-            required: true
-        }
+        type: Array, 
+        required: true
     }
 })
 

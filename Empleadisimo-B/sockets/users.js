@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var chat = require('../models/chat');
+var user = require('../models/usuarios');
 class Users{
 
     constructor(){
@@ -7,7 +8,7 @@ class Users{
     }
 
     addUser(user){
-        this.filterbyEmail(user)
+        this.filterbyEmail(user);
         this.users.push(user)
     }
 
@@ -16,7 +17,34 @@ class Users{
     }   
 
     saveChat(chatInformation){
+
+        this.chatExits(chatInformation['idUserE'], chatInformation['idUserR'])
+            .then(res => {
+
+                if(chat.length == 0){
+                    this.notExistingChat(chatInformation)
+                }else{
+                    this.existingChat(res)
+                }
+
+            })
+            .catch(err => console.error(err))
         
+    }
+
+    filterbyEmail(user){
+        this.users = this.users.filter(userC => userC['id'] != user['id']);
+    }
+
+    getSocketId(idUser){
+        return this.users.filter( userC => userC['id'] == idUser );
+    }
+
+    async chatExits(idUser, idCompany){  
+        return await chat.find({ users : idUser, users: idCompany })
+    }
+
+    notExistingChat(chatInformation){
         var date = new Date();
         let newChat = new chat({
             users : [
@@ -32,16 +60,16 @@ class Users{
         })
 
         newChat.save()
-            .then( res => { 
+            .then( res => {
+                console.log("") 
             })
             .catch( err => {
-            })
+            })   
     }
 
-    filterbyEmail(user){
-        this.users = this.users.filter(userC => userC['email'] != user['email']);
+    existingChat(updateChat){
+        console.log("Se modificar el chat");
     }
-
 }
 
 module.exports = {
