@@ -11,8 +11,28 @@ const mongoose = require('mongoose');
 const usuarios = require('../models/usuarios');
 const nodemailer = require('nodemailer');
 const email = require('../modules/email');
+const chat = require('../models/chat');
 
 // Router para conseguir la informacion de la compañia. 
+
+router.get("/obtainChat/:idUser", async function(req, res){
+    let userChat = await chat.find({ users : req.params.idUser })
+    let usersMessages = []
+
+    for(var i = 0; i < userChat.length; i++){
+        for(var j = 0; j < userChat[i]['users'].length; j++){
+            if(userChat[i]['users'][j] != req.params.idUser){
+                usersMessages.push(await usuario.findById(userChat[i]['users'][j])); 
+            }
+        }
+    }
+
+    res.json({
+        messages: userChat,
+        users: usersMessages
+    });
+    res.end();
+})
 
 router.get("/company/:idEmpresa", async function(req, res) {
 

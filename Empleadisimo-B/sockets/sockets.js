@@ -22,7 +22,6 @@ io.on('connect', (client) => {
         var socketId = user.getSocketId(data['idCompany']); 
             
         if(socketId.length > 0){
-            console.log(socketId);
             socketId = socketId[0]['socketId'];
             client.to(socketId).emit('recieveMessage', {
                 message: data['content']

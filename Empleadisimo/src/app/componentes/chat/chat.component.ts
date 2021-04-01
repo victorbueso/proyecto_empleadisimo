@@ -13,14 +13,19 @@ import { CookieService } from 'ngx-cookie-service';
 export class ChatComponent implements OnInit {
 
   informationChat: any;
-
+  messages = [];
+  users = []
   constructor(private chatService: ChatService,
               private userService: UsuariosService,
               private socketService: SocketService,
               private cookie: CookieService){
     this.getInformationChat();
+    this.obtainMessages();
   }
-
+  
+  ngOnInit(): void {
+  }
+  
   getInformationChat(){
     if(this.chatService.idChat){
       this.userService.getCompany(this.chatService.idChat).subscribe(
@@ -31,9 +36,6 @@ export class ChatComponent implements OnInit {
         err => console.error(err)
       )
     }
-  }
-
-  ngOnInit(): void {
   }
 
   obtainConn(){
@@ -47,7 +49,6 @@ export class ChatComponent implements OnInit {
     }
   }
   
-
   sendMessage(content: String){
     
     this.socketService.emit('sendMessage', {
@@ -56,6 +57,17 @@ export class ChatComponent implements OnInit {
       content
     })
   
+  }
+
+  obtainMessages(){
+    this.userService.obtainMessages().subscribe(
+      res => {
+        this.messages = res['messages'];
+        this.users = res['users'];
+        console.log(this.users, this.messages);
+      },
+      err => console.error(err)
+    )
   }
 
 }

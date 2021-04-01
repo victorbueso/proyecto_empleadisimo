@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var chat = require('../models/chat');
+const { update } = require('../models/usuarios');
 var user = require('../models/usuarios');
 class Users{
 
@@ -20,15 +21,14 @@ class Users{
 
         this.chatExits(chatInformation['idUserE'], chatInformation['idUserR'])
             .then(res => {
-
-                if(chat.length == 0){
+                if(res.length == 0){
                     this.notExistingChat(chatInformation)
                 }else{
-                    this.existingChat(res)
+                    this.existingChat(res, chatInformation);
                 }
 
             })
-            .catch(err => console.error(err))
+            .catch()
         
     }
 
@@ -60,15 +60,27 @@ class Users{
         })
 
         newChat.save()
-            .then( res => {
-                console.log("") 
+            .then( res => { 
             })
             .catch( err => {
             })   
     }
 
-    existingChat(updateChat){
-        console.log("Se modificar el chat");
+    async existingChat(updateChat, chatInformation){
+
+        var date = new Date();
+        let newMessage = {
+            content: chatInformation['content'],
+            date : `${ date.getDay() }/${ date.getMonth() }/${ date.getFullYear() }`,
+            hour : `${ date.getHours() }:${ date.getMinutes() }`,
+            idUser: chatInformation['idUserE'] 
+        }
+        await chat.updateOne(
+            { _id : updateChat[0]["_id"] },
+            { $push : { messages : newMessage} }
+        )
+        .then()
+        .catch()
     }
 }
 

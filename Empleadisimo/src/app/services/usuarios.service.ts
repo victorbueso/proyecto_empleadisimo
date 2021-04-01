@@ -16,7 +16,10 @@ export class UsuariosService {
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
-
+  
+  obtainMessages():Observable<any>{
+    return this.httpClient.get(`${ this.url }/obtainChat/${ this.cookieService.get('idUser') }`);
+  }
 
   loginUsuario(data:any):Observable<any>{
     return this.httpClient.post(`${this.url}/signin`,data);
