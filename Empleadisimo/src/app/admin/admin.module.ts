@@ -15,6 +15,7 @@ import { PaginationPipe } from './pipes/pagination.pipe';
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator'
 import { CustomMatPaginatorIntl } from './paginator-admin';
+import { FilterEmployeesPipe } from './pipes/filter-employees.pipe';
 
 
 
@@ -25,7 +26,8 @@ import { CustomMatPaginatorIntl } from './paginator-admin';
     CompaniesComponent, 
     HomeComponent, 
     DashboardComponent,
-    PaginationPipe],
+    PaginationPipe,
+    FilterEmployeesPipe],
   imports: [
     CommonModule,
     AdminRoutingModule,

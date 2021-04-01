@@ -15,7 +15,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
                                     </div>
-                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre, correo o profesión" spellcheck="false">
+                                    <input type="search" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="filter" [(ngModel)]="filter" spellcheck="false">
                                   </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let employee of employees;">
+                                <tbody *ngFor="let employee of employees  | filterEmployees : filter">
                                     <tr [ngClass]="{'table-light' : employee.estado == 'activo', 'table-warning': employee.estado=='bloqueado', 'table-danger': employee.estado=='eliminado'}">
                                         <td>{{employee.nombreCompleto}}</td>
                                         <td>{{employee.correo}}</td>
@@ -81,7 +81,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
                                     </div>
-                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre, correo o profesión" spellcheck="false">
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="activeFilter" [(ngModel)]="activeFilter" spellcheck="false">
                                   </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let employee of activeEmployees;">
+                                <tbody *ngFor="let employee of activeEmployees | filterEmployees : activeFilter">
                                     <tr class="table-light">
                                         <td>{{employee.nombreCompleto}}</td>
                                         <td>{{employee.correo}}</td>
@@ -147,7 +147,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
                                     </div>
-                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre, correo o profesión" spellcheck="false">
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="blockedFilter" [(ngModel)]="blockedFilter" spellcheck="false">
                                   </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let employee of blockedEmployees;">
+                                <tbody *ngFor="let employee of blockedEmployees | filterEmployees : blockedFilter">
                                     <tr class="table-light">
                                         <td>{{employee.nombreCompleto}}</td>
                                         <td>{{employee.correo}}</td>
@@ -213,7 +213,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
                                     </div>
-                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre, correo o profesión" spellcheck="false">
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="deletedFilter" [(ngModel)]="deletedFilter" spellcheck="false">
                                   </div>
                             </div>
                         </div>
@@ -238,7 +238,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let employee of deletedEmployees;">
+                                <tbody *ngFor="let employee of deletedEmployees | filterEmployees : deletedFilter">
                                     <tr class="table-light">
                                         <td>{{employee.nombreCompleto}}</td>
                                         <td>{{employee.correo}}</td>
