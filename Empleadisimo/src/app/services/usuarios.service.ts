@@ -130,6 +130,14 @@ export class UsuariosService {
     return this.httpClient.get(`${this.url}/admin/all`);
   }
 
+  getCompanies() :Observable<any> {
+    return this.httpClient.get(`${this.url}/admin/companies/all`);
+  }
+
+  getEmployees() :Observable<any> {
+    return this.httpClient.get(`${this.url}/admin/employees/all`);
+  }
+
   newAdmin(data:any):Observable<any>{
     return this.httpClient.post(`${this.url}/admin/newAdmin`, data);
   }

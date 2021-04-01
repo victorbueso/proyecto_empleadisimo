@@ -533,6 +533,33 @@ router.get('/admin/all', function(req, res) {
     });
 });
 
+/* Obtener todos los empresas */
+router.get('/admin/companies/all', function(req, res) {
+    usuario.find({
+        tipoUsuario: 1
+    }, {}).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
+
+/* Obtener todos los empleados */
+router.get('/admin/employees/all', function(req, res) {
+    usuario.find({
+        tipoUsuario: 0
+    }, {}).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
+
+
 /* Registro de admins */
 router.post('/admin/newAdmin', async function(req, res) {
     const correo = req.body.rgCorreo;
@@ -614,19 +641,7 @@ router.post('/admin/updateInfo/:idUser', async function(req, res) {
             res.end();
         })
 
-    // let userRouter = new usuario({
-    //     nombreCompleto: req.body.rgNombre,
-    //     correo: req.body.rgCorreo,
-    //     password: hash,
-    // });
 
-    // userRouter.save().then( () => {
-    //     res.status(200).json({message : 'Nuevo administrador agregado correctamente.'});
-    //     res.end();
-    // }).catch(error => {
-    //     res.send(error);
-    //     res.end();
-    // });
 });
 
 module.exports = router;

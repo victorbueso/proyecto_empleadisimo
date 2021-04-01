@@ -19,7 +19,6 @@ import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccoun
 import { ChatComponent } from './componentes/chat/chat.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
