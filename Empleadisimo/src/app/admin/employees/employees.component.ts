@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator'
 import { faUser, faUserAltSlash, faUserTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -37,6 +38,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   constructor(private usuariosService:UsuariosService,
+    private publicacionesService:PublicacionesService,
     private modalService:NgbModal) { }
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class EmployeesComponent implements OnInit {
     .subscribe(res => {
       this.employees = res;
       for(let i in res){
+        res[i]['aplicaciones'] = 0;
         if(res[i].estado == 'activo'){
           this.activeEmployees.push(res[i]);
         } else if(res[i].estado == 'bloqueado'){
@@ -52,6 +55,15 @@ export class EmployeesComponent implements OnInit {
         } else{
           this.deletedEmployees.push(res[i]);
         }
+
+        this.publicacionesService.getPosts()
+        .subscribe(result => {
+          for(let j in result){
+            if(result[j].usuarios.includes(res[i]._id)){
+              res[i].aplicaciones = res[i].aplicaciones + 1;
+            }
+          }
+        }, error2 => console.log(error2));
       }
     }, error => console.log(error));
   }
@@ -59,6 +71,13 @@ export class EmployeesComponent implements OnInit {
   open(content:any, id:string){
     this.modalService.open(content, {centered:true})
     this.selectedEmployee=id;
+  }
+
+  obtenerPublicaciones(){
+    this.publicacionesService.getPosts()
+    .subscribe(res => {
+      console.log(res);
+    }, error => console.log(error));
   }
 
   blockEmployee(){

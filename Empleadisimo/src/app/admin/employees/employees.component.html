@@ -30,25 +30,30 @@
                             <table class="table mr-auto ml-auto">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Nombre</th>
                                         <th>Correo electrónico</th>
                                         <th>Profesión</th>
-                                        <th>Ciudad</th>
-                                        <th>Departamento</th>
-                                        <th>País</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let employee of employees  | filterEmployees : filter">
                                     <tr [ngClass]="{'table-light' : employee.estado == 'activo', 'table-warning': employee.estado=='bloqueado', 'table-danger': employee.estado=='eliminado'}">
-                                        <td>{{employee.nombreCompleto}}</td>
-                                        <td>{{employee.correo}}</td>
-                                        <td>{{employee.profesion}}</td>
-                                        <td>{{employee.ubicacion.ciudad}}</td>
-                                        <td>{{employee.ubicacion.departamento}}</td>
-                                        <td>{{employee.ubicacion.pais}}</td>
-                                        <td>{{employee.estado}}</td>
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
                                                 <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
@@ -96,25 +101,30 @@
                             <table class="table mr-auto ml-auto">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Nombre</th>
                                         <th>Correo electrónico</th>
                                         <th>Profesión</th>
-                                        <th>Ciudad</th>
-                                        <th>Departamento</th>
-                                        <th>País</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let employee of activeEmployees | filterEmployees : activeFilter">
                                     <tr class="table-light">
-                                        <td>{{employee.nombreCompleto}}</td>
-                                        <td>{{employee.correo}}</td>
-                                        <td>{{employee.profesion}}</td>
-                                        <td>{{employee.ubicacion.ciudad}}</td>
-                                        <td>{{employee.ubicacion.departamento}}</td>
-                                        <td>{{employee.ubicacion.pais}}</td>
-                                        <td>{{employee.estado}}</td>
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
                                                 <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
@@ -162,25 +172,30 @@
                             <table class="table mr-auto ml-auto">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Nombre</th>
                                         <th>Correo electrónico</th>
                                         <th>Profesión</th>
-                                        <th>Ciudad</th>
-                                        <th>Departamento</th>
-                                        <th>País</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let employee of blockedEmployees | filterEmployees : blockedFilter">
                                     <tr class="table-light">
-                                        <td>{{employee.nombreCompleto}}</td>
-                                        <td>{{employee.correo}}</td>
-                                        <td>{{employee.profesion}}</td>
-                                        <td>{{employee.ubicacion.ciudad}}</td>
-                                        <td>{{employee.ubicacion.departamento}}</td>
-                                        <td>{{employee.ubicacion.pais}}</td>
-                                        <td>{{employee.estado}}</td>
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
                                                 <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
@@ -228,25 +243,30 @@
                             <table class="table mr-auto ml-auto">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Nombre</th>
                                         <th>Correo electrónico</th>
                                         <th>Profesión</th>
-                                        <th>Ciudad</th>
-                                        <th>Departamento</th>
-                                        <th>País</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let employee of deletedEmployees | filterEmployees : deletedFilter">
                                     <tr class="table-light">
-                                        <td>{{employee.nombreCompleto}}</td>
-                                        <td>{{employee.correo}}</td>
-                                        <td>{{employee.profesion}}</td>
-                                        <td>{{employee.ubicacion.ciudad}}</td>
-                                        <td>{{employee.ubicacion.departamento}}</td>
-                                        <td>{{employee.ubicacion.pais}}</td>
-                                        <td>{{employee.estado}}</td>
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
                                                 <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 

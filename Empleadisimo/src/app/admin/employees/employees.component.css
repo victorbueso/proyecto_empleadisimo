@@ -24,6 +24,12 @@ h3 {
     color: #f17300;
 }
 
+.img-perfil{
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%
+}
+
 .input-error{
     box-shadow: 0 0 0 0.2rem rgba(255,0,0,50%);
 }
