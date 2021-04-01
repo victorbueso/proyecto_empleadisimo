@@ -81,7 +81,7 @@ li:hover{
     width: 200px;
     transition: ease 0.25s;
     transform: translateX(-100%);
-    /* z-index:2000; */
+    z-index:2000;
 }
 
 .sideMenu-scrolled{
@@ -114,7 +114,7 @@ li:hover{
     transform:translateX(-100%);
 }
 
-@media (min-width:992px){
+@media (min-width:1334px){
     .sideMenu{
         transform: translateX(0);
     }
