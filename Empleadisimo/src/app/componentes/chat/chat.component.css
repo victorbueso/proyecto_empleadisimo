@@ -36,6 +36,7 @@
     box-sizing: border-box;
     align-items: center;
     padding: 0px 10px;
+    color: white;
     display: flex;
     height: 10%;
 }
@@ -71,9 +72,9 @@
 }
 
 .messages-container {
-    flex-direction: column-reverse;
     background-color: transparent;
     height: calc(100% - 40px);
+    flex-direction: column;
     overflow-y: scroll;
     display: flex;
     width: 100%;
@@ -123,6 +124,9 @@
     box-sizing: border-box;
     padding: 0px 10px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 .information-contact p {
@@ -151,4 +155,13 @@
 
 .send-button:hover{
     background-color: #0b3d71;
+}
+
+.buttonUser{
+    background-color: transparent;
+    display: flex;
+    border: none;
+    padding: 0px;
+    width: 100%;
+    margin: 0px;
 }

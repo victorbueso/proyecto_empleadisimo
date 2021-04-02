@@ -5,9 +5,11 @@ const { Users } = require('./users')
 const user = new Users();
 
 io.on('connect', (client) => {
-
+    
     client.on("ObtainData", (data) => {
         
+        console.log("Cliente del que obtuvo su data");
+        console.log(client.id);
         var connectedUser = {
             socketId: client.id,
             id: data['_id']
@@ -35,7 +37,7 @@ io.on('connect', (client) => {
         };
         
         user.saveChat(chatInformation)
-
+    
     })
     
 })

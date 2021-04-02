@@ -61,6 +61,7 @@ class Users{
 
         newChat.save()
             .then( res => { 
+                return newChat;
             })
             .catch( err => {
             })   
