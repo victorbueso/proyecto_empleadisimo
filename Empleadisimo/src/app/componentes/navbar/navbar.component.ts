@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit{
   public errorRegistro: Boolean = false;
   public errorLogin: Boolean = false;
   public message : String = "";
-  public imgPerfil : string = '../../../assets/img/user-sin-foto.png';
+  public imgPerfil : string = '../../../assets/img/usuario-sin-foto.png';
 
   public pruebaUsuarioLogueado = null;
 
@@ -206,14 +206,8 @@ export class NavbarComponent implements OnInit{
   // funcion utilizada para enviar los datos
     this.usuarioService.loginUsuario(data).subscribe(
       result=>{
-        //console.log(result);
         this.formularioLogin.reset();
-        /*this.formularioLogin.setValue({
-          lgCorreo:null,
-          lgPassword:null
-        });*/
         this.pruebaUsuarioLogueado = result.idUser;
-        //console.log(this.pruebaUsuarioLogueado);
         this.cookieService.set('token', result.token);
         this.cookieService.set('idUser', result.idUser);
         this.cookieService.set('tipo', result.tipo);
@@ -235,10 +229,6 @@ export class NavbarComponent implements OnInit{
         setTimeout( () => {
           this.message="";
           this.errorLogin = false;
-          /*this.formularioLogin.setValue({
-            lgCorreo:null,
-            lgPassword:null
-          });*/
           this.formularioLogin.reset();
         }, 3000)
 
@@ -274,11 +264,6 @@ export class NavbarComponent implements OnInit{
         result=>{
           console.log(result);
           this.registroSuccess= true;
-          /*this.formularioRegistro.setValue({
-            rgCorreo:null,
-            rgConfPassword:null,
-            rgPassword:null
-          });*/
           this.formularioRegistro.reset();
           this.cookieService.set('token', result.token);
           this.cookieService.set('idUser', result.idUser);
@@ -306,20 +291,10 @@ export class NavbarComponent implements OnInit{
           setTimeout( () => {
             this.message="";
             this.errorRegistro = false;
-            /*this.formularioLogin.setValue({
-              lgCorreo:null,
-              lgPassword:null
-            });*/
+
             this.formularioRegistro.reset();
           }, 3000)
 
-          /*console.log(error);
-          alert(error.error.message);
-          this.formularioRegistro.setValue({
-            rgCorreo:null,
-            rgConfPassword:null,
-            rgPassword:null
-          });*/
         }
       );
 

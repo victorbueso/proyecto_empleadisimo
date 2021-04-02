@@ -55,7 +55,6 @@ export class EmployeesComponent implements OnInit {
         } else{
           this.deletedEmployees.push(res[i]);
         }
-
         this.publicacionesService.getPosts()
         .subscribe(result => {
           for(let j in result){
@@ -71,13 +70,6 @@ export class EmployeesComponent implements OnInit {
   open(content:any, id:string){
     this.modalService.open(content, {centered:true})
     this.selectedEmployee=id;
-  }
-
-  obtenerPublicaciones(){
-    this.publicacionesService.getPosts()
-    .subscribe(res => {
-      console.log(res);
-    }, error => console.log(error));
   }
 
   blockEmployee(){
