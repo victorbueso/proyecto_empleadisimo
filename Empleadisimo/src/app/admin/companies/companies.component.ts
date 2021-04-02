@@ -1,5 +1,5 @@
 import { NumberInput } from '@angular/cdk/coercion';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator'
 import { faUser, faUserAltSlash, faUserTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,7 @@ export class CompaniesComponent implements OnInit {
   page_number : number = 1;
   pageSizeOptions = [10,20,50,100];
   activeTab:NumberInput;
+
   filter = '';
   activeFilter = '';
   blockedFilter = '';
@@ -30,7 +31,11 @@ export class CompaniesComponent implements OnInit {
   activeCompanies : any = [];
   deletedCompanies : any = [];
   blockedCompanies : any = [];
+  posts : any = [];
   selectedCompany : string ='';
+  selectedPost : number = -1;
+  nameCompany : string = '';
+
 
   handlePage(e:PageEvent){
     this.page_size = e.pageSize;
@@ -55,11 +60,6 @@ export class CompaniesComponent implements OnInit {
         } else{
           this.deletedCompanies.push(res[i]);
         }
-
-        this.publicacionesService.getPostCompany(res[i]._id)
-        .subscribe(result => {
-          res[i]['publicaciones'] = result
-        }, err => console.log(err))
       }
       console.log(res);
     }, error => console.log(error));
@@ -70,6 +70,19 @@ export class CompaniesComponent implements OnInit {
     this.selectedCompany=id;
   }
 
+  openXL(content:any, id:string){
+    this.modalService.open(content, {size: 'xl'})
+    this.publicacionesService.getPostCompany(id)
+    .subscribe(result => {
+      this.posts = result;
+      this.companies.forEach((company: { _id: string; nombreCompleto : string}) => {
+        if(company._id == id){
+          this.nameCompany = company.nombreCompleto;
+        }
+      });
+    }, err => console.log(err))
+
+  }
 
   blockCompany(){
     let data = {estado : 'bloqueado'};
@@ -97,5 +110,4 @@ export class CompaniesComponent implements OnInit {
       this.modalService.dismissAll()
     })
   }
-
 }

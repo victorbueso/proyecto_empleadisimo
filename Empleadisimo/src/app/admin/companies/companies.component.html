@@ -54,7 +54,7 @@
                                         <td class="text-center">{{company?.rubros.length}}</td>
                                         <td>{{company?.estado}}</td>
                                         <td class="option-btn text-center">
-                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left">Listar</button>
+                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left" (click)="openXL(listPosts, company._id)">Listar</button>
                                         </td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="company.estado == 'bloqueado'"> 
@@ -304,6 +304,29 @@
     
 </div>
 
+<!-- Lista de publicaciones -->
+<ng-template #listPosts let-modal>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6">
+                <h3>Empresa <strong>{{nameCompany}}</strong></h3>
+            </div>
+            <div class="col-6">
+                <h4>Cantidad de publicaciones : <strong> {{posts.length}}</strong></h4>
+            </div>
+        </div>
+        <div *ngFor="let post of posts; index as i">
+            <button class="accordion" [ngClass]="{'d-block': selectedPost != i, 'd-none' : selectedPost == i}" (click)="selectedPost = i">{{post.titulo}}</button>
+            <button class="accordion active" [ngClass]="{'d-block': selectedPost == i, 'd-none' : selectedPost != i}" (click)="selectedPost = -1">{{post.titulo}}</button>
+            <div class="panel" [ngClass]="{'d-block': selectedPost == i, 'd-none': selectedPost != i}">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
 
 <!-- Advertencia de bloquear usuario -->
 <ng-template #block let-modal>
