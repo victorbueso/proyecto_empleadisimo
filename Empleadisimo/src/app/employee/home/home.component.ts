@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck as farCalendarCheck } from '@fortawesome/free-regular-svg-icons'
@@ -8,7 +9,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
+<<<<<<< HEAD
 import { ActivatedRoute, Router } from "@angular/router";
+=======
+import { ChatService } from "../../services/chat.service";
+>>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
 
 
 @Component({
@@ -36,6 +41,8 @@ export class HomeComponent implements OnInit {
   /* Saber si un usuario ha aplicado a una publicación de trabajo */
   apply: Boolean = true;
 
+  public informationChat = {};
+
   public publicaciones: Array<any> = [];
 
   constructor(private publicacionesService:PublicacionesService,
@@ -43,11 +50,16 @@ export class HomeComponent implements OnInit {
               private cookies: CookieService,
               private usuariosService : UsuariosService,
               private socketService : SocketService,
+<<<<<<< HEAD
               private activatedRoute: ActivatedRoute,
               private router: Router) {
+=======
+              private router: Router,
+              private chatService: ChatService) {
+>>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
     config.showNavigationArrows = true;
-    config.showNavigationIndicators = false;
-
+    config.showNavigationIndicators = false; 
+    this.obtainConn();
   }
 
   ngOnInit(): void {
@@ -56,7 +68,17 @@ export class HomeComponent implements OnInit {
     .subscribe( () => {
       this.obtenerPublicaciones();
     }, error => console.log(error))
+  }
 
+  obtainConn(){
+    if(this.usuariosService.imOnline == false){
+      this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
+        (res) => {
+          this.socketService.emit("ObtainData", res )  
+          this.usuariosService.imOnline = true;
+        }
+      )
+    }
   }
 
   obtenerPublicaciones(){
@@ -113,6 +135,11 @@ export class HomeComponent implements OnInit {
 
   updateButtonStatus(i: number){
     this.publicaciones[i]["aplico"] = !this.publicaciones[i]["aplico"]
+  }
+
+  chat(publication:any){
+    this.chatService.idChat = publication.idEmpresa
+    this.router.navigate(['chat']);
   }
 
   modifyPublications(publicaciones: any){

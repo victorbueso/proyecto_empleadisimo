@@ -16,8 +16,12 @@ import { AuthenticationGuard } from './authentication.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
+<<<<<<< HEAD
 //import { EnterpriseComponent } from './enterprise/enterprise.component';
 
+=======
+import { ChatComponent } from './componentes/chat/chat.component';
+>>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
 
 
 @NgModule({
@@ -29,7 +33,11 @@ import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccoun
     SliderComponent,
     FooterLinksComponent,
     VerifyaccountComponent,
+<<<<<<< HEAD
     //EnterpriseComponent
+=======
+    ChatComponent
+>>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
   ],
   imports: [
     BrowserModule,

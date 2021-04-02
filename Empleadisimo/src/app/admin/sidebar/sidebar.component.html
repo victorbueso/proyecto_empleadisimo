@@ -1,0 +1,107 @@
+<div class="wrapper d-flex">
+    <div class="sideMenu bg-dark" [ngClass]="{'show-sidebar': isSidebarCollapsed == false, 'hide-sidebar': isSidebarCollapsed == true }" (scroll)="onWindowScroll($event)">
+        <div class="sidebar">
+          <ul class="navbar-nav">
+            <li class="nav-item-custom" *ngIf="usuarioLoggeado.length != 0">
+                <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                    <a class="nav-link-custom d-flex mr-auto ml-auto mt-2" style="height: 120px;">
+                        <div class="row d-flex">
+                            <div class="icon letter-user mr-auto ml-auto" style="color:white">
+                                {{usuarioLoggeado.nombreCompleto.toUpperCase() | slice:0:1}}
+                            </div>
+                            <div class="col-12 text-center mt-1">
+                                <span class="text mt-auto mb-auto" style="font-size: 1.1rem;" *ngIf="usuarioLoggeado.nombreCompleto.split(' ').length == 1">
+                                    {{usuarioLoggeado.nombreCompleto.split(' ') | slice:0:1}}
+                                </span>
+                                <span class="text mt-auto mb-auto" style="font-size: 1.1rem;" *ngIf="usuarioLoggeado.nombreCompleto.split(' ').length > 1">
+                                    {{usuarioLoggeado.nombreCompleto.split(' ') | slice:0:1}} 
+                                    {{usuarioLoggeado.nombreCompleto.split(' ') | slice:-1}}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                   
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'dashboard'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'dashboard'}">
+                <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                  <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
+                      <div class="row d-flex">
+                          <div class="icon mr-auto ml-auto">
+                              <fa-icon [icon]="faChartLine"></fa-icon>
+                          </div>
+                          <div class="col-12 text-center">
+                              <span class="text">Dashboard</span>
+                          </div>
+                      </div>
+                  </a>
+                </div>
+            </li>
+              <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'admins'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'admins'}">
+                  <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                    <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
+                        <div class="row d-flex">
+                            <div class="icon mr-auto ml-auto">
+                                <fa-icon [icon]="faUsersCog"></fa-icon>
+                            </div>
+                            <div class="col-12 text-center">
+                                <span class="text">Administradores</span>
+                            </div>
+                        </div>
+                    </a>
+                  </div>
+              </li>
+              <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'companies'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'companies'}">
+                <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                  <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
+                      <div class="row d-flex">
+                          <div class="icon mr-auto ml-auto">
+                              <fa-icon [icon]="farHandshake"></fa-icon>
+                          </div>
+                          <div class="col-12 text-center">
+                              <span class="text">Empresas</span>
+                          </div>
+                      </div>
+                  </a>
+                </div>
+            </li>
+            <li class="nav-item-custom mb-1" (click)="this.regionVisible = 'employees'; this.isSidebarCollapsed=true;" [ngClass]="{'active':regionVisible == 'employees'}">
+                <div class="d-flex" style="padding-right: 20px; width: 100%;">
+                  <a class="nav-link-custom d-flex mr-auto ml-auto" style="height: 100px">
+                      <div class="row d-flex">
+                          <div class="icon mr-auto ml-auto">
+                              <fa-icon [icon]="faUsers"></fa-icon>
+                          </div>
+                          <div class="col-12 text-center">
+                              <span class="text">Empleados</span>
+                          </div>
+                      </div>
+                  </a>
+                </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row mr-auto">
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'home', 'd-none': regionVisible!='home'}">
+                    <app-home></app-home>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'dashboard', 'd-none': regionVisible!='dashboard'}">
+                    <app-dashboard></app-dashboard>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'admins', 'd-none': regionVisible!='admins'}">
+                    <app-admins></app-admins>
+                </div>
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'companies', 'd-none': regionVisible!='companies'}">
+                    <app-companies></app-companies>
+                </div>
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 mr-auto ml-auto" [ngClass]="{'d-block' : regionVisible == 'employees', 'd-none': regionVisible!='employees'}">
+                    <app-employees></app-employees>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
