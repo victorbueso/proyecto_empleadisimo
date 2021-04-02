@@ -16,6 +16,7 @@ import { AuthenticationGuard } from './authentication.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
+//import { EnterpriseComponent } from './enterprise/enterprise.component';
 
 
 
@@ -27,7 +28,8 @@ import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccoun
     FooterComponent,
     SliderComponent,
     FooterLinksComponent,
-    VerifyaccountComponent
+    VerifyaccountComponent,
+    //EnterpriseComponent
   ],
   imports: [
     BrowserModule,

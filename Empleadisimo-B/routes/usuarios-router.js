@@ -307,7 +307,7 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 
 // borrar un cv en pdf
 
-router.put('/deleteCV/:idUser', async(req, res) => {
+router.post('/deleteCV/:idUser', async(req, res) => {
     var fp  = req.body.fp
     console.log(fp)
     const arr = []
@@ -351,10 +351,15 @@ router.put('/deleteCV/:idUser', async(req, res) => {
 
 router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) => {
     var fp1 = req.body.fp1;
-    const {ntitulo} = req.body;
-
     const arr = []
     const arr1 = []
+    const  mimetype = req.file.mimetype;
+
+    if(mimetype !== 'application/pdf'){
+        return res.json({message: 'Archivo no soportado, Solo se permiten archivos pdf',})
+    }
+
+    
 
     usuario.find({_id: req.params.idUser},{curriculum: 1}).
     then(result2 => {
@@ -380,18 +385,17 @@ router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) =>
             fd = `${day}-${month}-${year}-U`;
           }
 
-            /*fpd = arr1.find(o => o.rutaArchivo === fp1) 
-            fpd.titulo = ntitulo;
-            fpd.fecha = fd*/
+            fpd = arr1.find(o => o.rutaArchivo === fp1) 
+            fs.unlink(path.resolve(fpd.rutaArchivo))
+
             const df = arr1.findIndex( x => x.rutaArchivo === fp1)
-            arr1[df].titulo = ntitulo
-            arr1[df].fecha = fd
+            arr1[df].rutaArchivo = req.file.path
            
             usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
                 res.send(error);
                 res.end()
             });
-            res.status(200).json({ 'message': 'Titulo de CV actualizado exitosamente' });
+            res.status(200).json({ 'message': 'CV actualizado exitosamente' });
             //return res.json(arr1);
         }).catch(error2 => {
             res.send(error2);
