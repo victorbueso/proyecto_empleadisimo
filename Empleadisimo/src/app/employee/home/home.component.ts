@@ -8,7 +8,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
-import { ActivatedRoute, Router } from "@angular/router";
 
 
 @Component({
@@ -42,9 +41,7 @@ export class HomeComponent implements OnInit {
               private config:NgbCarouselConfig,
               private cookies: CookieService,
               private usuariosService : UsuariosService,
-              private socketService : SocketService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private socketService : SocketService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false;
 
@@ -120,10 +117,6 @@ export class HomeComponent implements OnInit {
     for(var i in publicaciones){
       publicaciones[i]['aplico'] = false;
     }
-  }
-
-  homepage(id:string){
-    this.router.navigate(['/company/information', id]);
   }
 
 }

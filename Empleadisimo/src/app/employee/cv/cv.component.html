@@ -28,14 +28,6 @@
                 <div class="buttons-modify">
                     <button (click)="deleteCv(curriculum)"  class="delete-cv">Eliminar</button>
                     <a [href]='curriculum' class="open-cv">Abrir</a>
-                    <form (submit)="updateCV(curriculum)">
-                        <input (change)="onPhotoSelected($event)" type="file" class="d-none" #photoinput>
-                        <div (click)="photoinput.click()" class="input-file-cv">
-                            <i class="fas fa-file-pdf"></i><span>{{ titleCurriculumU }}</span> 
-                        </div>
-                        <button class="send-photo"><i class="fas fa-file-upload" [ngClass]="{'d-none': uploading}"></i><i class="fas fa-spinner fa-pulse" [ngClass]="{'d-none':!uploading}"></i></button><br>
-                        <span *ngIf="successFile" class="success-file">Archivo actualizado con exito</span>
-                    </form>
                 </div>
             </div>
         </div>
