@@ -9,11 +9,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
-<<<<<<< HEAD
-import { ActivatedRoute, Router } from "@angular/router";
-=======
+import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
 
 
 @Component({
@@ -50,13 +47,8 @@ export class HomeComponent implements OnInit {
               private cookies: CookieService,
               private usuariosService : UsuariosService,
               private socketService : SocketService,
-<<<<<<< HEAD
-              private activatedRoute: ActivatedRoute,
-              private router: Router) {
-=======
               private router: Router,
-              private chatService: ChatService) {
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
+              private chatService:ChatService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false; 
     this.obtainConn();
@@ -150,7 +142,7 @@ export class HomeComponent implements OnInit {
   }
 
   homepage(id:string){
-    this.router.navigate(['/company/information', id]);
+    this.router.navigate([`employee/information/${id}`]);
   }
 
 }

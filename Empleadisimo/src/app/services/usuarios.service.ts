@@ -123,7 +123,6 @@ export class UsuariosService {
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
-<<<<<<< HEAD
 
   updateCurriculums(cv: File, file: string, idUser: string){
 
@@ -133,7 +132,6 @@ export class UsuariosService {
     return this.httpClient.put(`http://localhost:3000/usuarios/updateCV/${ idUser }`, fd1);
   }
 
-=======
   
   getCompany(idEmpresa: string):Observable<any>{
     return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);
@@ -163,5 +161,4 @@ export class UsuariosService {
   updateInfoAdmin(data:any, idUser:string):Observable<any>{
     return this.httpClient.post(`${this.url}/admin/updateInfo/${idUser}`, data);
   }
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
 }

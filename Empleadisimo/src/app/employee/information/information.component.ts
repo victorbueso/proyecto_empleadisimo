@@ -3,8 +3,6 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Usuario } from "../../interface/Usuario";
-import { Inject } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -24,9 +22,10 @@ export class InformationComponent implements OnInit {
     private router: Router,) { }
 
     ngOnInit(): void {
-      this.activatedRoute.params.subscribe(params => {
-        this.id = params['id'];},
-        err => console.log(err))
+      this.id = this.activatedRoute.snapshot.params.id;
+      // this.activatedRoute.params.subscribe(params => {
+      //   this.id = params['id'];},
+      //   err => console.log(err))
         this.publicacionesService.getPostCompany(this.id).
         subscribe(res => {
           for (let i = 0; i < Object.values(res).length; i++) {

@@ -75,11 +75,8 @@
               [ngClass]="{'non-apply-button': !publicacion['aplico']}" [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
               (click)="updateApplyPostUser(publicacion._id, i)" (click)="obtenerPublicaciones()">Aplicar
             </button>
-<<<<<<< HEAD
-            <a class="btn btn-primary" (click)="homepage(publicacion.idEmpresa)">Ver más</a>
-=======
-            <a (click)="chat(publicacion)" class="btn btn-primary">Chat</a>
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
+            <a class="btn btn-primary mr-2" (click)="homepage(publicacion.idEmpresa)">Ver más</a>
+            <a (click)="chat(publicacion)" class="btn btn-primary ml-2">Chat</a>
           </div>
         </div>
       </div>

@@ -357,18 +357,15 @@ router.post('/deleteCV/:idUser', async(req, res) => {
             arr1[i] = arr[0][i];
         }
 
-<<<<<<< HEAD
             const df = arr1.findIndex( x => x.rutaArchivo === fp) 
             arr1.splice(df,1)
-             fs.unlink(path.resolve(fpd.rutaArchivo))
-=======
-        fpd = arr1.find(o => o.rutaArchivo === fp)
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
+            fs.unlink(path.resolve(fpd.rutaArchivo))
+            fpd = arr1.find(o => o.rutaArchivo === fp)
 
 
-        const df = arr1.findIndex(x => x.rutaArchivo === fp)
-        arr1.splice(df, 1)
-        fs.unlink(path.resolve(fpd.rutaArchivo))
+        // const df = arr1.findIndex(x => x.rutaArchivo === fp)
+        // arr1.splice(df, 1)
+        // fs.unlink(path.resolve(fpd.rutaArchivo))
 
         usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
             res.send(error);
@@ -388,14 +385,11 @@ router.post('/deleteCV/:idUser', async(req, res) => {
 //actualizar un cv en pdf
 
 router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) => {
-<<<<<<< HEAD
     var fp1 = req.body.fp1;
     const arr = []
     const arr1 = []
     const  mimetype = req.file.mimetype;
-=======
-    const mimetype = req.file.mimetype;
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
+    // const mimetype = req.file.mimetype;
 
     if (mimetype !== 'application/pdf') {
         return res.json({ message: 'Archivo no soportado, Solo se permiten archivos pdf', })

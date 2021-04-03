@@ -11,6 +11,7 @@ import { FilterPositionPipe } from '../pipes/filter-position.pipe'
 import { PaginationPipe } from '../pipes/pagination.pipe';
 import { MatPaginatorIntl, MatPaginatorModule } from "@angular/material/paginator";
 import { UpdateInfoComponent } from './update-info/update-info.component';
+import { InformationComponent } from './information/information.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomMatPaginatorIntl } from './paginator-es';
@@ -23,7 +24,8 @@ import { CvComponent } from './cv/cv.component';
     FilterPositionPipe, 
     PaginationPipe,
     UpdateInfoComponent,
-    CvComponent
+    CvComponent,
+    InformationComponent
   ],
   imports: [
     CommonModule,
