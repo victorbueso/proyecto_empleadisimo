@@ -100,6 +100,8 @@
     cursor:pointer
 }
 
+
+
 .navbar-brand{
     color:white;
 }
@@ -157,21 +159,4 @@
     height: auto;
     width: 100px;
     margin: auto;
-}
-
-@media(max-width:1332px){
-    .navbar-brand-admin{
-        display: inline-block;
-        padding-top: .3125rem;
-        padding-bottom: .3125rem;
-        margin-right: 1rem;
-        margin-left: auto;
-        font-size: 1.25rem;
-        line-height: inherit;
-        white-space: nowrap;
-    }
-
-    #sidenav{
-        display: block;
-    }
 }

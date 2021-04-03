@@ -19,8 +19,6 @@ export class LandingPageComponent implements OnInit {
       this.router.navigate(['employee']);
     } else if(this.cookieService.get('tipo') == '1') {
       this.router.navigate(['company'])
-    } else if(this.cookieService.get('tipo') == '2') {
-      this.router.navigate(['admin'])
     } else this.router.navigate(['']);
   }
 

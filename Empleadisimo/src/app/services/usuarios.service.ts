@@ -1,4 +1,3 @@
-import { ObserversModule } from '@angular/cdk/observers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵangular_packages_router_router_j } from '@angular/router';
@@ -10,16 +9,11 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
 
-  private url = "http://localhost:3000/usuarios"
-  public imOnline = false; 
-  chatInformation = {};
+  private url="http://localhost:3000/usuarios"
 
   constructor(private httpClient:HttpClient,
               private cookieService:CookieService) { }
-  
-  obtainMessages():Observable<any>{
-    return this.httpClient.get(`${ this.url }/obtainChat/${ this.cookieService.get('idUser') }`);
-  }
+
 
   loginUsuario(data:any):Observable<any>{
     return this.httpClient.post(`${this.url}/signin`,data);
@@ -76,7 +70,13 @@ export class UsuariosService {
     return !!this.cookieService.get('token');
   }
 
+  isCompanyLogged(){
+    if(this.cookieService.get('tipo')=='1'){
+      return true
+    }
 
+    return false
+  }
 
   sendPhoto(cv: File, idUser: string){
     
@@ -98,14 +98,6 @@ export class UsuariosService {
     return this.httpClient.post(`http://localhost:3000/usuarios/deleteCV/${ idUser }`, data);
   }
 
-  isCompanyLogged(){
-    if(this.cookieService.get('tipo')=='1'){
-      return true
-    }
-
-    return false
-  }
-  
   isEmployeeLogged(){
     if(this.cookieService.get('tipo')=='0'){
       return true
@@ -113,17 +105,9 @@ export class UsuariosService {
     return false
   }
 
-  isAdminLogged(){
-    if(this.cookieService.get('tipo')=='2'){
-      return true
-    }
-    return false;
-  }
-
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
-<<<<<<< HEAD
 
   updateCurriculums(cv: File, file: string, idUser: string){
 
@@ -133,35 +117,4 @@ export class UsuariosService {
     return this.httpClient.put(`http://localhost:3000/usuarios/updateCV/${ idUser }`, fd1);
   }
 
-=======
-  
-  getCompany(idEmpresa: string):Observable<any>{
-    return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);
-  }
-
-
-  getAdmins() :Observable<any> {
-    return this.httpClient.get(`${this.url}/admin/all`);
-  }
-
-  getCompanies() :Observable<any> {
-    return this.httpClient.get(`${this.url}/admin/companies/all`);
-  }
-
-  getEmployees() :Observable<any> {
-    return this.httpClient.get(`${this.url}/admin/employees/all`);
-  }
-
-  newAdmin(data:any):Observable<any>{
-    return this.httpClient.post(`${this.url}/admin/newAdmin`, data);
-  }
-
-  updateStatusAdmin(data:any, idUser:string):Observable<any>{
-    return this.httpClient.put(`${this.url}/admin/updateStatus/${idUser}`, data);
-  }
-
-  updateInfoAdmin(data:any, idUser:string):Observable<any>{
-    return this.httpClient.post(`${this.url}/admin/updateInfo/${idUser}`, data);
-  }
->>>>>>> cb943087f7ab05be73812417a6085df4a0e64870
 }

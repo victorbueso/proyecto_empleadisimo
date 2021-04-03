@@ -141,9 +141,6 @@ body {
     font-family: 'Raleway medium';
 }
 
-.pointer{
-    cursor: pointer;
-}
 
 @keyframes rotate {
     0% {
