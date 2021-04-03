@@ -8,14 +8,17 @@ io.on('connect', (client) => {
     
     client.on("ObtainData", (data) => {
         
-        console.log("Cliente del que obtuvo su data");
-        console.log(client.id);
         var connectedUser = {
             socketId: client.id,
             id: data['_id']
         }
   
         user.addUser(connectedUser);  
+
+        console.log("________________________")
+        console.log(user.getUsers());
+        console.log("________________________")
+
     })
     
     client.on('sendMessage', (data) => {        
@@ -36,8 +39,10 @@ io.on('connect', (client) => {
             content : data.content,
         };
         
-        user.saveChat(chatInformation)
-    
+        io.to(socketId).emit("messageServer", {
+            message: "Dios, soy yo de nuevo. :c"
+        })
+  
     })
     
 })

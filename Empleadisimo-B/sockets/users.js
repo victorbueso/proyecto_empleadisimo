@@ -22,14 +22,14 @@ class Users{
         this.chatExits(chatInformation['idUserE'], chatInformation['idUserR'])
             .then(res => {
                 if(res.length == 0){
-                    this.notExistingChat(chatInformation)
+                    return this.notExistingChat(chatInformation)
                 }else{
-                    this.existingChat(res, chatInformation);
+                    return this.existingChat(res, chatInformation);
                 }
 
             })
             .catch()
-        
+
     }
 
     filterbyEmail(user){
@@ -80,7 +80,7 @@ class Users{
             { _id : updateChat[0]["_id"] },
             { $push : { messages : newMessage} }
         )
-        .then()
+        .then(() => newMessage)
         .catch()
     }
 }

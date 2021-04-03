@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { UsuariosService } from '../../services/usuarios.service'
 import { SocketService } from '../../services/socket.service';
@@ -11,7 +11,8 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+
+export class ChatComponent{
 
   informationChat: any;
   messages : Array<any> = [];
@@ -26,20 +27,32 @@ export class ChatComponent implements OnInit {
               private userService: UsuariosService,
               private socketService: SocketService,
               private cookie: CookieService){
-    this.obtainMessages();
-    console.log(this.users)
-    console.log(this.messages)
-    }
-  ngOnInit(): void {
+    this.obtainMessages();   
+    this.obtainConn();
+    this.serverMessage();
   }
-  
+
+  serverMessage(){
+    this.socketService.listen('messageServer').subscribe(
+      res => {
+        console.log(res)
+        console.log("Se recibio una respuesta");
+      },
+      err => console.error(err)
+    )
+  }
+
   homeChat(){
     if(this.chatService.idChat != ""){
       var idChat = this.existingChat(this.chatService.idChat);
       if(idChat != undefined){
-        this.swipePosition(this.users, 0, 1)
-      }else{
-        this.obtainUserInformation(this.chatService.idChat);
+        this.swapPosition(this.users, 0, 1);
+        this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages'])
+      }
+      else{
+        this.obtainUserInformation(this.chatService.idChat, () => {
+          this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages']);
+        });
         let message = {
           messages : [],
           users : [this.cookie.get('idUser'), this.chatService.idChat]
@@ -49,10 +62,17 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  obtainUserInformation(idUser : string){
+  updateData(actualPhoto: string, actualName : string, messages: Array<any>) : void{
+    this.actualPhoto = actualPhoto;
+    this.actualName = actualName; 
+    this.actualMessages = this.messages[0]['messages'];
+  }
+
+  obtainUserInformation(idUser : string, callbackF : () => void ){
     this.userService.getCompany(idUser).subscribe(
       res => {
         this.users.unshift(res['user']);
+        callbackF();
       },
       err => console.error(err)
     )
@@ -81,11 +101,11 @@ export class ChatComponent implements OnInit {
   }
   
   sendMessage(content: String){
-      this.socketService.emit('sendMessage', {
-        idUser: this.cookie.get('idUser'),
-        idCompany: this.informationChat['_id'],
-        content
-      })
+    this.socketService.emit('sendMessage', {
+      idUser: this.cookie.get('idUser'),
+      idCompany: this.informationChat['_id'],
+      content
+    })
   }
 
   obtainMessages(){
@@ -93,12 +113,12 @@ export class ChatComponent implements OnInit {
       res => {
         if(res['users'].length > 0){
           this.messages = res['messages'];
-          this.users = res['users'];        
+          this.users = res['users'];
           this.homeChat()
         }
       },
       err => console.error(err)
-    )
+      )
   }
 
   changeMessage(user: any){
@@ -119,7 +139,7 @@ export class ChatComponent implements OnInit {
     return []
   }
 
-  swipePosition(arrayAny : Array<Object>, positionOne: number, positionTwo: number){
+  swapPosition(arrayAny : Array<Object>, positionOne: number, positionTwo: number, callbackF? : () => void){
     var moveElement = arrayAny[positionTwo];
     if(arrayAny.length > positionOne && arrayAny.length > positionTwo){
       arrayAny[positionTwo] = arrayAny[positionOne]
@@ -127,4 +147,5 @@ export class ChatComponent implements OnInit {
     }
     return arrayAny;
   }
+  
 }
