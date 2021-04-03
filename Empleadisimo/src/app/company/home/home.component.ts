@@ -5,6 +5,7 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { SocketService } from '../../services/socket.service'
 
 //import {Subject} from 'rxjs';
 //import {debounceTime} from 'rxjs/operators';
@@ -49,10 +50,13 @@ export class HomeComponent implements OnInit {
     private publicacionesService:PublicacionesService,
     private cookies: CookieService,
     private usuariosService:UsuariosService,
-    private config: NgbModalConfig
+    private config: NgbModalConfig,
+    private socketService: SocketService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
+    this.obtainConn();
+    this.listenMessage();
   }
 
   ngOnInit(): void {
@@ -65,6 +69,24 @@ export class HomeComponent implements OnInit {
 
       this.SuccessfullMessage()
     })
+  }
+
+  obtainConn(){
+    if(this.usuariosService.imOnline == false){
+      this.usuariosService.obtenerUsuario(this.cookies.get('idUser')).subscribe(
+        (res) => {
+          this.socketService.emit("ObtainData", res ) 
+          this.usuariosService.imOnline = true;
+        }
+      )
+    }
+  }
+
+  listenMessage(){
+    this.socketService.listen('recieveMessage').subscribe(
+      (res) => console.log(res),
+      (err) => console.error(err)
+    )
   }
 
   public SuccessfullMessage() {

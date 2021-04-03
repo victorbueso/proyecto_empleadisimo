@@ -1,0 +1,52 @@
+.col-form-label{
+    font-family: 'Raleway semibold';
+}
+
+h2{
+    font-family: 'Ramabhadra';
+    color: #f17300;
+    font-size: 1.6rem;
+    margin-bottom: 0px;
+}
+
+h3 {
+    font-family: 'Raleway bold';
+    color: #054a91;
+    font-size: 1.2rem;;
+}
+
+.icon{
+    font-size: 20px;
+}
+
+.icon:hover{
+    color: #f17300;
+}
+
+.input-error{
+    box-shadow: 0 0 0 0.2rem rgba(255,0,0,50%);
+}
+
+.modal-text{
+    font-family: 'Raleway medium';
+}
+
+.option-btn{
+    padding-top: 5px;
+    width: 50px !important;
+    height: 45px !important;
+}
+
+.table{
+    font-family: 'Raleway medium';
+}
+
+.table thead th{
+    border-bottom: 1px solid gray;
+}
+
+.table td, .table th {
+    border-top: 0px !important;
+}
+
+

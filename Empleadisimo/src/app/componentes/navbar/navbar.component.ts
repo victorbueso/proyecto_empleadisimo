@@ -7,6 +7,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
 import { SocketService } from 'src/app/services/socket.service';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -18,12 +19,13 @@ export class NavbarComponent implements OnInit{
 
   faBell = farBell;
   faCommentDots = farCommentDots;
+  faSignOutAlt = faSignOutAlt;
 
   public successRegistro:Boolean = false;
   public errorRegistro: Boolean = false;
   public errorLogin: Boolean = false;
   public message : String = "";
-  public imgPerfil : string = '../../../assets/img/user-default.png';
+  public imgPerfil : string = '../../../assets/img/usuario-sin-foto.png';
 
   public pruebaUsuarioLogueado = null;
 
@@ -172,7 +174,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeido =+ 1;
+            this.noLeido = this.noLeido + 1;
           }
         })
       } else if(this.cookieService.get('tipo')=='1'){
@@ -183,7 +185,7 @@ export class NavbarComponent implements OnInit{
         }
         this.notificacionesC.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeidoC =+ 1;
+            this.noLeidoC = this.noLeidoC + 1;
           }
         })
       }
@@ -204,14 +206,8 @@ export class NavbarComponent implements OnInit{
   // funcion utilizada para enviar los datos
     this.usuarioService.loginUsuario(data).subscribe(
       result=>{
-        //console.log(result);
         this.formularioLogin.reset();
-        /*this.formularioLogin.setValue({
-          lgCorreo:null,
-          lgPassword:null
-        });*/
         this.pruebaUsuarioLogueado = result.idUser;
-        //console.log(this.pruebaUsuarioLogueado);
         this.cookieService.set('token', result.token);
         this.cookieService.set('idUser', result.idUser);
         this.cookieService.set('tipo', result.tipo);
@@ -222,6 +218,9 @@ export class NavbarComponent implements OnInit{
         } else if (result.tipo == 1){
           this.router.navigate(['company']);
           this.ngOnInit();
+        } else if( result.tipo == 2){
+          this.router.navigate(['admin']);
+          this.ngOnInit();
         }
         this.modalService.dismissAll();
       },error=>{
@@ -230,10 +229,6 @@ export class NavbarComponent implements OnInit{
         setTimeout( () => {
           this.message="";
           this.errorLogin = false;
-          /*this.formularioLogin.setValue({
-            lgCorreo:null,
-            lgPassword:null
-          });*/
           this.formularioLogin.reset();
         }, 3000)
 
@@ -269,11 +264,6 @@ export class NavbarComponent implements OnInit{
         result=>{
           console.log(result);
           this.registroSuccess= true;
-          /*this.formularioRegistro.setValue({
-            rgCorreo:null,
-            rgConfPassword:null,
-            rgPassword:null
-          });*/
           this.formularioRegistro.reset();
           this.cookieService.set('token', result.token);
           this.cookieService.set('idUser', result.idUser);
@@ -301,20 +291,10 @@ export class NavbarComponent implements OnInit{
           setTimeout( () => {
             this.message="";
             this.errorRegistro = false;
-            /*this.formularioLogin.setValue({
-              lgCorreo:null,
-              lgPassword:null
-            });*/
+
             this.formularioRegistro.reset();
           }, 3000)
 
-          /*console.log(error);
-          alert(error.error.message);
-          this.formularioRegistro.setValue({
-            rgCorreo:null,
-            rgConfPassword:null,
-            rgPassword:null
-          });*/
         }
       );
 
@@ -361,5 +341,9 @@ export class NavbarComponent implements OnInit{
     }, error => {
       console.log(error);
     })
+  }
+
+  showSidebar(){
+    this.helperService.sidebarEvent.emit();
   }
 }

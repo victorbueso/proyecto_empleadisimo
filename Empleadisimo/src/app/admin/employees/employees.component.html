@@ -1,0 +1,325 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 d-flex mt-auto mb-3">
+            <h2>Sección de empleados</h2>
+        </div>
+        
+        <div class="col-xl-12 col-md-10 mr-auto ml-auto">
+            <mat-tab-group dynamicHeight [(selectedIndex)]="activeTab">
+                <!-- Todas las cuentas -->
+                <mat-tab label="Todos"> 
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12 col-12 d-flex">
+                            <div class="form-group row w-100 mb-auto mt-auto">
+                                <div class="input-group flex-nowrap pl-4 pr-2">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
+                                    </div>
+                                    <input type="search" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="filter" [(ngModel)]="filter" spellcheck="false">
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <mat-paginator [length]="employees.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-12 text-center mt-5" *ngIf="this.employees.length == 0">
+                            <p>No se encontró ninguna cuenta de empleado.</p>
+                        </div>
+                        <div class="table-responsive" *ngIf="this.employees.length != 0">
+                            <table class="table mr-auto ml-auto">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Profesión</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let employee of employees  | filterEmployees : filter">
+                                    <tr [ngClass]="{'table-light' : employee.estado == 'activo', 'table-warning': employee.estado=='bloqueado', 'table-danger': employee.estado=='eliminado'}">
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
+                                        <div class="d-flex justify-content-end" >
+                                            <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado == 'activo'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Bloquear usuario" placement="left" (click)="open(block, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado != 'eliminado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Eliminar usuario" placement="left" (click)="open(delete, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
+                                                </button> 
+                                            </td>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                </mat-tab>
+                <!-- Cuentas activas -->
+                <mat-tab label="Cuentas activas"> 
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12 col-12 d-flex">
+                            <div class="form-group row w-100 mb-auto mt-auto">
+                                <div class="input-group flex-nowrap pl-4 pr-2">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="activeFilter" [(ngModel)]="activeFilter" spellcheck="false">
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <mat-paginator [length]="activeEmployees.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-12 text-center mt-5" *ngIf="this.activeEmployees.length == 0">
+                            <p>No se encontró ninguna cuenta de empleado activa.</p>
+                        </div>
+                        <div class="table-responsive" *ngIf="this.activeEmployees.length != 0">
+                            <table class="table mr-auto ml-auto">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Profesión</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let employee of activeEmployees | filterEmployees : activeFilter">
+                                    <tr class="table-light">
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
+                                        <div class="d-flex justify-content-end" >
+                                            <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado == 'activo'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Bloquear usuario" placement="left" (click)="open(block, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado != 'eliminado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Eliminar usuario" placement="left" (click)="open(delete, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
+                                                </button> 
+                                            </td>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </mat-tab>
+                <!-- Cuentas bloqueadas -->
+                <mat-tab label="Cuentas bloqueadas"> 
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12 col-12 d-flex">
+                            <div class="form-group row w-100 mb-auto mt-auto">
+                                <div class="input-group flex-nowrap pl-4 pr-2">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="blockedFilter" [(ngModel)]="blockedFilter" spellcheck="false">
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <mat-paginator [length]="blockedEmployees.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-12 text-center mt-5" *ngIf="this.blockedEmployees.length == 0">
+                            <p>No se encontró ninguna cuenta de empleado bloqueada.</p>
+                        </div>
+                        <div class="table-responsive" *ngIf="this.blockedEmployees.length != 0">
+                            <table class="table mr-auto ml-auto">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Profesión</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let employee of blockedEmployees | filterEmployees : blockedFilter">
+                                    <tr class="table-light">
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
+                                        <div class="d-flex justify-content-end" >
+                                            <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado == 'activo'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Bloquear usuario" placement="left" (click)="open(block, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado != 'eliminado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Eliminar usuario" placement="left" (click)="open(delete, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
+                                                </button> 
+                                            </td>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                </mat-tab>
+                <!-- Cuentas eliminadas -->
+                <mat-tab label="Cuentas eliminadas"> 
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5 col-md-12 col-sm-12 col-12 d-flex">
+                            <div class="form-group row w-100 mb-auto mt-auto">
+                                <div class="input-group flex-nowrap pl-4 pr-2">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search bg-inverse"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control input-block" placeholder="Buscar por nombre o correo electrónico" name="deletedFilter" [(ngModel)]="deletedFilter" spellcheck="false">
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <mat-paginator [length]="deletedEmployees.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                        <div class="col-12 text-center mt-5" *ngIf="this.deletedEmployees.length == 0">
+                            <p>No se encontró ninguna cuenta de empleado eliminada.</p>
+                        </div>
+                        <div class="table-responsive" *ngIf="this.deletedEmployees.length != 0">
+                            <table class="table mr-auto ml-auto">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nombre</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Profesión</th>
+                                        <th>Fecha de registro</th>
+                                        <th>Curriculums</th>
+                                        <th>Trabajos aplicados</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let employee of deletedEmployees | filterEmployees : deletedFilter">
+                                    <tr class="table-light">
+                                        <td style="padding-top : 4px; padding-bottom: 4px">
+                                            <img [src]="'http://localhost:3000/'+ employee.fotoPerfil" *ngIf="employee.fotoPerfil != ''" class="img-perfil" alt="">
+                                            <img src="/assets/img/usuario-sin-foto.png" *ngIf="employee.fotoPerfil == ''" class="img-perfil" alt="">
+                                        </td>
+                                        <td>{{employee?.nombreCompleto}}</td>
+                                        <td>{{employee?.correo}}</td>
+                                        <td>{{employee?.profesion}}</td>
+                                        <td class="text-center">{{employee?.fechaRegistro}}</td>
+                                        <td class="text-center">{{employee?.curriculum.length}}</td>
+                                        <td class="text-center">{{employee?.aplicaciones}}</td>
+                                        <td>{{employee?.estado}}</td>
+                                        <div class="d-flex justify-content-end" >
+                                            <td class="option-btn" *ngIf="employee.estado == 'bloqueado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Desbloquear usuario" placement="left" (click)="unblockEmployee(employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUser" ></fa-icon> 
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado == 'activo'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Bloquear usuario" placement="left" (click)="open(block, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserAltSlash"></fa-icon>
+                                                </button> 
+                                            </td>
+                                            <td class="option-btn" *ngIf="employee.estado != 'eliminado'"> 
+                                                <button class="btn" style="padding: 0px" ngbTooltip="Eliminar usuario" placement="left" (click)="open(delete, employee._id)"> 
+                                                    <fa-icon class="icon" [icon]="faUserTimes"></fa-icon>
+                                                </button> 
+                                            </td>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-tab>
+              </mat-tab-group>
+        </div>
+    </div>
+    
+</div>
+
+
+<!-- Advertencia de bloquear usuario -->
+<ng-template #block let-modal>
+    <div class="modal-body">
+        <p class="modal-text">
+            Al bloquear un usuario este no podrá iniciar sesión en el sitio, ¿deseas continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="blockEmployee()">Sí, bloquear</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
+
+<!-- Advertencia de eliminar usuario -->
+
+  <ng-template #delete let-modal>
+    <div class="modal-body">
+        <p class="modal-text">
+            Una vez eliminado, el usuario ya no tendrá acceso a su cuenta, ¿deseas continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deleteEmployee()">Sí, eliminar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
