@@ -33,6 +33,13 @@ h3 {
     color: #f17300;
 }
 
+.icon-posts{
+    width: 30px;
+    font-size: 20px;
+    color: #f17300;
+    margin-right: 2px;
+}
+
 .img-perfil{
     width: 40px; 
     height: 40px;
@@ -82,6 +89,20 @@ h3 {
 
 .table-responsive::-webkit-scrollbar-thumb{
     background: #f17300;
+    border-radius: 5px;
+}
+
+.seccion-publicaciones{
+    max-height: 500px;
+    overflow: auto;
+}
+
+.seccion-publicaciones::-webkit-scrollbar{
+    width: 6px;
+}
+
+.seccion-publicaciones::-webkit-scrollbar-thumb{
+    background-color: #f17300;
     border-radius: 5px;
 }
 

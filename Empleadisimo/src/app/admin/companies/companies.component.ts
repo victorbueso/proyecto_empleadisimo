@@ -1,7 +1,8 @@
 import { NumberInput } from '@angular/cdk/coercion';
 import { Component, OnInit, AfterViewInit, ElementRef} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator'
-import { faUser, faUserAltSlash, faUserTimes } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faUser, faUserAltSlash, faUsers, faUserTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarTimes} from '@fortawesome/free-regular-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -15,6 +16,11 @@ export class CompaniesComponent implements OnInit {
   faUser = faUser;
   faUserAltSlash = faUserAltSlash;
   faUserTimes = faUserTimes;
+  faUsers = faUsers;
+  faMapMarkerAlt =faMapMarkerAlt;
+  faCalendarCheck = faCalendarCheck;
+  faCalendarTimes = faCalendarTimes;
+
 
   // MatPaginator Inputs
   page_size : number = 10;
@@ -71,7 +77,7 @@ export class CompaniesComponent implements OnInit {
   }
 
   openXL(content:any, id:string){
-    this.modalService.open(content, {size: 'xl'})
+    this.modalService.open(content, {size: 'lg'});
     this.publicacionesService.getPostCompany(id)
     .subscribe(result => {
       this.posts = result;

@@ -22,9 +22,9 @@
             </thead>
             <tbody *ngFor="let admin of admins; index as i">
                 <tr>
-                    <td>{{admin.nombreCompleto}}</td>
-                    <td>{{admin.correo}}</td>
-                    <td>{{admin.estado}}</td>
+                    <td>{{admin?.nombreCompleto}}</td>
+                    <td>{{admin?.correo}}</td>
+                    <td>{{admin?.estado}}</td>
                     <div class="d-flex justify-content-end" *ngIf="admin.estado != 'default'">
                         <td class="option-btn"> 
                             <button class="btn" [disabled]="!this.systemLoggeado" style="padding:0px" (click)="open(newAdmin, admin._id, 'actualizar')" ngbTooltip="Editar usuario"> 
