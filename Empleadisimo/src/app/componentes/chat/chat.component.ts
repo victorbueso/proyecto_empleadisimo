@@ -14,36 +14,59 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 export class ChatComponent implements OnInit {
 
   informationChat: any;
-  messages = [];
-  users = []
-  chats =  [];
+  messages : Array<any> = [];
+  users : Array<any> = [];
+  chats : Array<any> =  [];
   actualPhoto = "";
   actualName = "";
   actualMessages = [];
   myId: String = ""; 
+
   constructor(private chatService: ChatService,
               private userService: UsuariosService,
               private socketService: SocketService,
               private cookie: CookieService){
-    this.getInformationChat();
     this.obtainMessages();
-  }
+    console.log(this.users)
+    console.log(this.messages)
+    }
   ngOnInit(): void {
   }
   
-  getInformationChat(){
+  homeChat(){
     if(this.chatService.idChat != ""){
-      this.userService.getCompany(this.chatService.idChat).subscribe(
-        res =>{ 
-          console.log(res);
-          this.informationChat = res.user;
-          this.actualName = res['user']['nombreCompleto'];
-          this.actualPhoto = res['user']['fotoPerfil'];
-          this.actualMessages = [];
-        },
-        err => console.error(err)
-      )
+      var idChat = this.existingChat(this.chatService.idChat);
+      if(idChat != undefined){
+        this.swipePosition(this.users, 0, 1)
+      }else{
+        this.obtainUserInformation(this.chatService.idChat);
+        let message = {
+          messages : [],
+          users : [this.cookie.get('idUser'), this.chatService.idChat]
+        }
+        this.messages.unshift(message)
+      }
     }
+  }
+
+  obtainUserInformation(idUser : string){
+    this.userService.getCompany(idUser).subscribe(
+      res => {
+        this.users.unshift(res['user']);
+      },
+      err => console.error(err)
+    )
+  }
+
+  existingChat(idUser: String): number | undefined{
+    for(var i = 0; i < this.messages.length; i++){
+      for(var j = 0; j < this.messages[i]['users']['length']; j++){
+        if(this.messages[i]['users'][j] == idUser){
+          return i
+        }
+      }
+    }
+    return undefined
   }
 
   obtainConn(){
@@ -68,21 +91,10 @@ export class ChatComponent implements OnInit {
   obtainMessages(){
     this.userService.obtainMessages().subscribe(
       res => {
-        if(res['users'].length > 0 && this.actualName == ""){
+        if(res['users'].length > 0){
           this.messages = res['messages'];
           this.users = res['users'];        
-          this.actualPhoto = this.users[0]['fotoPerfil'];
-          this.actualName = this.users[0]['nombreCompleto'];
-          this.actualMessages = this.messages[0]['messages'];
-          this.myId = this.cookie.get('idUser');
-        //   // if(!this.informationChat){
-        //   //   this.informationChat = this.users[0]['_id'];
-        //   // }
-        }else{
-          if(res['users'].length > 0){
-            this.messages = res['messages'];
-            this.users = res['users'];
-          }
+          this.homeChat()
         }
       },
       err => console.error(err)
@@ -107,4 +119,12 @@ export class ChatComponent implements OnInit {
     return []
   }
 
+  swipePosition(arrayAny : Array<Object>, positionOne: number, positionTwo: number){
+    var moveElement = arrayAny[positionTwo];
+    if(arrayAny.length > positionOne && arrayAny.length > positionTwo){
+      arrayAny[positionTwo] = arrayAny[positionOne]
+      arrayAny[positionOne] = moveElement;
+    }
+    return arrayAny;
+  }
 }

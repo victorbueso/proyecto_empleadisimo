@@ -128,7 +128,6 @@ export class UsuariosService {
     return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);
   }
 
-
   getAdmins() :Observable<any> {
     return this.httpClient.get(`${this.url}/admin/all`);
   }

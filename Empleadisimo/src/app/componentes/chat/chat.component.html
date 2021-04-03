@@ -1,15 +1,6 @@
 <div class="chat-container">
     <div class="contact-container">
-        <div *ngIf="informationChat" class="contact pointer">
-            <div class="contact-profile">
-                <img class="contact-pp" [src]=" actualPhoto | modifyImage">
-            </div>
-            <div class="information-contact">
-                <span>{{ actualName }}</span>
-                <p>Lorem, ipsum dolor.</p>
-            </div>
-        </div>
-        <div *ngFor="let user of users" class="contact pointer">
+        <!-- <div *ngFor="let user of users" class="contact pointer">
             <button (click)="changeMessage(user)" class="buttonUser">
                 <div class="contact-profile">
                     <img class="contact-pp" [src]="user['fotoPerfil'] | modifyImage">
@@ -18,7 +9,7 @@
                     <span>{{ user['nombreCompleto'] }}</span>
                 </div>
             </button>
-        </div>        
+        </div>         -->
     </div>
     <div class="message-container">
         <div class="ppc pointer">
