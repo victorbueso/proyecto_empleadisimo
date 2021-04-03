@@ -17,6 +17,7 @@ interface HtmlInputEvent extends Event{
 export class CvComponent{
   photoSelected!: string | ArrayBuffer;
   titleCurriculum: string = "Seleccione su curriculum";
+  titleCurriculumU: string = "Actualize/Cambie su curriculum"
   successFile = false;
   idEmpleado: string = "";
   curriculums: any = [];
@@ -86,6 +87,22 @@ export class CvComponent{
     }, err => {
       console.error(err)
     })
+  }
+
+  updateCV(url:string){
+    url = `${ url.slice(22, 29) }\\${ url.slice(30) }`
+    this.uploading = !this.uploading
+    this.userService.updateCurriculums(this.file, url, this.idEmpleado).subscribe(res => {
+      this.uploading = !this.uploading;
+      this.updateCurriculum();
+      this.successFile = true;
+    },
+    err => {
+      console.error(err)
+    })
+    /*console.log(url)
+    console.log(this.file)
+    console.log(this.idEmpleado)*/
   }
 
 }
