@@ -30,21 +30,31 @@ export class ChatComponent{
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
-                
   }
 
   serverMessage(){
     this.socketService.listen('messageServer').subscribe(
       (res : any) => {
         var index = this.obtainPosition(res['message']['idUser']);
-        // this.messages.push(res['message']);
-        this.messages[index]['messages'].push(res['message']);
+        if(index > -1){
+          this.messages[index]['messages'].push(res['message']);
+        }else{
+          this.messages.unshift(res['message']);
+          this.userService.getCompany(res['message']['messages'][0]['idUser'])
+          .subscribe(
+            (res) => {
+              this.users.unshift(res['user'])              
+            },
+            (err) => console.error(err)
+          )
+        }
       },
       err => console.error(err)
     )
   }
 
   homeChat(){
+    
     if(this.chatService.idChat != ""){
       var idChat = this.existingChat(this.chatService.idChat);
       if(idChat != undefined){
@@ -117,6 +127,8 @@ export class ChatComponent{
           this.messages = res['messages'];
           this.users = res['users'];
           this.homeChat()
+        }else{
+          this.homeChat()
         }
       },
       err => console.error(err)
@@ -128,9 +140,6 @@ export class ChatComponent{
     this.actualName = user['nombreCompleto'];
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
-    console.log(this.users);
-    console.log("---------------");
-    console.log(this.messages);
   }
 
   obtainMessagesById(userId : string){
@@ -158,7 +167,7 @@ export class ChatComponent{
       if(this.users[i]['_id'] == idUser){
         return i
       }
-    }-1
+    }
     return -1 
   }
 

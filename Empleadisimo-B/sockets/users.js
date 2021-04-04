@@ -72,6 +72,8 @@ class Users{
             .catch( err => {
             })   
             
+        return newChat;
+    
     }
 
     async existingChat(updateChat, chatInformation){
