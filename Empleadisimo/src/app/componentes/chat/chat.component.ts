@@ -30,13 +30,15 @@ export class ChatComponent{
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
+                
   }
 
   serverMessage(){
     this.socketService.listen('messageServer').subscribe(
-      res => {
-        console.log(res)
-        console.log("Se recibio una respuesta");
+      (res : any) => {
+        var index = this.obtainPosition(res['message']['idUser']);
+        // this.messages.push(res['message']);
+        this.messages[index]['messages'].push(res['message']);
       },
       err => console.error(err)
     )
@@ -126,13 +128,16 @@ export class ChatComponent{
     this.actualName = user['nombreCompleto'];
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
+    console.log(this.users);
+    console.log("---------------");
+    console.log(this.messages);
   }
 
   obtainMessagesById(userId : string){
     for(var i = 0; i < this.messages.length; i++){
       for(var j = 0; j < 2; j++){
         if(this.messages[i]['users'][j] == userId){
-          return this.messages[i]["messages"]
+          return this.messages[i]["messages"]; 
         }
       }
     }
@@ -148,4 +153,13 @@ export class ChatComponent{
     return arrayAny;
   }
   
+  obtainPosition(idUser : any) : number {
+    for(var i =  0; i < this.users.length; i++){
+      if(this.users[i]['_id'] == idUser){
+        return i
+      }
+    }-1
+    return -1 
+  }
+
 }

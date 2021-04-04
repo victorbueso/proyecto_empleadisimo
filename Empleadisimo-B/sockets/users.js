@@ -6,6 +6,7 @@ class Users{
 
     constructor(){
         this.users = [];
+        this.lastMessage = [];
     }
 
     addUser(user){
@@ -17,19 +18,25 @@ class Users{
         return this.users;
     }   
 
-    saveChat(chatInformation){
+    saveChat(chatInformation, saveChat){
 
-        this.chatExits(chatInformation['idUserE'], chatInformation['idUserR'])
+        return new Promise(resolved => { 
+            this.chatExits(chatInformation['idUserE'], chatInformation['idUserR'])
             .then(res => {
                 if(res.length == 0){
-                    return this.notExistingChat(chatInformation)
+                    resolved(
+                        this.notExistingChat(chatInformation)
+                    )
                 }else{
-                    return this.existingChat(res, chatInformation);
+                    resolved(
+                    this.existingChat(res, chatInformation)
+                    .then(res => res)
+                    .catch(err => console.error(err)))
                 }
 
             })
             .catch()
-
+        })
     }
 
     filterbyEmail(user){
@@ -61,10 +68,10 @@ class Users{
 
         newChat.save()
             .then( res => { 
-                return newChat;
             })
             .catch( err => {
             })   
+            
     }
 
     async existingChat(updateChat, chatInformation){
@@ -80,8 +87,10 @@ class Users{
             { _id : updateChat[0]["_id"] },
             { $push : { messages : newMessage} }
         )
-        .then(() => newMessage)
+        .then(() => {
+        })
         .catch()
+        return newMessage
     }
 }
 

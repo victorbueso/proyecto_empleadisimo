@@ -26,12 +26,12 @@ io.on('connect', (client) => {
         const date = new Date();        
         var socketId = user.getSocketId(data['idCompany']); 
             
-        if(socketId.length > 0){
-            socketId = socketId[0]['socketId'];
-            client.to(socketId).emit('recieveMessage', {
-                message: data['content']
-            })             
-        }
+        // if(socketId.length > 0){
+        //     socketId = socketId[0]['socketId'];
+        //     client.to(socketId).emit('recieveMessage', {
+        //         message: data['content']
+        //     })             
+        // }
         
         chatInformation = {
             idUserE : data.idUser,
@@ -39,9 +39,18 @@ io.on('connect', (client) => {
             content : data.content,
         };
         
-        io.to(socketId).emit("messageServer", {
-            message: "Dios, soy yo de nuevo. :c"
-        })
+        var message = [];
+
+        user.saveChat(chatInformation)
+        .then((res) => {
+            console.log(socketId[0]['socketId'])
+            io.to(socketId[0]['socketId']).emit("messageServer", {
+                message: res
+            })
+        });
+        
+
+
   
     })
     
