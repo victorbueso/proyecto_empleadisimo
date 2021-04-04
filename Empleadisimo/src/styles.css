@@ -148,6 +148,7 @@ body {
 /* Scrollbar */
 .mat-typography::-webkit-scrollbar{
     width: 6px;
+    height: 6px;
 }
 
     .mat-typography::-webkit-scrollbar-thumb{

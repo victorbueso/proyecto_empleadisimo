@@ -2,8 +2,38 @@
     font-family: 'Raleway medium';
 }
 
+.description{
+    font-size: 1rem;
+}
+
+.items{
+    font-size: 1rem;
+    padding-left: 15px;
+    border-left: 5px solid #f17300;
+}
+
 h1{
     font-family: 'Ramabhadra';
+    margin-bottom: 0px;
+}
+
+h2{
+    font-family: 'Raleway bold';
+    margin-bottom: 10px;
+}
+
+.icon{
+    font-size: 1.2rem;
+}
+
+.img-perfil{
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%
+}
+
+.icon:hover{
+    color:#f17300;
 }
 
 .nav-link{
@@ -12,4 +42,19 @@ h1{
 
 .nav-link:hover{
     color: #f17300 !important;
+}
+
+.table-responsive{
+    max-height: 500px;
+    overflow: auto;
+}
+
+.table-responsive::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb{
+    color:#f17300;
+    border-radius: 5px;
 }

@@ -57,6 +57,9 @@ export class HomeComponent implements OnInit {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;
+      this.publicaciones.forEach(publicacion => {
+        publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
+      });
     }, error => {
       console.log(error);
     })

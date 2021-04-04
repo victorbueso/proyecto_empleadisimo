@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3">
+        <div class="col-12 mt-3" style="font-size: 1.1rem;">
             <a routerLink='/' class="nav-link">
             <fa-icon [icon]="faArrowLeft"></fa-icon> Volver a inicio
             </a>
@@ -8,17 +8,67 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-8">
+        <div class="col-xl-10 col-8 mt-auto mb-auto">
             <h1>
                 {{post?.titulo}}
             </h1>
         </div>
-        <div class="col-4 d-flex justify-content-end">
-            <button class="btn btn-outline-danger ml-2 mr-2">Editar</button>
-            <button class="btn btn-outline-danger ml-2 mr-2">Eliminar</button>
+        <div class="col-xl-2 col-4 d-flex justify-content-end">
+            <button class="btn icon mr-1" ngbTooltip="Editar publicación"><fa-icon [icon]="faPen"></fa-icon></button>
+            <button class="btn icon mr-1" ngbTooltip="Eliminar publicación"><fa-icon [icon]="faTimes"></fa-icon></button>
         </div>
-        <div class="col-8 mt-4">
+        <div class="col-12 mt-4 mb-4 description">
             {{post?.descripcion}}
         </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Profesión solicitada</strong> <br> {{post?.profesion}} 
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+           <strong>Cantidad de pago</strong> <br>{{post?.cantidadPago}}
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Ubicación</strong> <br>{{post.ubicacion?.ciudad}}, {{post.ubicacion?.departamento}}, {{post.ubicacion?.pais}}
+         </div>
+         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Modalidad</strong> <br>{{post?.modalidad}}
+         </div>
+         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Fecha de publicación</strong> <br>{{post?.fechaPublicacion | date:'dd/MM/yyy'}}
+         </div>
+         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Fecha de vencimiento</strong> <br>{{post?.fechaVencimiento | date:'dd/MM/yyy'}}
+         </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h2>Aplicantes</h2>
+        </div>
+        <div class="col-12 text-center" *ngIf="post.resultado?.length == 0">
+            Aún no tienes aplicantes en esta publicación de trabajo.
+        </div>
+        <div class="table-responsive" *ngIf="post.resultado?.length != 0">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Curriculum Vitae</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let usuarios of post.resultado">
+                    <td style="padding-top : 4px; padding-bottom: 4px">
+                        <img [src]="'http://localhost:3000/'+ usuarios.fotoPerfil" *ngIf="usuarios.fotoPerfil != ''" class="img-perfil" alt="">
+                        <img src="/assets/img/usuario-sin-foto.png" *ngIf="usuarios.fotoPerfil == ''" class="img-perfil" alt="">
+                    </td>
+                    <td>{{usuarios.nombreCompleto}}</td>
+                    <td>
+                        <button class="btn btn-primary">Ver curriculum</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+   
 </div>

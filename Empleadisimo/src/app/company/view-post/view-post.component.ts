@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { PublicacionesService } from 'src/app/services/publicaciones.service';
 })
 export class ViewPostComponent implements OnInit {
   faArrowLeft  = faArrowLeft;
+  faPen = faPen;
+  faTimes = faTimes;
 
   post : any = [];
 
@@ -22,6 +24,15 @@ export class ViewPostComponent implements OnInit {
     .subscribe(res => {
       console.log(res);
       this.post = res[0];
+      this.post.fechaVencimiento = new Date(res[0].fechaVencimiento);
+      this.post.fechaPublicacion = new Date(res[0].fechaPublicacion);
+      if(this.post.modalidad == 1){
+        this.post.modalidad = 'Presencial'
+      } else if(this.post.modalidad == 2){
+        this.post.modalidad = 'Semipresencial'
+      } else if(this.post.modalidad == 3){
+        this.post.modalidad = 'Virtual'
+      }
     }, error => console.log(error));
     
   }

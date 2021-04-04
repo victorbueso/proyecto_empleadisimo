@@ -16,7 +16,8 @@
       <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px; font-family: 'Raleway medium';">
         <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
           <div class="card-body">
-            <h2 class="card-title">{{publicacion.titulo}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">23/02/2021</p></h2>
+            <h2 class="card-title">{{publicacion.titulo}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+              {{publicacion.fechaPublicacion | date:'dd/MM/yyyy'}}</p></h2>
             <p class="card-text">
               {{publicacion.descripcion}}
             </p>

@@ -106,17 +106,18 @@ export class NavbarComponent implements OnInit{
       this.obtenerNotificaciones();
     }
     this.socketService.listen('nuevaPublicacion').subscribe(
-      res => {
-        this.noLeido = this.noLeido + 1;
-        var data : any;
-        data = res;
-        this.nuevaNotificacion = true;
-        this.notificaciones.unshift({
-          idPublicacion:data._id,
-          titulo:data.titulo,
-          fechaPublicacion: data.fechaPublicacion,
-          estado: false
-        });
+      () => {
+        this.obtenerNotificaciones();
+        // this.noLeido = this.noLeido + 1;
+        // var data : any;
+        // data = res;
+        // this.nuevaNotificacion = true;
+        // this.notificaciones.unshift({
+        //   idPublicacion:data._id,
+        //   titulo:data.titulo,
+        //   fechaPublicacion: data.fechaPublicacion,
+        //   estado: false
+        // });
     },
     error=>{
       console.log(error);
@@ -125,17 +126,18 @@ export class NavbarComponent implements OnInit{
     if(idUser!=''){
       console.log('el usuario escucha');
       this.socketService.listen(idUser).subscribe(
-        res =>{
-          this.noLeidoC = this.noLeidoC + 1;
-          var data : any;
-          data = res;
-          this.nuevaNotificacionC = true;
-          this.notificacionesC.unshift({
-          idPublicacion:data.idPublicacion,
-          titulo:data.titulo,
-          fechaAplicacion: data.fechaAplicacion,
-          estado: false
-        });
+        () =>{
+          this.obtenerNotificaciones();
+        //   this.noLeidoC = this.noLeidoC + 1;
+        //   var data : any;
+        //   data = res;
+        //   this.nuevaNotificacionC = true;
+        //   this.notificacionesC.unshift({
+        //   idPublicacion:data.idPublicacion,
+        //   titulo:data.titulo,
+        //   fechaAplicacion: data.fechaAplicacion,
+        //   estado: false
+        // });
       },
       error=>{
         console.log(error);
