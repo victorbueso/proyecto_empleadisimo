@@ -1,20 +1,32 @@
 <div class="chat-container">
-    <div class="contact-container">
-        <div *ngFor="let user of users" class="contact pointer">
-            <button (click)="changeMessage(user)" class="buttonUser">
-                <div class="contact-profile">
-                    <img class="contact-pp" [src]="user['fotoPerfil'] | modifyImage">
-                </div>
-                <div class="information-contact">
-                    <span>{{ user['nombreCompleto'] }}</span>
-                </div>
-            </button>
-        </div>        
+    <div class="container-padding">
+        <div class="title-container">
+            <div class="pp-main">
+                <img class="contact-pp" src="../../../assets/img/1.jpg">
+            </div>
+            <div class="mm-container">
+                <h1>Mis mensajes</h1>
+            </div>
+        </div>
+        <div class="contact-container">
+            <div *ngFor="let user of users" class="contact pointer">
+                <button (click)="changeMessage(user)" class="buttonUser">
+                    <div class="contact-profile">
+                        <img class="contact-pp" [src]="user['fotoPerfil'] | modifyImage">
+                    </div>
+                    <div class="information-contact">
+                        <span>{{ user['nombreCompleto'] | titlecase }}</span>
+                        <span>Lorem ipsum dolor sit...</span>
+                    </div>
+                </button><br>
+                <hr>
+            </div>        
+        </div>
     </div>
     <div class="message-container">
         <div class="ppc pointer">
             <img class="contact-pp" [src]=" actualPhoto | modifyImage">
-            <p>{{ actualName }}</p>
+            <p>{{ actualName | titlecase }}</p>
         </div>
         <div class="messages">
             <div class="messages-container">
