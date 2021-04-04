@@ -26,4 +26,8 @@ export class PublicacionesService {
   updatePostUser(data: any): Observable<any> {
     return this.httpClient.put(this.url, data);
   }
+
+  getAllInfoPost(id:string): Observable<any> {
+    return this.httpClient.get(`${this.url}/posts/getInfo/${id}`);
+  }
 }

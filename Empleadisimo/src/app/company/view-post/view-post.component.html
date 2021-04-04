@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <a routerLink='/' class="nav-link">
+            <fa-icon [icon]="faArrowLeft"></fa-icon> Volver a inicio
+            </a>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-8">
+            <h1>
+                {{post?.titulo}}
+            </h1>
+        </div>
+        <div class="col-4 d-flex justify-content-end">
+            <button class="btn btn-outline-danger ml-2 mr-2">Editar</button>
+            <button class="btn btn-outline-danger ml-2 mr-2">Eliminar</button>
+        </div>
+        <div class="col-8 mt-4">
+            {{post?.descripcion}}
+        </div>
+    </div>
+</div>

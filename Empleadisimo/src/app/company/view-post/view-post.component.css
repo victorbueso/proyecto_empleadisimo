@@ -1,0 +1,15 @@
+.container{
+    font-family: 'Raleway medium';
+}
+
+h1{
+    font-family: 'Ramabhadra';
+}
+
+.nav-link{
+    color: #054a91 !important;
+}
+
+.nav-link:hover{
+    color: #f17300 !important;
+}

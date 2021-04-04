@@ -126,7 +126,7 @@ export class NavbarComponent implements OnInit{
       console.log('el usuario escucha');
       this.socketService.listen(idUser).subscribe(
         res =>{
-          this.noLeidoC = this.noLeidoC+ 1;
+          this.noLeidoC = this.noLeidoC + 1;
           var data : any;
           data = res;
           this.nuevaNotificacionC = true;
@@ -303,8 +303,7 @@ export class NavbarComponent implements OnInit{
   }
 
   buttonLogout(){
-    console.log('logOut');
-    this.router.navigate(['']);
+    this.router.navigate(['./']);
     this.pruebaUsuarioLogueado = null;
     this.cookieService.deleteAll();
   }
@@ -321,7 +320,6 @@ export class NavbarComponent implements OnInit{
       this.noLeido = 0;
       this.usuarioService.readNotifications(this.cookieService.get('idUser'))
       .subscribe( () => {
-        console.log("Notificaciones leídas");
         setTimeout( () => {
           this.obtenerNotificaciones()
         }, 1000)

@@ -126,7 +126,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateButtonStatus(i: number){
-    this.publicaciones[i]["aplico"] = !this.publicaciones[i]["aplico"]
+    this.publicaciones[i]["aplico"] = true;
   }
 
   chat(publication:any){

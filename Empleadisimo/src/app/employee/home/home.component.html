@@ -71,8 +71,7 @@
             Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
-            <button
-              [ngClass]="{'non-apply-button': !publicacion['aplico']}" [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
+            <button [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
               (click)="updateApplyPostUser(publicacion._id, i)" (click)="obtenerPublicaciones()">Aplicar
             </button>
             <a class="btn btn-primary mr-2" (click)="homepage(publicacion.idEmpresa)">Ver más</a>
