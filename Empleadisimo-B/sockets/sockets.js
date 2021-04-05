@@ -5,28 +5,26 @@ const { Users } = require('./users')
 const user = new Users();
 
 io.on('connect', (client) => {
-
+    
     client.on("ObtainData", (data) => {
         
-        var connectedUser = {
-            socketId: client.id,
-            id: data['_id']
+        if(data){
+            var connectedUser = {
+                socketId: client.id,
+                id: data['_id']
+            }
+      
+            user.addUser(connectedUser);  
+        }else{
+            console.log("No llega durante el registro");
         }
-  
-        user.addUser(connectedUser);  
+
     })
     
     client.on('sendMessage', (data) => {        
     
         const date = new Date();        
         var socketId = user.getSocketId(data['idCompany']); 
-            
-        if(socketId.length > 0){
-            socketId = socketId[0]['socketId'];
-            client.to(socketId).emit('recieveMessage', {
-                message: data['content']
-            })             
-        }
         
         chatInformation = {
             idUserE : data.idUser,
@@ -34,8 +32,16 @@ io.on('connect', (client) => {
             content : data.content,
         };
         
-        user.saveChat(chatInformation)
+        var message = [];
 
+        user.saveChat(chatInformation)
+        .then((res) => {
+            if(socketId.length > 0){
+                io.to(socketId[0]['socketId']).emit("messageServer", {
+                    message: res
+                })
+            }
+        });
+        
     })
-    
 })

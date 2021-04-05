@@ -1,36 +1,43 @@
 <div class="chat-container">
-    <div class="contact-container">
-
-        <div *ngIf="informationChat" class="contact pointer">
-            <div class="contact-profile">
-                <img class="contact-pp" [src]="informationChat['fotoPerfil']">
+    <div class="container-padding">
+        <div class="title-container">
+            <div class="pp-main">
+                <img class="contact-pp" src="../../../assets/img/1.jpg">
             </div>
-            <div class="information-contact">
-                <span>{{ informationChat['nombreCompleto'] }}</span>
-                <p>Lorem, ipsum dolor.</p>
+            <div class="mm-container">
+                <h1>Mis mensajes</h1>
             </div>
         </div>
+        <div class="contact-container">
+            <div *ngFor="let user of users" class="contact pointer">
+                <button (click)="changeMessage(user)" class="buttonUser">
+                    <div class="contact-profile">
+                        <img class="contact-pp" [src]="user['fotoPerfil'] | modifyImage">
+                    </div>
+                    <div class="information-contact">
+                        <span>{{ user['nombreCompleto'] | titlecase }}</span>
+                        <span>Lorem ipsum dolor sit...</span>
+                    </div>
+                </button><br>
+                <hr>
+            </div>        
+        </div>
     </div>
-    <div class="message-container">
+    <div class="noContact" [ngClass]="{'d-block' : actualName == '', 'd-none' : actualName != ''}">
+    </div>
+    <div class="message-container" [ngClass]="{'d-block' : actualName != '', 'd-none' : actualName == ''}">
         <div class="ppc pointer">
-            <img class="contact-pp" src="../../../assets/img/1.jpg">
+            <img class="contact-pp" [src]=" actualPhoto | modifyImage">
+            <p>{{ actualName | titlecase }}</p>
         </div>
         <div class="messages">
             <div class="messages-container">
-                <div class="mess sendit">
+                <div *ngFor="let message of actualMessages.slice().reverse()" class="mess" [class.sendit] = "myId == message['idUser']" [class.reciveit] = "myId != message['idUser']">
                     <div class="ms">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo, iure.</p>
+                        <p>{{ message['content'] }}</p>
                     </div>
                     <div class="hour-content">
-                        <span>12:01</span>
-                    </div>
-                </div>
-                <div class="mess reciveit">
-                    <div class="ms">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo, iure.</p>
-                    </div>
-                    <div class="hour-content">
-                        <span>12:01</span>
+                        <span>{{ message['hour'] }}</span>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,8 @@ import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccoun
 //import { EnterpriseComponent } from './enterprise/enterprise.component';
 
 import { ChatComponent } from './componentes/chat/chat.component';
+import { ModifyImagePipe } from './pipes/modify-image.pipe';
+
 
 
 @NgModule({
@@ -30,8 +32,13 @@ import { ChatComponent } from './componentes/chat/chat.component';
     SliderComponent,
     FooterLinksComponent,
     VerifyaccountComponent,
+<<<<<<< HEAD
+    ChatComponent,
+    ModifyImagePipe,
+=======
     //EnterpriseComponent
     ChatComponent
+>>>>>>> 2ae3613213b7a1b1203c8b6f8ec2cd7e9053d8e9
   ],
   imports: [
     BrowserModule,
