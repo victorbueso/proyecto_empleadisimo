@@ -17,15 +17,17 @@ import { MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator
 import { CustomMatPaginatorIntl } from './paginator-admin';
 import { FilterEmployeesPipe } from './pipes/filter-employees.pipe';
 import { FilterCompaniesPipe } from './pipes/filter-companies.pipe';
+import { ChartModule } from 'angular-highcharts';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 
 @NgModule({
-  declarations: [ AdminsComponent, 
-    SidebarComponent, 
-    EmployeesComponent, 
-    CompaniesComponent, 
-    HomeComponent, 
+  declarations: [ AdminsComponent,
+    SidebarComponent,
+    EmployeesComponent,
+    CompaniesComponent,
+    HomeComponent,
     DashboardComponent,
     PaginationPipe,
     FilterEmployeesPipe,
@@ -38,8 +40,9 @@ import { FilterCompaniesPipe } from './pipes/filter-companies.pipe';
     ReactiveFormsModule,
     NgbModule,
     MatTabsModule,
-    MatPaginatorModule
-  ], 
+    MatPaginatorModule,
+    HighchartsChartModule
+  ],
   providers:[
     {
       provide: MatPaginatorIntl,

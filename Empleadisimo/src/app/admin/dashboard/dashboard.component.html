@@ -1,1 +1,26 @@
-<p>dashboard works!</p>
+<h1>Dashboard</h1>
+<hr>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6" id="pie">
+      <!--<div class="pie" [chart]="donutChart"></div>-->
+      <highcharts-chart [Highcharts]="highchartsPie" [options]="donutChart"></highcharts-chart>
+    </div>
+    <div class="col-md-6" id="area">
+      <!--<div class="area" [chart]="areaChart"></div>-->
+      <highcharts-chart [Highcharts]="highchartsArea" [options]="areaChart"></highcharts-chart>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6" id="bar">
+      <!--<div class="bar" [chart]="barChart"></div>-->
+      <highcharts-chart [Highcharts]="highchartsBar" [options]="barChart"></highcharts-chart>
+    </div>
+    <!--<div class="col-md-6">
+      <div class="polar" [chart]="polarChart"></div>
+    </div>-->
+  </div>
+
+</div>

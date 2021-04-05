@@ -87,6 +87,7 @@ router.post('/', async function(req, res) {
         sucursales: [],
         rubros: [],
         fechaFundacion: null,
+        fechaRegistro: new Date(),
         notificaciones: [],
         estado : 'activo'
     });

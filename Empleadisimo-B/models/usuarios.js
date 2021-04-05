@@ -16,6 +16,7 @@ var schema = new mongoose.Schema({
     sucursales: Array,
     rubros: Array,
     fechaFundacion: String,
+    fechaRegistro: String,
     notificaciones: Array,
     estado: String,
 });
