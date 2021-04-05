@@ -28,6 +28,15 @@ export class PublicacionesService {
   }
 
   getAllInfoPost(id:string): Observable<any> {
-    return this.httpClient.get(`${this.url}/posts/getInfo/${id}`);
+    return this.httpClient.get(`${this.url}posts/getInfo/${id}`);
   }
+
+  updateStatus(id:string, data:any):Observable<any>{
+    return this.httpClient.post(`${this.url}post/updateStatus/${id}`, data);
+  }
+
+  updatePost(id:string, data:any):Observable<any>{
+    return this.httpClient.put(`${this.url}post/update/${id}`, data);
+  }
+
 }

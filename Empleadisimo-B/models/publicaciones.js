@@ -12,7 +12,8 @@ var schema = new mongoose.Schema({
     ubicacion: mongoose.SchemaTypes.Mixed,              //{pais: '', departamento: '', ciudad: ''}
     modalidad: Number,                                  //presencial: 1, semiPresencial: 2, homeOffice: 3
     idEmpresa: mongoose.Types.ObjectId,
-    usuarios: Array
+    usuarios: Array,
+    estado : String
 });
 
 module.exports = mongoose.model('publicaciones', schema);
