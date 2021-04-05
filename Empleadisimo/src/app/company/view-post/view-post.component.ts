@@ -16,9 +16,7 @@ export class ViewPostComponent implements OnInit {
   faTimes = faTimes;
 
   post : any = [];
-  isNotSelected: string = '0'
-  isSelected: string = '';
-
+  
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
     description: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
@@ -89,16 +87,12 @@ export class ViewPostComponent implements OnInit {
     console.log(this.formPublications.value)
     this.publicacionesService.updatePost(this.post._id, this.formPublications.value)
     .subscribe(res => {
-      console.log(res);
       this.ngOnInit();
       this.formPublications.reset();
       this.modalService.dismissAll();
     }, error => console.log(error))
   }
 
-  capturarSelect() {
-    this.isSelected = this.isNotSelected;
-  }
 
   deletePost(){
     let data = {estado : 'eliminado'}

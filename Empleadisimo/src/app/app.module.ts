@@ -32,13 +32,10 @@ import { ModifyImagePipe } from './pipes/modify-image.pipe';
     SliderComponent,
     FooterLinksComponent,
     VerifyaccountComponent,
-<<<<<<< HEAD
     ChatComponent,
     ModifyImagePipe,
-=======
     //EnterpriseComponent
     ChatComponent
->>>>>>> 2ae3613213b7a1b1203c8b6f8ec2cd7e9053d8e9
   ],
   imports: [
     BrowserModule,
