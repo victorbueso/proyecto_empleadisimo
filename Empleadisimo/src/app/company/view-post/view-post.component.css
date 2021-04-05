@@ -6,10 +6,8 @@
     font-size: 1rem;
 }
 
-.items{
-    font-size: 1rem;
-    padding-left: 15px;
-    border-left: 5px solid #f17300;
+.error-message{
+    color:red;
 }
 
 h1{
@@ -34,6 +32,25 @@ h2{
 
 .icon:hover{
     color:#f17300;
+}
+
+.items{
+    font-size: 1rem;
+    padding-left: 15px;
+    border-left: 5px solid #f17300;
+}
+
+label{
+    font-family: 'Raleway medium';
+}
+
+.modal-text{
+    font-family: 'Raleway medium';
+    font-size: 1.1rem;
+}
+
+.modal-title{
+    color: #054a91
 }
 
 .nav-link{

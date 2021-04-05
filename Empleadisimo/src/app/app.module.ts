@@ -36,6 +36,8 @@ registerLocaleData(localeEs);
     VerifyaccountComponent,
     ChatComponent,
     ModifyImagePipe,
+    //EnterpriseComponent
+    ChatComponent
   ],
   imports: [
     BrowserModule,

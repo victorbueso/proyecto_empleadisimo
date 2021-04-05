@@ -14,8 +14,8 @@
             </h1>
         </div>
         <div class="col-xl-2 col-4 d-flex justify-content-end">
-            <button class="btn icon mr-1" ngbTooltip="Editar publicación"><fa-icon [icon]="faPen"></fa-icon></button>
-            <button class="btn icon mr-1" ngbTooltip="Eliminar publicación"><fa-icon [icon]="faTimes"></fa-icon></button>
+            <button class="btn icon mr-1" ngbTooltip="Editar publicación" (click)="openLg(edit)"><fa-icon [icon]="faPen"></fa-icon></button>
+            <button class="btn icon mr-1" ngbTooltip="Eliminar publicación" (click)="open(delete)"><fa-icon [icon]="faTimes"></fa-icon></button>
         </div>
         <div class="col-12 mt-4 mb-4 description">
             {{post?.descripcion}}
@@ -37,6 +37,11 @@
          </div>
          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
             <strong>Fecha de vencimiento</strong> <br>{{post?.fechaVencimiento | date:'dd/MM/yyy'}}
+         </div>
+         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-2 mb-2 items">
+            <strong>Estado de publicación : </strong>
+            <span *ngIf="post?.estado == 'vigente'" style="color: green">{{post?.estado[0].toUpperCase()}}{{post?.estado.slice(1)}}</span>
+            <span *ngIf="post?.estado == 'vencida'" style="color: orangered">{{post?.estado[0].toUpperCase()}}{{post?.estado.slice(1)}}</span>  
          </div>
     </div>
     <div class="row mt-4">
@@ -70,5 +75,88 @@
               </table>
         </div>
     </div>
-   
 </div>
+
+<!--Editar publicación-->
+<ng-template #edit let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title mb-0">Editar publicación</h2>
+    </div>
+    <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
+      <form [formGroup]="formPublications">
+        <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">
+          <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('title')?.invalid && (formPublications.get('title')?.dirty || formPublications.get('title')?.touched))}">No se ingreso título, o no es válido</div>
+          <label for="inputTitle"></label>
+          <input formControlName="title" type="text" class="form-control" id="inputTitle" placeholder="Título" required>
+        </div>
+        <div class="form-group">
+          <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('description')?.invalid && (formPublications.get('description')?.dirty || formPublications.get('description')?.touched))}">No se ingreso descripción, o no es válida</div>
+          <label for="textareaDescription"></label>
+          <textarea formControlName="description" class="form-control" id="textareaDescription" rows="3" placeholder="Descripción" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('expirationDate')?.invalid && (formPublications.get('expirationDate')?.dirty || formPublications.get('expirationDate')?.touched))}">Fecha de vencimiento no válida</div>
+            <label for="inputCalendar">Fecha de vencimiento</label>
+            <input formControlName="expirationDate" type="date" class="form-control" id="inputCalendar" placeholder="Insertar fecha" required>
+          </div>
+          <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('salary')?.invalid && (formPublications.get('salary')?.dirty || formPublications.get('salary')?.touched))}">Ingrese un salario válido</div>
+            <label for="inputSalario">Salario</label>
+            <input formControlName="salary" type="text" class="form-control" id="inputSalario" required>
+          </div>
+          <div class="form-group col-md-4" style="margin-bottom: 3px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('modality')?.invalid && (formPublications.get('modality')?.dirty || formPublications.get('modality')?.touched))}">Ingrese una modalidad válida</div>
+            <label for="inputState">Modalidad</label>
+            <select formControlName="modality" id="inputState" class="form-control" required>
+              <option [ngValue]="1">Presencial</option>
+              <option [ngValue]="2">Semi-virtual</option>
+              <option [ngValue]="3">Virtual</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('profession')?.invalid && (formPublications.get('profession')?.dirty || formPublications.get('profession')?.touched))}">No se ingresó una profesión, o no es válida</div>
+          <label for="inputProfesion">Profesión</label>
+          <input formControlName="profession" type="text" class="form-control" id="inputProfesion" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4" style="padding-top: 2px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('city')?.invalid && (formPublications.get('city')?.dirty || formPublications.get('city')?.touched))}">Ingrese una ciudad válida</div>
+            <label for="inputCiudad">Ciudad</label>
+            <input formControlName="city" type="text" class="form-control" id="inputCiudad" placeholder="Ciudad" required>
+          </div>
+          <div class="form-group col-md-4" style="padding-top: 2px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('department')?.invalid && (formPublications.get('department')?.dirty || formPublications.get('department')?.touched))}">Ingrese un departamento válido</div>
+            <label for="inputDepartamento">Departamento</label>
+            <input formControlName="department" type="text" class="form-control" id="inputDepartamento" placeholder="Departamento" required>
+          </div>
+          <div class="form-group col-md-4" style="padding-top: 2px;">
+            <div class="d-none error-message" [ngClass]="{'d-block': (formPublications.get('country')?.invalid && (formPublications.get('country')?.dirty || formPublications.get('country')?.touched))}">Ingrese un país válido</div>
+            <label for="inputPais">País</label>
+            <input formControlName="country" type="text" class="form-control" id="inputPais" placeholder="País" required>
+          </div>
+        </div>
+      </form>
+  
+    </div>
+    <div class="modal-footer">
+        <button [disabled]="formPublications.invalid" type="button" class="btn btn-primary" (click)="saveChanges()">
+            Guardar cambios
+          </button>
+      <button type="button" class="btn btn-outline-danger mr-2" (click)="modal.close()">Cancelar</button>
+    </div>
+  </ng-template>
+
+<!-- Eliminar publicación -->
+<ng-template #delete let-modal>
+    <div class="modal-body">
+        <p class="modal-text">
+            Estás a punto de eliminar esta publicación de trabajo, ¿deseas continuar?
+        </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deletePost()">Eliminar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>

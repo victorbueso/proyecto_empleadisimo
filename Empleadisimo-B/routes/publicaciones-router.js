@@ -145,6 +145,7 @@ router.get('/posts/getInfo/:idPost', function(req,res){
                 fechaVencimiento:true,
                 ubicacion:true,
                 modalidad:true,
+                estado:true,
                 "resultado.nombreCompleto" : true,
                 "resultado.fotoPerfil": true,
                 "resultado.curriculums" : true
@@ -158,5 +159,46 @@ router.get('/posts/getInfo/:idPost', function(req,res){
         res.end();
     })
 })
+
+/* Actualizar publicacion */
+router.put('/post/update/:idPost', function(req, res){
+    publicaciones.updateOne({
+        _id: req.params.idPost
+    },
+    {
+        titulo: req.body.title,
+        descripcion: req.body.description,
+        cantidadPago: req.body.salary,
+        fechaVencimiento: req.body.expirationDate,
+        profesion: req.body.profession,
+        "ubicacion.pais": req.body.country,
+        "ubicacion.departamento": req.body.department,
+        "ubicacion.ciudad": req.body.city,
+        modalidad: req.body.modality
+    }).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error =>{
+        res.send(error);
+        res.end();
+    })
+});
+
+
+/* Actualizar estado de publicacion */
+router.post('/post/updateStatus/:idPost', function (req, res){
+    publicaciones.updateOne({
+        _id : req.params.idPost
+    },
+    {
+        estado : req.body.estado
+    }).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+});
 
 module.exports = router;

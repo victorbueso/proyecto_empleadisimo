@@ -14,7 +14,7 @@
     <div *ngIf="publicaciones.length==0" class="d-flex text-align-center" style="font-family: 'Raleway semibold';"> No has realizado ninguna publicación :( </div>
     <div *ngIf="publicaciones.length!=0">
       <div *ngFor="let publicacion of publicaciones" style="float: center; margin-left: 45px; font-family: 'Raleway medium';">
-        <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;">
+        <div class="card border-primary mb-3 ml-5 mt-2 float-left" style="width: 85%;" *ngIf="publicacion.estado != 'eliminado'">
           <div class="card-body">
             <h2 class="card-title">{{publicacion.titulo}}<p style="float: right; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
               {{publicacion.fechaPublicacion | date:'dd/MM/yyyy'}}</p></h2>
