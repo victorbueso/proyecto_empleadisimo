@@ -6,6 +6,7 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
 import { ChatComponent } from './componentes/chat/chat.component'
 import { AuthenticationGuard } from './authentication.guard'
 import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
+//import { EnterpriseComponent } from "./enterprise/enterprise.component";
 
 const routes: Routes = [
   { path: 'footer/:id' ,component: FooterLinksComponent },

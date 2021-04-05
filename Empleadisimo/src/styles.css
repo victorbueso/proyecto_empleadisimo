@@ -145,6 +145,16 @@ body {
     cursor: pointer;
 }
 
+/* Scrollbar */
+.mat-typography::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+
+    .mat-typography::-webkit-scrollbar-thumb{
+    background: #f17300;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(90deg)

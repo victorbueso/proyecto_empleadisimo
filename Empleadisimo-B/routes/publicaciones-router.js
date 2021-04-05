@@ -105,7 +105,7 @@ router.put('/', async(req, res) => {
         _id: req.body.idPublicacion
     }, {
         $addToSet: {
-            usuarios: req.body.idEmpleado
+            usuarios: mongoose.Types.ObjectId(req.body.idEmpleado)
         }
     }).then(() => {
         //io.emit(publicacion.idEmpresa,{idEmpresa : publicacion.idEmpresa, idPublicacion: req.body.idPublicacion, titulo : publicacion.titulo});
@@ -116,5 +116,47 @@ router.put('/', async(req, res) => {
         res.end();
     })
 });
+
+
+/* Obtener info de los empleados que aplicaron a publicacion */
+
+router.get('/posts/getInfo/:idPost', function(req,res){
+    publicaciones.aggregate([
+        {
+            $lookup:{
+                from : "usuarios",
+                localField: "usuarios",
+                foreignField : "_id",
+                as: "resultado"
+            }
+        },
+        {
+            $match:{
+                _id:mongoose.Types.ObjectId(req.params.idPost)
+            }
+        },
+        {
+            $project: {
+                profesion:true,
+                titulo : true,
+                descripcion : true,
+                cantidadPago: true,
+                fechaPublicacion : true,
+                fechaVencimiento:true,
+                ubicacion:true,
+                modalidad:true,
+                "resultado.nombreCompleto" : true,
+                "resultado.fotoPerfil": true,
+                "resultado.curriculums" : true
+            }
+        }
+    ]).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    })
+})
 
 module.exports = router;

@@ -6,16 +6,14 @@ import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from '../../services/socket.service'
+import { Router } from '@angular/router';
 
-//import {Subject} from 'rxjs';
-//import {debounceTime} from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
 
-//@Component({selector: 'ngbd-alert-selfclosing', templateUrl: './alert-selfclosing.html'})
 
 export class HomeComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
@@ -23,14 +21,9 @@ export class HomeComponent implements OnInit {
   isNotSelected: string = '0'
   isSelected: string = '';
   public publicaciones: any = [];
-  backend: string = 'http://localhost:3000/posts/';
 
-  //private _success = new Subject<string>();
-  //successMessage = '';
   successMessage = false;
   successfull = ``;
-
-  //@ViewChild('selfClosingAlert', {static: false}) selfClosingAlert!: NgbAlert;
 
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
@@ -51,7 +44,8 @@ export class HomeComponent implements OnInit {
     private cookies: CookieService,
     private usuariosService:UsuariosService,
     private config: NgbModalConfig,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private router:Router
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -63,11 +57,11 @@ export class HomeComponent implements OnInit {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;
-      console.log(result);
+      this.publicaciones.forEach(publicacion => {
+        publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
+      });
     }, error => {
       console.log(error);
-
-      this.SuccessfullMessage()
     })
   }
 
@@ -102,7 +96,6 @@ export class HomeComponent implements OnInit {
   }
 
   get description (){
-    // console.log("Se esta ejecutando la funcion")
     return this.formPublications.get('description')?.invalid && this.formPublications.get('description')?.touched;
   }
 
@@ -135,16 +128,6 @@ export class HomeComponent implements OnInit {
   }
 
   limpiar(): any {
-    /*this.formPublications.get('titulo')?.reset();
-    this.formPublications.get('descripcion')?.reset();
-    this.formPublications.get('fechaVencimiento')?.reset();
-    this.formPublications.get('salario')?.reset();
-    this.formPublications.get('modalidad')?.reset();
-    this.formPublications.get('profesion')?.reset();
-    this.formPublications.get('ciudad')?.reset();
-    this.formPublications.get('departamento')?.reset();
-    this.formPublications.get('pais')?.reset(); */
-
     this.formPublications.reset(this.formPublications);
   }
 
@@ -191,9 +174,7 @@ export class HomeComponent implements OnInit {
         estado:false
       }
       this.guardarNotificacion(data);
-      //console.log(res);
       this.formPublications.reset(this.formPublications);
-      //this._modal.dismissAll();
       this.ngOnInit();
     }, error => {
       console.log(error);
@@ -202,7 +183,6 @@ export class HomeComponent implements OnInit {
   }
 
   guardarNotificacion(data:any){
-    // console.log(data);
     this.usuariosService.addNotification(data).
     subscribe(res =>{
       console.log(res);
@@ -216,6 +196,9 @@ export class HomeComponent implements OnInit {
     this.isSelected = this.isNotSelected;
   }
 
+  viewPost(id:string){
+    this.router.navigate([`company/post/${id}`])
+  }
 }
 
 

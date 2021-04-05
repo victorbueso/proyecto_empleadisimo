@@ -54,7 +54,7 @@
                                         <td class="text-center">{{company?.rubros.length}}</td>
                                         <td>{{company?.estado}}</td>
                                         <td class="option-btn text-center">
-                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left">Listar</button>
+                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left" (click)="openXL(listPosts, company._id)">Listar</button>
                                         </td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="company.estado == 'bloqueado'"> 
@@ -304,6 +304,53 @@
     
 </div>
 
+<!-- Lista de publicaciones -->
+<ng-template #listPosts let-modal>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6">
+                <h3>Empresa <strong>{{nameCompany}}</strong></h3>
+            </div>
+            <div class="col-6" >
+                <h4 style="font-family: 'Raleway medium'"><strong> {{posts.length}} publicaciones realizadas</strong></h4>
+            </div>
+        </div>
+        <div class="seccion-publicaciones">
+         <div *ngIf="posts.length == 0" class="text-center">Aún no se han realizado publicaciones de trabajo.</div>   
+        <div *ngFor="let post of posts; index as i">
+            <button class="accordion" [ngClass]="{'d-block': selectedPost != i, 'd-none' : selectedPost == i}" (click)="selectedPost = i">{{post.titulo}}</button>
+            <button class="accordion active" [ngClass]="{'d-block': selectedPost == i, 'd-none' : selectedPost != i}" (click)="selectedPost = -1">{{post.titulo}}</button>
+                <div class="panel" [ngClass]="{'d-block': selectedPost == i, 'd-none': selectedPost != i}">
+                    <div style="font-family: 'Raleway medium';">
+                        <p>{{post.descripcion}}</p>
+                        <br>
+                        <div class="row mb-2">
+                            <div class="d-flex col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                                <div class="icon-posts text-center"> <fa-icon [icon]="faMapMarkerAlt"></fa-icon> </div>
+                                <strong> {{post.ubicacion?.ciudad}}, {{post.ubicacion?.departamento}}, {{post.ubicacion?.pais}} </strong>
+                            </div>
+                            <div class="d-flex col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                                <div class="icon-posts text-center"> <fa-icon [icon]="faUsers"></fa-icon> </div> <strong>{{post.usuarios.length}} aplicantes </strong> 
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="d-flex col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                                <div class="icon-posts text-center"> <fa-icon [icon]="faCalendarCheck"></fa-icon> </div> <strong>Publicado el 
+                                    {{post?.fechaPublicacion | slice:0:10}} </strong> 
+                            </div>
+                            <div class="d-flex col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2">
+                                <div class="icon-posts text-center"> <fa-icon [icon]="faCalendarTimes"></fa-icon> </div> <strong> Vence el {{post?.fechaVencimiento | slice:0:10}} </strong> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
 
 <!-- Advertencia de bloquear usuario -->
 <ng-template #block let-modal>

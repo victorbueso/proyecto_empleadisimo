@@ -123,6 +123,15 @@ export class UsuariosService {
   sendEmailVerification(data: any): Observable<any> {
     return this.httpClient.post(`${this.url}/verifyemail`, data);
   }
+
+  updateCurriculums(cv: File, file: string, idUser: string){
+
+    const fd1 = new FormData();
+    fd1.append('curriculums', cv)
+    fd1.append('fp1',file)
+    return this.httpClient.put(`http://localhost:3000/usuarios/updateCV/${ idUser }`, fd1);
+  }
+
   
   getCompany(idEmpresa: string):Observable<any>{
     return this.httpClient.get(`http://localhost:3000/usuarios/company/${ idEmpresa }`);

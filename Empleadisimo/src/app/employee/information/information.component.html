@@ -1,0 +1,33 @@
+<div class="row">
+
+    <div class="col-md-4 p-4" *ngIf="usuario">
+        <div class="card-header">
+            {{usuario.nombreCompleto}}
+        </div>
+        <div class="card-header">
+            {{usuario.rubros}}
+        </div>
+        <div class="card-header">
+            {{usuario.fechaFundacion}}
+        </div>
+        <button class="btn btn-primary btn-block" (click)="regreso()">
+            Regresar
+        </button>
+        <button class="btn btn-primary btn-block" >
+            Seguir
+        </button>
+    </div>
+    <div class="col-md-4 p-4" *ngFor="let publicacion of publicaciones">
+        <div class="card card-photo">
+            <div class="card-header">
+                {{publicacion.titulo}}
+            </div>
+            <div class="card-body">
+                {{publicacion.cantidadPago}}
+            </div>
+            <button class="btn btn-primary btn-block" (click)="showid(publicacion.idEmpresa)">
+                id
+            </button>
+        </div>
+    </div>
+</div>

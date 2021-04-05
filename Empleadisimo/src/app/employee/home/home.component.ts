@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
 
 
@@ -47,7 +48,7 @@ export class HomeComponent implements OnInit {
               private usuariosService : UsuariosService,
               private socketService : SocketService,
               private router: Router,
-              private chatService: ChatService) {
+              private chatService:ChatService) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = false; 
     this.obtainConn();
@@ -125,7 +126,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateButtonStatus(i: number){
-    this.publicaciones[i]["aplico"] = !this.publicaciones[i]["aplico"]
+    this.publicaciones[i]["aplico"] = true;
   }
 
   chat(publication:any){
@@ -138,6 +139,10 @@ export class HomeComponent implements OnInit {
     for(var i in publicaciones){
       publicaciones[i]['aplico'] = false;
     }
+  }
+
+  homepage(id:string){
+    this.router.navigate([`employee/information/${id}`]);
   }
 
 }

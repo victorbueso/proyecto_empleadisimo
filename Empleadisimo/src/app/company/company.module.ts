@@ -13,10 +13,10 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CookieService } from 'ngx-cookie-service';
-
+import { ViewPostComponent } from './view-post/view-post.component';
 
 @NgModule({
-  declarations: [HomeComponent, UpdateInfoComponent],
+  declarations: [HomeComponent, UpdateInfoComponent, ViewPostComponent],
   exports: [MatSidenavModule],
   imports: [
     CommonModule,
