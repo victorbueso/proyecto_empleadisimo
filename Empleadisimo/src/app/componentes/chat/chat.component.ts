@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, Renderer2 } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { UsuariosService } from '../../services/usuarios.service'
 import { SocketService } from '../../services/socket.service';
@@ -22,14 +22,19 @@ export class ChatComponent{
   actualName = "";
   actualMessages = [];
   myId: String = ""; 
+  @ViewChild("inputMessage") inputMessage! : ElementRef;
 
-  constructor(private chatService: ChatService,
-              private userService: UsuariosService,
-              private socketService: SocketService,
-              private cookie: CookieService){
+  constructor(private chatService : ChatService,
+              private userService : UsuariosService,
+              private socketService : SocketService,
+              private cookie : CookieService,
+              private render : Renderer2 ){
+    
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
+    this.myId = this.cookie.get('idUser')
+    console.log(this.actualPhoto);
   }
 
   serverMessage(){
@@ -118,6 +123,18 @@ export class ChatComponent{
       idCompany: this.informationChat['_id'],
       content
     })
+    
+    var date = new Date();
+    let messageSendit = {
+        date: `${ date.getDay() }/${ date.getMonth() }/${ date.getFullYear() }`,
+        hour: `${ date.getHours() }:${ date.getMinutes() }`,
+        idUser : this.cookie.get('idUser'),
+        content
+    } 
+
+    var position = this.obtainPosition(this.informationChat['_id'])  
+    this.messages[position]['messages'].push(messageSendit);
+    this.render.setProperty(this.inputMessage.nativeElement, "value", "");
   }
 
   obtainMessages(){
@@ -140,6 +157,7 @@ export class ChatComponent{
     this.actualName = user['nombreCompleto'];
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
+    console.log(this.actualPhoto);
   }
 
   obtainMessagesById(userId : string){

@@ -23,14 +23,16 @@
             </div>        
         </div>
     </div>
-    <div class="message-container">
+    <div class="noContact" [ngClass]="{'d-block' : actualName == '', 'd-none' : actualName != ''}">
+    </div>
+    <div class="message-container" [ngClass]="{'d-block' : actualName != '', 'd-none' : actualName == ''}">
         <div class="ppc pointer">
             <img class="contact-pp" [src]=" actualPhoto | modifyImage">
             <p>{{ actualName | titlecase }}</p>
         </div>
         <div class="messages">
             <div class="messages-container">
-                <div *ngFor="let message of actualMessages" class="mess" [class.sendit] = "myId == message['idUser']" [class.reciveit] = "myId != message['idUser']">
+                <div *ngFor="let message of actualMessages.slice().reverse()" class="mess" [class.sendit] = "myId == message['idUser']" [class.reciveit] = "myId != message['idUser']">
                     <div class="ms">
                         <p>{{ message['content'] }}</p>
                     </div>
