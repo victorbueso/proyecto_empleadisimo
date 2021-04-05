@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +21,9 @@ import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccoun
 import { ChatComponent } from './componentes/chat/chat.component';
 import { ModifyImagePipe } from './pipes/modify-image.pipe';
 
-
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common'
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -32,13 +34,8 @@ import { ModifyImagePipe } from './pipes/modify-image.pipe';
     SliderComponent,
     FooterLinksComponent,
     VerifyaccountComponent,
-<<<<<<< HEAD
     ChatComponent,
     ModifyImagePipe,
-=======
-    //EnterpriseComponent
-    ChatComponent
->>>>>>> 2ae3613213b7a1b1203c8b6f8ec2cd7e9053d8e9
   ],
   imports: [
     BrowserModule,
@@ -51,7 +48,8 @@ import { ModifyImagePipe } from './pipes/modify-image.pipe';
     FontAwesomeModule,
   ],
   providers: [
-    AuthenticationGuard
+    AuthenticationGuard,
+    {provide: LOCALE_ID, useValue : 'es'}
   ],
   bootstrap: [AppComponent]
 })

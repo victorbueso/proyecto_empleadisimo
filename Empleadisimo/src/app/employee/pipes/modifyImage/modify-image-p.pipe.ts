@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'modifyImage'
+  name: 'modifyImageP'
 })
-export class ModifyImagePipe implements PipeTransform {
+export class ModifyImagePPipe implements PipeTransform {
 
   transform(value: String) {
     if(value != ''){
@@ -12,5 +12,4 @@ export class ModifyImagePipe implements PipeTransform {
       return 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-PNG-Icon-715x715.png';
     }
   }
-
 }

@@ -16,6 +16,7 @@ import { InformationComponent } from './information/information.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomMatPaginatorIntl } from './paginator-es';
 import { CvComponent } from './cv/cv.component';
+import { ModifyImagePPipe } from './pipes/modifyImage/modify-image-p.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CvComponent } from './cv/cv.component';
     PaginationPipe,
     UpdateInfoComponent,
     CvComponent,
-    InformationComponent
+    InformationComponent,
+    ModifyImagePPipe,
   ],
   imports: [
     CommonModule,
@@ -34,8 +36,7 @@ import { CvComponent } from './cv/cv.component';
     FontAwesomeModule,
     MatPaginatorModule,
     FormsModule, 
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
   ],
   providers: [
     HomeEmployeeSliderService,
@@ -45,4 +46,5 @@ import { CvComponent } from './cv/cv.component';
     }
   ]
 })
+
 export class EmployeeModule { }

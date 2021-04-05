@@ -1,33 +1,29 @@
-<div class="row">
-
-    <div class="col-md-4 p-4" *ngIf="usuario">
-        <div class="card-header">
-            {{usuario.nombreCompleto}}
+<div class="profile-company">
+    <div *ngIf = "usuario" class="profile-information">
+        <div class="pp-container">
+            <img class="img-profile pointer" [src]=" usuario.fotoPerfil | modifyImageP ">
+            <div class="name-container">
+                <h1>{{ usuario.nombreCompleto | titlecase }}</h1>
+                <hr>
+            </div>
+            <div class="option-container">
+                <button class="follow-button">Seguir</button>
+                <h3 class="pointer">Informacion basica</h3>
+                <h3 class="pointer">Reportar</h3>
+                <h3 class="pointer">Contactar</h3>
+            </div>
         </div>
-        <div class="card-header">
-            {{usuario.rubros}}
-        </div>
-        <div class="card-header">
-            {{usuario.fechaFundacion}}
-        </div>
-        <button class="btn btn-primary btn-block" (click)="regreso()">
-            Regresar
-        </button>
-        <button class="btn btn-primary btn-block" >
-            Seguir
-        </button>
     </div>
-    <div class="col-md-4 p-4" *ngFor="let publicacion of publicaciones">
-        <div class="card card-photo">
-            <div class="card-header">
-                {{publicacion.titulo}}
+    <div *ngIf = "usuario" class="profile-publications">
+        <div *ngFor="let publicacion of publicaciones " class="post">
+            <img class="post-image" [src]=" usuario.fotoPerfil | modifyImageP ">                
+            <div class="title-profile">
+                <h2>{{ usuario.nombreCompleto | titlecase }}</h2><br>
+                <span>{{ usuario.fechaFundacion | date: 'longDate' }}</span>
             </div>
-            <div class="card-body">
-                {{publicacion.cantidadPago}}
+            <div class="information-post">
+
             </div>
-            <button class="btn btn-primary btn-block" (click)="showid(publicacion.idEmpresa)">
-                id
-            </button>
         </div>
     </div>
 </div>
