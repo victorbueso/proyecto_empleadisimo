@@ -22,7 +22,12 @@
   margin: 1em auto;
 }
 
-
+h2{
+  font-family: 'Ramabhadra';
+  color: #f17300;
+  font-size: 1.6rem;
+  margin-bottom: 0px;
+}
 
 .highcharts-data-table table {
 font-family: Verdana, sans-serif;

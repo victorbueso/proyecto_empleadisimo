@@ -1,5 +1,7 @@
-<h1>Dashboard</h1>
-<hr>
+<div class="col-6 d-flex mt-auto mb-3">
+  <h1>Dashboard</h1>
+  <hr>
+</div>
 
 <div class="container">
   <div class="row">
@@ -13,14 +15,19 @@
     </div>
   </div>
   <hr>
+  <hr>
   <div class="row">
     <div class="col-md-6" id="bar">
       <!--<div class="bar" [chart]="barChart"></div>-->
       <highcharts-chart [Highcharts]="highchartsBar" [options]="barChart"></highcharts-chart>
     </div>
-    <!--<div class="col-md-6">
-      <div class="polar" [chart]="polarChart"></div>
-    </div>-->
+    <div class="col-md-6" id="column">
+      <!--<div class="polar" [chart]="polarChart"></div>-->
+      <highcharts-chart
+        [Highcharts]="highchartsColumn" [options]="columnChart"
+        style = "width: 100%; width: 520px; display: block;">
+      </highcharts-chart>
+    </div>
   </div>
 
 </div>
