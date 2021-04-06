@@ -15,6 +15,8 @@ export interface Usuario{
     rubros: Array<any>;
     sucursales: Array<any>;
     tipoUsuario: number;
+    seguidores:Array<any>;
+    siguiendo:Array<any>;
     __v: number
 
 }

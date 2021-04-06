@@ -4,6 +4,7 @@
     max-height: 100vh;
     display: flex;
     width: 100vw;
+    
 }
 
 .profile-information{
@@ -18,7 +19,7 @@
     background-color: transparent;
     box-sizing: border-box;
     padding: 50px 0px;
-    height: 100px;
+    height: auto;
     width: 100%;
 }
 
@@ -77,7 +78,7 @@
     padding: 10px 0px 0px 10px;
     margin: 0px auto 40px auto;
     display: flex;
-    height: 100px;
+    height: auto;
     width: 90%;
 }
 
@@ -93,7 +94,7 @@
 .title-profile{
     box-sizing: border-box;
     padding-left: 10px;
-    width: 100%;
+    width: 40%;
 }
 
 .title-profile h2{
@@ -122,4 +123,11 @@
     color: var(--main-color);
     box-sizing: border-box;
     background-color: white;
+}
+
+.visible{
+    display: block;
+}
+.no-visible{
+    display: none;
 }

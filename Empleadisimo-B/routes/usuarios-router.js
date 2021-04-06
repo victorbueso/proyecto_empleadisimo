@@ -89,7 +89,9 @@ router.post('/', async function(req, res) {
         fechaFundacion: null,
         fechaRegistro: new Date(),
         notificaciones: [],
-        estado : 'activo'
+        estado : 'activo',
+        seguidores: [],
+        siguiendo:[]
     });
 
     userRouter.save().then(result => {
@@ -701,5 +703,76 @@ router.post('/admin/updateInfo/:idUser', async function(req, res) {
 
 
 });
+
+//seguir una compania
+router.post('/followCompany/:idUser', async(req, res)=>{
+    const user = await usuario.findOne({ '_id': req.body.idCompany })
+    if(user.seguidores.indexOf(req.params.idUser)!=-1){
+        res.status(200).json({message: "ya esta siguiendo a la compania"});
+        res.end()
+    }else{
+        
+        await usuario.updateOne(
+            {
+                _id:mongoose.Types.ObjectId(req.params.idUser)
+            },{
+                $push:{
+                    "siguiendo":req.body.idCompany
+                }
+            }
+
+        );
+        await usuario.updateOne(
+            {
+                _id:mongoose.Types.ObjectId(req.body.idCompany)
+            },    
+            {
+                $push:{
+                    "seguidores":req.params.idUser
+                
+                }
+            }
+        );
+        res.status(200).json({message: "se activo seguir la empresa"});
+            res.end()
+    }
+    
+});
+
+//dejar de seguir una compania
+router.post('/StopfollowCompany/:idUser', async(req, res)=>{
+    const user = await usuario.findOne({ '_id': req.body.idCompany })
+    if(user.seguidores.indexOf(req.params.idUser)==-1){
+        res.status(200).json({message: "no se esta siguiendo esta compania"});
+        res.end()
+    }else{
+        
+        await usuario.updateOne(
+            {
+                _id:mongoose.Types.ObjectId(req.params.idUser)
+            },{
+                $pull:{
+                    "siguiendo":req.body.idCompany
+                }
+            }
+
+        );
+        await usuario.updateOne(
+            {
+                _id:mongoose.Types.ObjectId(req.body.idCompany)
+            },    
+            {
+                $pull:{
+                    "seguidores":req.params.idUser
+                
+                }
+            }
+        );
+        res.status(200).json({message: "se activo dejar de seguir la empresa"});
+            res.end()
+    }
+    
+});
+
 
 module.exports = router;

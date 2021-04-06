@@ -160,4 +160,10 @@ export class UsuariosService {
   updateInfoAdmin(data:any, idUser:string):Observable<any>{
     return this.httpClient.post(`${this.url}/admin/updateInfo/${idUser}`, data);
   }
+  followCompany(data:any,idUser:string):Observable<any>{
+    return this.httpClient.post(`${this.url}/followCompany/${idUser}`,data);
+  }
+  StopfollowCompany(data:any,idUser:string):Observable<any>{
+    return this.httpClient.post(`${this.url}/StopfollowCompany/${idUser}`,data);
+  }
 }

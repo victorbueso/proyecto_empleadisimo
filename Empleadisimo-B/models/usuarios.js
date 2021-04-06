@@ -19,6 +19,8 @@ var schema = new mongoose.Schema({
     fechaRegistro: String,
     notificaciones: Array,
     estado: String,
+    seguidores: Array,
+    siguiendo: Array
 });
 
 module.exports = mongoose.model('usuarios', schema);
