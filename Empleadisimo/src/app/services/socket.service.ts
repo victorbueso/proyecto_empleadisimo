@@ -12,7 +12,7 @@ export class SocketService {
 
   constructor() {
     this.socket = io(this.url);
-   }
+  }
   
    listen(eventName: string){
     return new Observable((Subscriber)  => {

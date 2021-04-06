@@ -162,7 +162,7 @@
 
 .information-contact {
     box-sizing: border-box;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0px 10px;
     text-align: left;
     color: white;
@@ -243,6 +243,26 @@
     height: 100%;
     width: 100vw;
     background-color: #030e19;
+}
+
+.prev-information{
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+}
+
+.circle{
+    background-color: var(--secondary-color);
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    min-height: 20px;
+    max-height: 20px;
+    max-width: 30px;
+    max-height: 30px;
+    margin: auto 0px;
+    display: flex;
+    width: 11%;
 }
 
 @media screen and (max-width: 900px){

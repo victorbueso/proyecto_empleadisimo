@@ -3,7 +3,6 @@ import { ChatService } from '../../services/chat.service';
 import { UsuariosService } from '../../services/usuarios.service'
 import { SocketService } from '../../services/socket.service';
 import { CookieService } from 'ngx-cookie-service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 
 @Component({
@@ -22,6 +21,7 @@ export class ChatComponent{
   actualName = "";
   actualMessages = [];
   myId: String = ""; 
+  notifications = [];
   @ViewChild("inputMessage") inputMessage! : ElementRef;
 
   constructor(private chatService : ChatService,
@@ -29,12 +29,17 @@ export class ChatComponent{
               private socketService : SocketService,
               private cookie : CookieService,
               private render : Renderer2 ){
-    
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
     this.myId = this.cookie.get('idUser')
-    console.log(this.actualPhoto);
+  }
+
+  connection(){
+    this.socketService.listen('connect').subscribe(
+      ( res ) => console.log(res),
+      ( err ) => console.error(err)
+    )
   }
 
   serverMessage(){
@@ -43,6 +48,7 @@ export class ChatComponent{
         var index = this.obtainPosition(res['message']['idUser']);
         if(index > -1){
           this.messages[index]['messages'].push(res['message']);
+          this.notifications[index] = this.notifications[index] + 1;
         }else{
           this.messages.unshift(res['message']);
           this.userService.getCompany(res['message']['messages'][0]['idUser'])
@@ -143,6 +149,7 @@ export class ChatComponent{
         if(res['users'].length > 0){
           this.messages = res['messages'];
           this.users = res['users'];
+          this.obtainNotification(res['messages']);
           this.homeChat()
         }else{
           this.homeChat()
@@ -150,14 +157,19 @@ export class ChatComponent{
       },
       err => console.error(err)
       )
+  
   }
 
-  changeMessage(user: any){
+  changeMessage(user: any, id : number){
     this.actualPhoto = user['fotoPerfil'];
     this.actualName = user['nombreCompleto'];
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
-    console.log(this.actualPhoto);
+    this.notifications[id] = 0;
+    this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
+      (res) => {console.log(res)},
+      (err) => console.error(err)
+    )
   }
 
   obtainMessagesById(userId : string){
@@ -187,6 +199,16 @@ export class ChatComponent{
       }
     }
     return -1 
+  }
+
+  obtainNotification(messages : any){
+    for(var i = 0; i < messages.length; i++){
+      if(messages[i]['user1']['idUser']  == this.cookie.get('idUser')){
+        this.notifications[i] = messages[i]['user1']['notification']; 
+      }else{
+        this.notifications[i] = messages[i]['user2']['notification']; 
+      }
+    }
   }
 
 }

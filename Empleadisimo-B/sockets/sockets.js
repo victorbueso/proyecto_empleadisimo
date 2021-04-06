@@ -1,6 +1,6 @@
-const { io } = require('../index');
 const usuarios = require('../models/usuarios');
 const { Users } = require('./users')
+const { io } = require('../index');
 
 const user = new Users();
 
@@ -13,14 +13,11 @@ io.on('connect', (client) => {
                 socketId: client.id,
                 id: data['_id']
             }
-      
             user.addUser(connectedUser);  
-        }else{
-            console.log("No llega durante el registro");
         }
 
     })
-    
+  
     client.on('sendMessage', (data) => {        
     
         const date = new Date();        
@@ -34,7 +31,7 @@ io.on('connect', (client) => {
         
         var message = [];
 
-        user.saveChat(chatInformation)
+        user.saveChat(chatInformation, data.idUser)
         .then((res) => {
             if(socketId.length > 0){
                 io.to(socketId[0]['socketId']).emit("messageServer", {

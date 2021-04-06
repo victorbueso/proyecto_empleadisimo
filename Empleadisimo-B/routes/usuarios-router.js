@@ -12,10 +12,63 @@ const usuarios = require('../models/usuarios');
 const nodemailer = require('nodemailer');
 const email = require('../modules/email');
 const chat = require('../models/chat');
+const { find } = require('../models/usuarios');
+
+//Router para modificar el estado de las notificaciones
+router.put("/messageSeen/:idUser?", async (req, res)=> {
+    if(!req.params.idUser){
+        res.status(400).json({
+            message: "No se envio ningun id"
+        })
+    res.end()
+    }
+    new Promise(resolved => {
+        chat.findOne(
+        { 
+            users : req.params.idUser,
+            users : req.body._id
+        })
+        .then(udpatechat => {
+            if(String(udpatechat['user1']['idUser']) == String(req.params.idUser)){
+                resolved(
+                    chat.findOneAndUpdate(
+                    {
+                        users : req.params.idUser,
+                        users : req.body._id
+                    },
+                    {
+                        'user1.notification' : 0
+                    },
+                    {
+                        useFindAndModify: false
+                    }
+                ))
+            }else{
+                resolved(
+                    chat.findOneAndUpdate(
+                        {
+                            users : req.params.idUser,
+                            users : req.body._id
+                        },
+                        {
+                            'user2.notification' : 0
+    
+                        }
+                    )
+                )
+            }
+        })
+        .catch( err => console.error(err))
+
+    })
+    res.end()
+
+})
 
 // Router para conseguir la informacion de la compañia. 
 
-router.get("/obtainChat/:idUser", async function(req, res){
+router.get("/obtainChat/:idUser?", async function(req, res){
+
     let userChat = await chat.find({ users : req.params.idUser })
     let usersMessages = []
 

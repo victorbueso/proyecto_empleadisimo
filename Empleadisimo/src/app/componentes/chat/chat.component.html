@@ -9,14 +9,19 @@
             </div>
         </div>
         <div class="contact-container">
-            <div *ngFor="let user of users" class="contact pointer">
-                <button (click)="changeMessage(user)" class="buttonUser">
+            <div *ngFor="let user of users; let i = index" class="contact pointer">
+                <button (click)="changeMessage(user, i)" class="buttonUser">
                     <div class="contact-profile">
                         <img class="contact-pp" [src]="user['fotoPerfil'] | modifyImage">
                     </div>
                     <div class="information-contact">
-                        <span>{{ user['nombreCompleto'] | titlecase }}</span>
-                        <span>Lorem ipsum dolor sit...</span>
+                        <div class="prev-information">
+                            <span>{{ user['nombreCompleto'] | titlecase }}</span>
+                            <span>Lorem ipsum dolor sit...</span>
+                        </div>
+                        <div *ngIf="notifications[i] > 0" class="circle">
+                            <span>{{ notifications[i] }}</span>
+                        </div>
                     </div>
                 </button><br>
                 <hr>
