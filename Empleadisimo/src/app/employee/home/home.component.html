@@ -72,7 +72,7 @@
           </div>
           <div class="d-flex justify-content-end">
             <button [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
-              (click)="updateApplyPostUser(publicacion._id, i)" (click)="obtenerPublicaciones()">Aplicar
+              (click)="open(selectCV, publicacion._id, i)">Aplicar
             </button>
             <a class="btn btn-primary mr-2" (click)="homepage(publicacion.idEmpresa)">Ver más</a>
             <a (click)="chat(publicacion)" class="btn btn-primary ml-2">Chat</a>
@@ -82,3 +82,20 @@
     </div>
   </div>
 </div>
+
+<!-- Seleccionar cv -->
+<ng-template #selectCV let-modal>
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label for="exampleFormControlSelect1" style="font-family:'Raleway semibold'">Seleccionado un CV</label>
+      <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cvSelected">
+        <option selected disabled>-- Seleccionar --</option>
+        <option *ngFor="let cv of curriculums; index as i" [value]="i"> {{cv.titulo}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="updateApplyPostUser()" [disabled]="!cvSelected">Enviar</button>
+  </div>
+</ng-template>

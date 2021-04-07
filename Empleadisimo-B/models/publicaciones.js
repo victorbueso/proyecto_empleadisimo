@@ -13,6 +13,7 @@ var schema = new mongoose.Schema({
     modalidad: Number,                                  //presencial: 1, semiPresencial: 2, homeOffice: 3
     idEmpresa: mongoose.Types.ObjectId,
     usuarios: Array,
+    curriculumUsuario:Array,
     estado : String
 });
 

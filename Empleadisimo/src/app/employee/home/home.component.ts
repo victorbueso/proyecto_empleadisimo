@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
 import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -37,21 +37,30 @@ export class HomeComponent implements OnInit {
 
   /* Saber si un usuario ha aplicado a una publicación de trabajo */
   apply: Boolean = true;
+  curriculums : any = [];
+  cvSelected : number = -1;
+  postSelected : string = '';
+  postNumber : number;
 
   public informationChat = {};
 
   public publicaciones: Array<any> = [];
 
   constructor(private publicacionesService:PublicacionesService,
-              private config:NgbCarouselConfig,
               private cookies: CookieService,
+              private modalService:NgbModal,
               private usuariosService : UsuariosService,
               private socketService : SocketService,
               private router: Router,
               private chatService:ChatService) {
-    config.showNavigationArrows = true;
-    config.showNavigationIndicators = false; 
     this.obtainConn();
+  }
+
+  open(content:any, idPublicacion: string, publicacion: number){
+    this.modalService.open(content, {centered: true});
+    this.obtenerCurriculums();
+    this.postSelected = idPublicacion;
+    this.postNumber = publicacion;
   }
 
   ngOnInit(): void {
@@ -71,6 +80,14 @@ export class HomeComponent implements OnInit {
         }
       )
     }
+  }
+
+  obtenerCurriculums(){
+    this.usuariosService.getUser(this.cookies.get('idUser')).subscribe(
+      res=> {
+        this.curriculums = res.curriculum;
+      }, error => console.log(error)
+    )
   }
 
   obtenerPublicaciones(){
@@ -101,27 +118,27 @@ export class HomeComponent implements OnInit {
       return !this.apply;
   }
 
-  updateApplyPostUser(idPublicacion: string, publicacion: number) {
+  updateApplyPostUser() {
     let data = {
       idEmpleado: this.cookies.get("idUser"),
-      idPublicacion: idPublicacion
+      idPublicacion: this.postSelected,
+      curriculum : this.curriculums[this.cvSelected]
     };
     console.log(data);
     this.publicacionesService.updatePostUser(data).subscribe(res => {
+      this.obtenerPublicaciones();
+      this.modalService.dismissAll();
       let notification = {
-        idPublicacion : idPublicacion,
+        idPublicacion : this.postSelected,
         titulo : res.titulo
       }
       this.usuariosService.addNotificationCompany(notification, res.idEmpresa)
       .subscribe( () => {
       }, error => console.log(error));
-      //console.log(`El usuario ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
-      //console.log(`El usuario ${res} ha aplicado a una oferta de empleo, la empresa confirmará su petición.`)
     }, error => {
       //console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
     })
-
-    this.updateButtonStatus(publicacion);
+    this.updateButtonStatus(this.postNumber);
 
   }
 

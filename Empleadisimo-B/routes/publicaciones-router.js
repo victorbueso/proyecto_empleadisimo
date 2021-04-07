@@ -100,12 +100,12 @@ router.put('/', async(req, res) => {
         _id: req.body.idPublicacion
     })
 
-
     publicaciones.updateOne({
         _id: req.body.idPublicacion
     }, {
         $addToSet: {
-            usuarios: mongoose.Types.ObjectId(req.body.idEmpleado)
+            usuarios: mongoose.Types.ObjectId(req.body.idEmpleado),
+            curriculumUsuario: req.body.curriculum
         }
     }).then(() => {
         //io.emit(publicacion.idEmpresa,{idEmpresa : publicacion.idEmpresa, idPublicacion: req.body.idPublicacion, titulo : publicacion.titulo});
@@ -146,9 +146,9 @@ router.get('/posts/getInfo/:idPost', function(req,res){
                 ubicacion:true,
                 modalidad:true,
                 estado:true,
+                curriculumUsuario: true,
                 "resultado.nombreCompleto" : true,
-                "resultado.fotoPerfil": true,
-                "resultado.curriculum" : true
+                "resultado.fotoPerfil": true
             }
         }
     ]).then(result => {

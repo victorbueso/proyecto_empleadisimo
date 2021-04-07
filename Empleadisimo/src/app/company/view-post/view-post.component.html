@@ -61,14 +61,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let usuarios of post.resultado">
+                  <tr *ngFor="let usuarios of post.resultado; index as i">
                     <td style="padding-top : 4px; padding-bottom: 4px">
                         <img [src]="'http://localhost:3000/'+ usuarios.fotoPerfil" *ngIf="usuarios.fotoPerfil != ''" class="img-perfil" alt="">
                         <img src="/assets/img/usuario-sin-foto.png" *ngIf="usuarios.fotoPerfil == ''" class="img-perfil" alt="">
                     </td>
                     <td>{{usuarios.nombreCompleto}}</td>
                     <td>
-                        <a [href]="'http://localhost:3000/'+ usuarios.curriculum[0]?.rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
+                        <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i].rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
                     </td>
                   </tr>
                 </tbody>
