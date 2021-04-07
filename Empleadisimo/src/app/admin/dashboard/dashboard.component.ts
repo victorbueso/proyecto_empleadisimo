@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   dataEmpl: Array<any> = [];
   dataComp: Array<any> = [];
   dataFP: Array<any> = [];
+  dataFE: Array<any> = [];
   dataFV: Array<any> = [];
 
   constructor(private usuariosService: UsuariosService, private publicacionesService: PublicacionesService ) { }
@@ -52,6 +53,7 @@ export class DashboardComponent implements OnInit {
         color += letter[Math.floor(Math.random()*16)];
     return color;
   }
+
   //Gráfica de pastel para la cantidad de usuarios disponibles en el sistema
   highchartsPie: typeof Highcharts = Highcharts;
   donutChart: Highcharts.Options = {
@@ -63,19 +65,19 @@ export class DashboardComponent implements OnInit {
       enabled: false
     },
     subtitle : {
-      text: "Registro de usuarios en el sistema",
+      //text: "Cantidad de usuarios en el sistema",
       style: {
-        position: 'absolute',
-        right: '0px',
-        bottom: '10px'
+        position: 'relative',
+        left: '0px',
+        top: '10px'
       }
     },
     plotOptions: {
       pie: {
         innerSize: '99%',
-        borderWidth: 60,
+        borderWidth: 70,
         borderColor: '',
-        slicedOffset: 20,
+        slicedOffset: 40,
         dataLabels: {
           connectorWidth: 0
         }
@@ -84,7 +86,7 @@ export class DashboardComponent implements OnInit {
     title: {
       verticalAlign: 'middle',
       floating: true,
-      text: 'Hola Mundo'
+      text: 'No. de Usuarios'
     },
     legend: {
       enabled: false
@@ -117,14 +119,6 @@ export class DashboardComponent implements OnInit {
     title: {
        text: 'Registro de usuarios en el sistema'
     },
-    subtitle : {
-       text: "Registro de usuarios en el sistema",
-       style: {
-          position: 'absolute',
-          right: '0px',
-          bottom: '10px'
-       }
-    },
     legend : {
        layout: 'vertical',
        align: 'left',
@@ -135,13 +129,13 @@ export class DashboardComponent implements OnInit {
        borderWidth: 1,
     },
     xAxis:{
-       categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec']
+       categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     },
     yAxis : {
        title: {
-          text: 'Cantidad de usuarios'
+          text: 'No. de usuarios registrados'
        },
-       min:0
+       allowDecimals: false
     },
     plotOptions : {
        area: {
@@ -158,14 +152,14 @@ export class DashboardComponent implements OnInit {
     },
     series: [
        {
-          name: 'John',
+          name: 'Employees',
           type: 'area',
           color: this.getRandomColor(),
           data: this.dataEmpl
           //data: [2030, 4343, 4043, 2100, 4032, 5000, 1029, 900, 6100, 502, 2883, 2999]
        },
        {
-          name: 'Jane',
+          name: 'Companies',
           type: 'area',
           color: this.getRandomColor(),
           data: this.dataComp
@@ -175,7 +169,7 @@ export class DashboardComponent implements OnInit {
  };
 
   highchartsBar: typeof Highcharts = Highcharts;
-  //Gráfica de pastel para la cantidad de usuarios disponibles en el sistema
+  //Gráfica de barra para la cantidad de publicaciones realizadas en el sistema
   barChart: Highcharts.Options = {
     chart: {
       type: 'bar',
@@ -184,16 +178,20 @@ export class DashboardComponent implements OnInit {
       enabled: false
     },
     title: {
-      text: 'Cantidad de publicaciones realizadas por mes'
+      text: 'Publicaciones realizadas (por mes)'
     },
     xAxis: {
       lineColor: '#fff',
       categories: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
       ],
     },
     yAxis: {
-      visible: false
+      visible: true,
+      title: {
+        text: 'No. de publicaciones realizadas'
+      },
+      allowDecimals: false
     },
     legend: {
       enabled: false
@@ -205,6 +203,7 @@ export class DashboardComponent implements OnInit {
     },
     series: [
       {
+        name: 'Publicaciones realizadas',
         type: 'bar',
         color: this.getRandomColor(),
         data: this.dataFP
@@ -214,7 +213,57 @@ export class DashboardComponent implements OnInit {
           {y: this.dataFP[2], color: '#fa61b8'},*/
       }
     ]
-  }
+  };
+
+  highchartsColumn: typeof Highcharts = Highcharts;
+  //Gráfica de columna para la cantidad de publicaciones eliminadas y vencidad en el sistema
+  columnChart: Highcharts.Options = {
+    chart: {
+       type: 'column'
+    },
+    title: {
+       text: 'Publicaciones eliminadas y vencidas (por mes)'
+    },
+    credits: {
+      enabled: false
+    },
+    xAxis:{
+       categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul', 'Aug','Sep','Oct','Nov','Dec'],
+       crosshair: true
+    },
+    yAxis : {
+       min: 0,
+       title: {
+          text: 'No. de publicaciones'
+       },
+       allowDecimals: false
+    },
+    plotOptions : {
+       column: {
+          pointPadding: 0.1,
+          borderWidth: 0
+       },
+       series: {
+        borderRadius: 5,
+      } as any
+    },
+    series: [
+      {
+        name: 'Eliminadas',
+        color: this.getRandomColor(),
+        type: 'column',
+        data: this.dataFE
+        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+      },
+      {
+        name: 'Vencidas',
+        color: this.getRandomColor(),
+        type: 'column',
+        data: this.dataFV
+        //data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+      },
+    ]
+  };
 
   ngOnInit() {
     //Cantidad de Admins, Companies y Empleados en el Sistema, los 3 para la gráfica de pastel
@@ -321,29 +370,73 @@ export class DashboardComponent implements OnInit {
       }
     );
 
-    //Cantidad de publicaciones realizadas en el sistema por cada mes: fp reutiliza array1
+    //Cantidad de publicaciones realizadas, eliminadas y vencidas en el sistema por cada mes: fpev reutiliza array0, array1 y array2
     this.publicacionesService.getPosts()
       .subscribe((res: any) => {
-        const fp = res;
+        const fpev = res;
+        this.array2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.array0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        for (let i in this.array1) {
-          for (let j in fp) {
-            if (fp[j].fechaPublicacion) {
-              let mes = new Date(fp[j].fechaPublicacion);
-              let mesActual = mes.getMonth();
-
-              if (mesActual == Number(i)) {
+        for (let i in this.array2) {
+          for (let j in fpev) {
+            let fechaP = new Date(fpev[j].fechaPublicacion);
+            let fechaV = new Date(fpev[j].fechaVencimiento);
+            let mesActualP = fechaP.getMonth();
+            let mesActualV = fechaV.getMonth();
+            if (fpev[j].fechaPublicacion) {
+              if (mesActualP == Number(i)) {
+                this.array2[i] += 1;
+              }
+            }
+            if (fpev[j].fechaVencimiento) {
+              if ((mesActualV == Number(i)) && (fechaV.getTime() < Date.now())) {
                 this.array1[i] += 1;
               }
             }
+            if (fpev[j].estado == "eliminado" && (mesActualP == Number(i))) {
+              this.array0[i] += 1;
+            }
           }
         }
-        for (let k in this.array1) {
-          this.dataFP.push(this.array1[k]);
+        for (let k in this.array2) {
+          this.dataFP.push(this.array2[k]);
+          this.dataFE.push(this.array0[k]);
+          this.dataFV.push(this.array1[k]);
         }
 
         Highcharts.chart("bar", this.barChart);
-      })
+        Highcharts.chart("column", this.columnChart);
+      }
+    );
+
+    //Cantidad de publicaciones eliminadas y vencidas en el sistema por cada mes: fev reutiliza array0 y array1
+    /*this.publicacionesService.getPosts()
+      .subscribe((res: any) => {
+        const fev = res;
+        this.array0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (let i in this.array1) {
+          for (let j in fev) {
+            let fecha = new Date(fev[j].fechaVencimiento);
+            let mesActual = fecha.getMonth();
+            if (fev[j].fechaVencimiento) {
+              if (mesActual == Number(i) && fecha.getTime() < Date.now()) {
+                this.array1[i] += 1;
+              }
+            }
+
+            if (fev[j].estado == "eliminado" && (mesActual == Number(i))) {
+              this.array0[i] += 1;
+            }
+          }
+        }
+        for (let k in this.array0) {
+          this.dataFE.push(this.array0[k]);
+          this.dataFV.push(this.array1[k]);
+        }
+        Highcharts.chart("column", this.columnChart);
+      }
+    );*/
   }
 
   //donutChart = new Chart(this.graficaPrueba);

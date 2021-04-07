@@ -4,6 +4,7 @@
     max-height: 100vh;
     display: flex;
     width: 100vw;
+    
 }
 
 .profile-information{
@@ -18,7 +19,7 @@
     background-color: transparent;
     box-sizing: border-box;
     padding: 50px 0px;
-    height: 100px;
+    height: auto;
     width: 100%;
 }
 
@@ -73,16 +74,33 @@
 
 .post{
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    padding: 10px 0px 0px 10px;
+    padding: 10px 0px 10px 10px;
     margin: 0px auto 40px auto;
     flex-direction: column;
     display: flex;
+    height: auto;
     width: 90%;
 }
 
 .post-image{
     height: 60px;
     border-radius: 50%;
+}
+
+.title-profile{
+    box-sizing: border-box;
+    padding-left: 10px;
+    width: 40%;
+}
+
+.title-profile h2{
+    color: #F17300;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.information-post{
+    width: 100%;
 }
 
 .follow-button{
@@ -125,4 +143,10 @@
 .name_date h4{
     margin: 0px;
     color: #F17300;
+}
+    .visible{
+    display: block;
+}
+.no-visible{
+    display: none;
 }
