@@ -51,13 +51,15 @@ export class ChatComponent{
           this.notifications[index] = this.notifications[index] + 1;
         }else{
           this.messages.unshift(res['message']);
-          this.userService.getCompany(res['message']['messages'][0]['idUser'])
+          this.notifications[0] = 1; 
+          try{
+            this.userService.getCompany(res['message']['messages'][0]['idUser'])
           .subscribe(
             (res) => {
               this.users.unshift(res['user'])              
             },
             (err) => console.error(err)
-          )
+          )}catch{}
         }
       },
       err => console.error(err)
@@ -70,13 +72,20 @@ export class ChatComponent{
       var idChat = this.existingChat(this.chatService.idChat);
       if(idChat != undefined){
         this.swapPosition(this.users, 0, 1);
-        this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages'])
-        console.log(111111111111111111111111111);
+        this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages']);
+        setTimeout( () => {
+          this.chatService.messageSeen(this.cookie.get('idUser'), this.users[0]).subscribe(
+            (res) => {},
+            (err) => console.error(err)
+          )
+          this.notifications[idChat] = 0
+        } , 1000);
+        this.informationChat = this.users[0];  
       }
       else{
         this.obtainUserInformation(this.chatService.idChat, () => {
           this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages']);
-          this.informationChat = this.users[0]
+          this.informationChat = this.users[0];
         });
         let message = {
           messages : [],
@@ -167,11 +176,12 @@ export class ChatComponent{
     this.actualName = user['nombreCompleto'];
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
-    this.notifications[id] = 0;
-    this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
-      (res) => {},
-      (err) => console.error(err)
-    )
+    this.cleanNotifications(user, id)
+    // this.notifications[id] = 0;
+    // this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
+    //   (res) => {},
+    //   (err) => console.error(err)
+    // )
   }
 
   obtainMessagesById(userId : string){
@@ -213,4 +223,11 @@ export class ChatComponent{
     }
   }
 
+  cleanNotifications(user : any, id : number) : void{
+    this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
+      (res) => {},
+      (err) => console.error(err)
+    )
+    this.notifications[id] = 0
+  }
 }
