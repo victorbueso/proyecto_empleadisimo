@@ -346,4 +346,9 @@ export class NavbarComponent implements OnInit{
   showSidebar(){
     this.helperService.sidebarEvent.emit();
   }
-}
+
+  navChat(){
+    this.router.navigate(['chat']);
+  }
+
+} 

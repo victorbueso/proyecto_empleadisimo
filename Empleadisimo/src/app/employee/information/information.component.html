@@ -14,36 +14,24 @@
         </div>
     </div>
     <div *ngIf = "usuario" class="profile-publications">
-        <div *ngFor="let publicacion of publicaciones " class="post">
-            <div class="mainI-company">
-                <div class="image-container">
-                    <img [src]="usuario.fotoPerfil | modifyImageP" class="post-image">
-                </div>
-                <div class="name_date">
-                    <h4>{{ usuario.nombreCompleto | titlecase }}</h4>
-                    <span>{{ publicacion.fechaPublicacion | date: 'longDate' }}</span>
-    <!-- aaqui se mostraran las publicaciones -->
-    <!-- <div [ngClass]="{'visible':visualizador=='publicaciones','no-visible':visualizador!='publicaciones'}" class="profile-publications">
-        <h2>Publicaciones activas</h2>
-        <div>
-            <div *ngFor="let publicacion of publicaciones " class="post">
-                <img class="post-image" [src]=" usuario.fotoPerfil | modifyImageP ">                
-                <div class="title-profile">
-                    <h1>{{ publicacion.titulo | titlecase }}</h1><br>
-                    <h2>Fecha Vencimiento:{{publicacion.fechaVencimiento}}</h2><br>
-                    <span>{{ usuario.fechaFundacion | date: 'longDate' }}</span>
-                </div>
-                <div class="information-post">
-                    <h3>Se busca: {{publicacion.profesion}}</h3><br>
-                    <h3>{{publicacion.descripcion}}</h3><br>
-                    <button class="follow-button mr-4" style="float:right; width: 15%;"> Aplicar</button>
+        <div [ngClass]="{'visible':visualizador=='publicaciones','no-visible':visualizador!='publicaciones'}" class="profile-publications">
+            <h2>Publicaciones activas</h2>
+            <div>
+                <div *ngFor="let publicacion of publicaciones " class="post">
+                    <img class="post-image" [src]=" usuario.fotoPerfil | modifyImageP ">                
+                    <div class="title-profile">
+                        <h1>{{ publicacion.titulo | titlecase }}</h1><br>
+                        <h2>Fecha Vencimiento:{{publicacion.fechaVencimiento}}</h2><br>
+                        <span>{{ usuario.fechaFundacion | date: 'longDate' }}</span>
+                    </div>
+                    <div class="information-post">
+                        <h3>Se busca: {{publicacion.profesion}}</h3><br>
+                        <h3>{{publicacion.descripcion}}</h3><br>
+                        <button class="follow-button mr-4" style="float:right; width: 15%;"> Aplicar</button>
+                    </div>
                 </div>
             </div>
-        </div> -->
-        
     </div>
-
-    
     <div [ngClass]="{'visible':visualizador=='perfil','no-visible':visualizador!='perfil'}" class="profile-publications">
         <div class="post">
             <div class="title-profile row">
