@@ -91,7 +91,7 @@
       <label for="exampleFormControlSelect1" style="font-family:'Raleway semibold'">Seleccionado un CV</label>
       <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cvSelected">
         <option selected disabled>-- Seleccionar --</option>
-        <option *ngFor="let cv of curriculums; index as i" [value]="i"> {{cv.titulo}}</option>
+        <option *ngFor="let cv of curriculums; index as i" [value]="i"> Curriculum {{i}}</option>
       </select>
     </div>
   </div>
