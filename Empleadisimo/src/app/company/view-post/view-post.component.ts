@@ -54,6 +54,7 @@ export class ViewPostComponent implements OnInit {
     let idPost = this.activatedRoute.snapshot.params.id;
     this.publicacionesService.getAllInfoPost(idPost)
     .subscribe(res => {
+      console.log(res);
       this.post = res[0];
       let today = new Date();
       this.post.fechaVencimiento = new Date(res[0].fechaVencimiento);
