@@ -1,27 +1,29 @@
 <div class="col-6 d-flex mt-auto mb-3">
-  <h1>Dashboard</h1>
-  <hr>
+  <h2 class="pl-5 ml-5">Dashboard</h2>
 </div>
+<hr>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6" id="pie">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" id="pie">
       <!--<div class="pie" [chart]="donutChart"></div>-->
-      <highcharts-chart [Highcharts]="highchartsPie" [options]="donutChart"></highcharts-chart>
+      <highcharts-chart [Highcharts]="highchartsPie" [options]="donutChart"
+      style = "width: 100%; width: 520px; display: block;"></highcharts-chart>
     </div>
-    <div class="col-md-6" id="area">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" id="area">
       <!--<div class="area" [chart]="areaChart"></div>-->
-      <highcharts-chart [Highcharts]="highchartsArea" [options]="areaChart"></highcharts-chart>
+      <highcharts-chart [Highcharts]="highchartsArea" [options]="areaChart"
+      style = "width: 100%; width: 520px; display: block;"></highcharts-chart>
     </div>
   </div>
-  <hr>
-  <hr>
+  <hr><hr>
   <div class="row">
-    <div class="col-md-6" id="bar">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" id="bar">
       <!--<div class="bar" [chart]="barChart"></div>-->
-      <highcharts-chart [Highcharts]="highchartsBar" [options]="barChart"></highcharts-chart>
+      <highcharts-chart [Highcharts]="highchartsBar" [options]="barChart"
+      style = "width: 100%; width: 520px; display: block;"></highcharts-chart>
     </div>
-    <div class="col-md-6" id="column">
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6" id="column">
       <!--<div class="polar" [chart]="polarChart"></div>-->
       <highcharts-chart
         [Highcharts]="highchartsColumn" [options]="columnChart"
