@@ -139,7 +139,7 @@ export class DashboardComponent implements OnInit {
     },
     plotOptions : {
        area: {
-          fillOpacity: 0.5
+          fillOpacity: 0.5,
        },
       series: {
         marker: {
@@ -245,8 +245,10 @@ export class DashboardComponent implements OnInit {
        },
        series: {
         borderRadius: 5,
+        innerWidth: '50%'
       } as any
     },
+
     series: [
       {
         name: 'Eliminadas',

@@ -4,6 +4,10 @@
   margin-top: 30px;
 }
 
+highcharts-container {
+  left: -70px;
+}
+
 #gradient-0 stop {
   stop-color: darkred;
 }
@@ -55,4 +59,10 @@ font-weight: 600;
 }
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
+}
+
+@media(max-width: 550) and (min-width: 250) {
+  highcharts-chart {
+    width: 50%!important;
+  }
 }
