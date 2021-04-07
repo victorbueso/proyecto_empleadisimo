@@ -37,7 +37,7 @@ export class ChatComponent{
 
   connection(){
     this.socketService.listen('connect').subscribe(
-      ( res ) => console.log(res),
+      ( res ) => {},
       ( err ) => console.error(err)
     )
   }
@@ -71,10 +71,12 @@ export class ChatComponent{
       if(idChat != undefined){
         this.swapPosition(this.users, 0, 1);
         this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages'])
+        console.log(111111111111111111111111111);
       }
       else{
         this.obtainUserInformation(this.chatService.idChat, () => {
           this.updateData(this.users[0]['fotoPerfil'], this.users[0]['nombreCompleto'], this.users[0]['messages']);
+          this.informationChat = this.users[0]
         });
         let message = {
           messages : [],
@@ -167,7 +169,7 @@ export class ChatComponent{
     this.actualMessages = this.obtainMessagesById(user['_id'])
     this.notifications[id] = 0;
     this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
-      (res) => {console.log(res)},
+      (res) => {},
       (err) => console.error(err)
     )
   }
