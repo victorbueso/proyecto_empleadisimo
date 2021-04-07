@@ -148,7 +148,7 @@ router.get('/posts/getInfo/:idPost', function(req,res){
                 estado:true,
                 "resultado.nombreCompleto" : true,
                 "resultado.fotoPerfil": true,
-                "resultado.curriculums" : true
+                "resultado.curriculum" : true
             }
         }
     ]).then(result => {

@@ -68,7 +68,7 @@
                     </td>
                     <td>{{usuarios.nombreCompleto}}</td>
                     <td>
-                        <button class="btn btn-primary">Ver curriculum</button>
+                        <a [href]="'http://localhost:3000/'+ usuarios.curriculum[0]?.rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
                     </td>
                   </tr>
                 </tbody>
