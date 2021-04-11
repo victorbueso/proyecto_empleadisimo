@@ -20,6 +20,7 @@ export class ChatComponent{
   actualPhoto = "";
   actualName = "";
   actualMessages = [];
+  actualId : Number;
   myId: String = ""; 
   notifications = [];
   @ViewChild("inputMessage") inputMessage! : ElementRef;
@@ -49,6 +50,8 @@ export class ChatComponent{
         if(index > -1){
           this.messages[index]['messages'].push(res['message']);
           this.notifications[index] = this.notifications[index] + 1;
+          console.log(this.users[index]);
+          console.log(this.actualMessages);
         }else{
           this.messages.unshift(res['message']);
           this.notifications[0] = 1; 
@@ -231,4 +234,5 @@ export class ChatComponent{
     )
     this.notifications[id] = 0
   }
+
 }

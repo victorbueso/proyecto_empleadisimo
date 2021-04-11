@@ -52,7 +52,9 @@ router.put("/messageSeen/:idUser?", async (req, res)=> {
                         },
                         {
                             'user2.notification' : 0
-    
+                        },
+                        {
+                            useFindAndModify: false
                         }
                     )
                 )
