@@ -28,6 +28,19 @@
         </div>
     </div>
     <div class="noContact" [ngClass]="{'d-block' : actualName == '', 'd-none' : actualName != ''}">
+        <div class="selectMessage">
+            <div class="selectMessageInfo">
+                <div class="background-box">
+                    <div class="mailbox-image">
+                        <i class="fas fa-inbox mailbox"></i>
+                    </div>
+                </div>
+                <div class="text-noselect">
+                    <span>Seleccione un chat dentro de la caja de mensajes</span>
+                    <hr>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="message-container" [ngClass]="{'d-block' : actualName != '', 'd-none' : actualName == ''}">
         <div class="ppc pointer">
