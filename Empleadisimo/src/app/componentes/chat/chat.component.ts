@@ -161,6 +161,7 @@ export class ChatComponent{
           this.messages = res['messages'];
           this.users = res['users'];
           this.obtainNotification(res['messages']);
+          console.log(this.notifications);
           this.homeChat()
         }else{
           this.homeChat()

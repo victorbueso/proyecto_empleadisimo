@@ -68,11 +68,11 @@ class Users{
             },
             user1 : {
                 idUser : chatInformation.idUserE, 
-                notification : 1
+                notification : 0
             },
             user2 : {
                 idUser : chatInformation.idUserR,
-                notification : 0
+                notification : 1
             }
         })
 
