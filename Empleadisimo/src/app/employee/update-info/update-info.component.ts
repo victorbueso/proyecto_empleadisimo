@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit} from '@angular/core';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Router } from '@angular/router';
+//import { ConsoleReporter } from 'jasmine';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class UpdateInfoComponent implements OnInit{
   genderV: boolean = false;
   public usuario:any={};
   public imageURL:string='';
+
   uploadForm:FormGroup=new FormGroup({
     avatar:new FormControl(''),
     name:new FormControl('')
@@ -55,6 +57,13 @@ export class UpdateInfoComponent implements OnInit{
         }else{
           this.imageURL= '';
         }
+        this.forma.setValue({
+          'name':res.nombreCompleto,
+          'profesion':res.profesion,
+          'birthDate':res.fechaNacimiento,
+          'gender':res.genero
+        })
+
       })}
 
   ngOnInit(){
@@ -173,7 +182,11 @@ export class UpdateInfoComponent implements OnInit{
 
   sendInformation(){
     this.upload()
+
     if(!this.forma.valid){
+      console.log(this.forma.value.gender)
+      console.log(this.forma.value.name)
+      console.log(this.usuario.nombreCompleto)
       this.message="¡Ups! Al parecer el formulario no se ha completado."
       this.errorMessage=true;
       setTimeout( () => {
