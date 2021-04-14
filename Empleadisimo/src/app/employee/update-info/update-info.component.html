@@ -20,26 +20,26 @@
             <div>
                 <h3 style="font-family: 'Raleway medium';">Foto de perfil</h3>
             </div>
-            <div class="row">
-                <div class="col-xl-4 col-lg-6 col-md-6 col-xs-6 col-6">
+            <div class="select-image">
+                <div class="">
                     <div style="background-color: white;width: 200px; height: 200px;">    
                         <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
                             <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-8 col-lg-6 col-md-6 col-xs-6 col-6">
-
-                    <div class="row">
-                        <input type="file" accept="image/*" (change)="showPreview($event)" />
+                <div class="">
+                    <div class="">
+                        <input class="d-none" #inputFile type="file" accept="image/*" (change)="showPreview($event)" />
+                        <div class="buttonUpload" (click)="inputFile.click()">
+                            <i class="fas fa-chevron-circle-up"></i>
+                            Upload
+                        </div>
                     </div>
-                    <!--<div class="row mt-4">
-                        <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
-                    </div>-->
                 </div>
             </div>
             
-            
+            <!--class="d-none"-->
         </form>
         <!--Form para datos-->
         <form #form class="basic-form" [formGroup]="forma" (ngSubmit)="sendInformation()">
@@ -57,7 +57,6 @@
             <input [ngClass]="{'input-error': invalidBirth() || birthDateV}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">
             <div class="buttons-update">
                 <button (onclick)="sendInformation()" class="next-button">Siguiente</button>
-                <button class="skip-button">Omitir</button>
             </div>
         </form>
     </div>
