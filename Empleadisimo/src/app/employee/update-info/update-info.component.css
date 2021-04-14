@@ -9,7 +9,7 @@
     background: linear-gradient(270deg, #FFFFFF 0%, #0E8ED1 65%);
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     display: flex;
     padding: 3%;
 }
@@ -30,6 +30,7 @@
 
 .basic-info {
     display: flex;
+    min-width: 300px;
     flex-direction: column;
 }
 
@@ -161,4 +162,44 @@ input[type="date"] {
 .logo-empleadisimo:hover {
     animation-name: rotate;
     animation-duration: 1s;
+}
+
+.select-image{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.d-none{
+    display: none;
+}
+
+.buttonUpload{
+    padding: 10px;
+    color: white;
+    margin-top: 5px;
+    cursor: pointer;
+    max-width: 204px;
+    max-height: 300px;
+    border-radius: 4px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: var(--main-color);
+}
+
+.buttonUpload:hover{
+    background-color: #0b5aab;
+}
+
+@media only screen and (max-width: 700px) {
+    .basic-info{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .basic-info{
+        width: 100%;
+    }
 }
