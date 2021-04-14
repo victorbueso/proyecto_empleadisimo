@@ -49,10 +49,9 @@
             <input #phone type="text" [ngClass]="{'input-error': invalidProfesion() || phoneV}" placeholder="Ingrese su profesion" formControlName="profesion">
             <p [ngClass]="{'display-block': invalidSex() || genderV}" class="error-message">No se selecciono ninguna opcion</p>
             <select [ngClass]="{'input-error': invalidSex() || genderV}" class="select-sex" formControlName="gender">
-                    <option [defaultSelected]=true >Selecione Su genero</option>
-                    <option >Masculino</option>
-                    <option >Femenino</option>
-
+                        <option [defaultSelected]=true>Selecione Su genero</option>
+                        <option >Masculino</option>
+                        <option >Femenino</option>
                 </select>
             <p [ngClass]="{'display-block': invalidBirth() || birthDateV}" class="error-message">Fecha de nacimiento no ingresada o invalida</p>
             <input [ngClass]="{'input-error': invalidBirth() || birthDateV}" type="date" placeholder="Ingrese su fecha de nacimiento" formControlName="birthDate">

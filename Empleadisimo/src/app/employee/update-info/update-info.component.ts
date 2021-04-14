@@ -3,6 +3,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit} from '@angular/core';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Router } from '@angular/router';
+//import { ConsoleReporter } from 'jasmine';
+
 
 @Component({
   selector: 'app-update-info',
@@ -14,6 +16,9 @@ export class UpdateInfoComponent implements OnInit{
   public successMessage: Boolean=false;
   public errorMessage : Boolean =false;
   public message: String = '';
+  public lista:string[]=["Femenino","Masculino"];
+  public masculino:string = "Masculino";
+  public femenino:string = "Femenino";
 
   nameV: boolean = false;
   phoneV: boolean = false;
@@ -32,7 +37,14 @@ export class UpdateInfoComponent implements OnInit{
     profesion: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
     birthDate:[null, [Validators.required, this.dateValidator]],
     gender: [null, [Validators.required, Validators.minLength(1), Validators.pattern("(Masculino)|(Femenino)")]]
+
   })
+
+  // constructor(private fb: FormBuilder,
+  //             private cookieService: CookieService,
+  //             private userServices: UsuariosService,
+  //             private router:Router) {
+  //             }
 
   constructor(
     private fb: FormBuilder,
@@ -40,18 +52,29 @@ export class UpdateInfoComponent implements OnInit{
     private cookieService: CookieService,
     private router:Router) {
       userServices.obtenerUsuario(this.cookieService.get('idUser')).subscribe((res:any)=>{
-        this.usuario = res;
-        console.log(this.forma);
+        console.log(res);
+        this.usuario= res;
+
         if(this.usuario.fotoPerfil!=''){
           this.imageURL = "http://localhost:3000/usuarios/profilePic/"+this.usuario._id;
         }else{
           this.imageURL= '';
         }
+
+        var g:string=''
+        if(res.genero === 1){
+          g = 'Masculino'
+        }else if(res.genero === 0){
+          g = 'Femenino'
+        }else{
+          g = '';
+        }
+
         this.forma.setValue({
           'name':res.nombreCompleto,
           'profesion':res.profesion[0],
           'birthDate':res.fechaNacimiento,
-          'gender':res.genero
+          'gender':g
         })
 
       })}
@@ -66,7 +89,7 @@ export class UpdateInfoComponent implements OnInit{
       avatar: file
     });
     this.uploadForm.get('avatar')!.updateValueAndValidity()
-    // console.log(this.uploadForm.get('avatar'));
+    console.log(this.uploadForm.get('avatar'));
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
@@ -78,7 +101,7 @@ export class UpdateInfoComponent implements OnInit{
   upload(){
     if(this.usuario.fotoPerfil==''&&this.imageURL!=''){
       let formData = new FormData();
-      // console.log('se va a agregar la foto ');
+      console.log('se va a agregar la foto ');
       formData.append('image',this.uploadForm.value.avatar);
       this.userServices.uploadProfileImage(this.usuario._id,formData)
       .subscribe(res=>{
@@ -90,11 +113,11 @@ export class UpdateInfoComponent implements OnInit{
       if(this.imageURL!="http://localhost:3000/usuarios/profilePic/"+this.usuario._id){
         let formData = new FormData();
         formData.append('image',this.uploadForm.value.avatar);
-        // console.log('se va a actualizar la foto');
+        console.log('se va a actualizar la foto');
         this.userServices.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
           //this.router.navigate(['employee']);
-          // console.log("Irnos")
+          console.log("Irnos")
           // alert('foto de usuario actualizada');
         });
       }/*else{
@@ -171,8 +194,13 @@ export class UpdateInfoComponent implements OnInit{
   }
 
   sendInformation(){
-  
+    this.upload()
+
     if(!this.forma.valid){
+      console.log(this.forma.value.gender)
+      console.log(this.usuario.genero)
+      console.log(this.forma.value.name)
+      console.log(this.usuario.nombreCompleto)
       this.message="¡Ups! Al parecer el formulario no se ha completado."
       this.errorMessage=true;
       setTimeout( () => {
@@ -197,7 +225,7 @@ export class UpdateInfoComponent implements OnInit{
         nombreCompleto:this.forma.value.name,
         profesion: this.forma.value.profesion,
         fechaNacimiento : this.forma.value.birthDate,
-        genero : genero
+        genero : this.forma.value.genero || genero 
       }
       this.userServices.updateInfo(infoUser, this.cookieService.get('idUser'))
       .subscribe( () => {
