@@ -12,18 +12,7 @@ router.post('/', function(req, res) {
         cantidadPago: req.body.cantidadPago,
         fechaPublicacion: req.body.fechaPublicacion,
         fechaVencimiento: req.body.fechaVencimiento,
-        /*cv: {                                                      //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
-            idCV: req.body.idCV,
-            nombreCV: req.body.nombreCV,
-            fechaCreacion: req.body.fechaCreacion,
-        },
-        empleos: {
-            tituloEmpleo: req.body.tituloEmpleo,
-            descripcionEmpleo: req.body.descripcionEmpleo,
-            duracionEmpleo: req.body.duracionEmpleo,
-        },*/
         profesion: req.body.profesion,
-        //duracionPublicacion: req.body.duracionPublicacion,
         ubicacion: { //{pais: '', departamento: '', ciudad: ''}
             pais: req.body.pais,
             departamento: req.body.departamento,
@@ -31,7 +20,8 @@ router.post('/', function(req, res) {
         },
         modalidad: req.body.modalidad,
         idEmpresa: req.body.idEmpresa,
-        usuarios: []
+        usuarios: [],
+        estado: 'vigente'
     });
 
     publicationsRouter.save().then(result => {
