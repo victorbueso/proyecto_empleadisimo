@@ -23,6 +23,7 @@ export class UpdateInfoComponent implements OnInit {
   public usuario:any = {sucursales:[]};
   public errorMessage:Boolean = false;
   public successMessage:Boolean = false;
+  public noPicture:Boolean = false;
 
   forma: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
@@ -142,17 +143,24 @@ export class UpdateInfoComponent implements OnInit {
 
   }
   actualizarPerfil(){
-
+    this.upload()
     this.successMessage=false;
     this.errorMessage=false;
 
     console.log(this.forma.value.name);
+    console.log(this.imageURL)
 
     this.usuario.nombreCompleto= this.forma.value.name;
     this.usuario.rubros = this.partirRubros(this.forma.value.rubros);
     this.usuario.fechaFundacion = this.forma.value.fechaFundacion;
 
-    if(this.forma.valid == true){
+    if(!this.imageURL){
+      //alert('debe seleccionar una imagen para actualizar su foto de perfil');
+      this.noPicture = true;
+      setTimeout(() => {
+        this.noPicture = false;
+      }, 3000);
+    }else if(this.forma.valid == true){
       console.log(this.usuario);
       this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
       .subscribe(res=>{
@@ -166,7 +174,7 @@ export class UpdateInfoComponent implements OnInit {
       },error=>{
         console.log(error);
       });
-    } else{
+    }else{
       this.errorMessage = true;
       setTimeout(() => {
         this.errorMessage = false;
@@ -221,11 +229,13 @@ export class UpdateInfoComponent implements OnInit {
         this.usuarioService.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
           console.log(res);
-          alert('foto de usuario actualizada');
+          //alert('foto de usuario actualizada');
+        },error=>{
+          console.log(error);
         });
-      }else{
-          alert('debe seleccionar una imagen para actualizar su foto de perfil');
-      }
+      } 
+          //alert('debe seleccionar una imagen para actualizar su foto de perfil');
+      
     }
 
   }

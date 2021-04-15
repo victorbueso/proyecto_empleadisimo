@@ -16,9 +16,9 @@ export class UpdateInfoComponent implements OnInit{
   public successMessage: Boolean=false;
   public errorMessage : Boolean =false;
   public message: String = '';
-  public lista:string[]=["Femenino","Masculino"];
+ /* public lista:string[]=["Femenino","Masculino"];
   public masculino:string = "Masculino";
-  public femenino:string = "Femenino";
+  public femenino:string = "Femenino";*/
 
   nameV: boolean = false;
   phoneV: boolean = false;
@@ -197,10 +197,10 @@ export class UpdateInfoComponent implements OnInit{
     this.upload()
 
     if(!this.forma.valid){
-      console.log(this.forma.value.gender)
+     /* console.log(this.forma.value.gender)
       console.log(this.usuario.genero)
       console.log(this.forma.value.name)
-      console.log(this.usuario.nombreCompleto)
+      console.log(this.usuario.nombreCompleto)*/
       this.message="¡Ups! Al parecer el formulario no se ha completado."
       this.errorMessage=true;
       setTimeout( () => {
