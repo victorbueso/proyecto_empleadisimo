@@ -1,45 +1,42 @@
 .container-basic {
-    background: linear-gradient(270deg, #FFFFFF 0%, #f17b0d 65%);
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    display: flex;
     padding: 3%;
+    height: auto;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(270deg,#FFFFFF 0%, var(--secondary-color) 65%);
 }
+
 .visible{
     display: block;
 }
-.no-visible{
-    display: none;
-}
-.visible{
-    display: block;
-}
+
 .no-visible{
     display: none;
 }
 
-.container-basic {
-    background: linear-gradient(270deg, #FFFFFF 0%, var(--secondary-color) 65%);
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    display: flex;
-    padding: 3%;
+.visible{
+    display: block;
 }
+
+.no-visible{
+    display: none;
+}
+
 
 .basic-info {
-    box-shadow: 0px 4px 14px 0px #000000b8;
-    background-color: white;
-    border-radius: 15px;
-    display: inherit;
-    padding: 2% 3%;
     width: 60%;
+    padding: 2% 3%;
+    display: inherit;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0px 4px 14px 0px #000000b8;
 }
 
 .title-info {
-    display: inherit;
     width: 100%;
+    display: inherit;
 }
 
 .basic-info {
@@ -61,21 +58,21 @@
 
 .basic-form input,
 select {
-    border-bottom: 2px solid #00000061;
-    height: var(--height-forms);
-    width: var(--width-forms);
-    color: #00000061;
-    border-right: 0px;
-    border-left: 0px;
     border-top: 0px;
     margin-top: 5px;
-    box-sizing: border-box;
+    border-left: 0px;
     margin: 10px 0px;
+    border-right: 0px;
+    color: #00000061;
+    box-sizing: border-box;
+    width: var(--width-forms);
+    height: var(--height-forms);
+    border-bottom: 2px solid #00000061;
 }
 
 .input-good {
-    border-bottom-color: green;
     color: green;
+    border-bottom-color: green;
 }
 
 .basic-form select:focus,
@@ -92,28 +89,28 @@ input[type="date"] {
 }
 
 .basic-form input[type="text"]:focus {
-    outline: none;
     width: 80%;
+    outline: none;
     color: black;
 }
 
 .buttons-update {
-    justify-content: flex-end;
-    box-sizing: border-box;
-    padding-top: 50px;
-    display: flex;
     gap: 10px;
+    display: flex;
+    padding-top: 50px;
+    box-sizing: border-box;
+    justify-content: flex-end;
 }
 
 .next-button {
-    border-color: var(--secondary-color);
-    color: var(--secondary-color);
-    background-color: transparent;
-    border-style: solid;
+    padding: 5px;
+    border-width: 1px;
     border-image: none;
     border-radius: 3px;
-    border-width: 1px;
-    padding: 5px;
+    border-style: solid;
+    color: var(--secondary-color);
+    background-color: transparent;
+    border-color: var(--secondary-color);
 }
 
 .next-button:focus {
@@ -121,20 +118,20 @@ input[type="date"] {
 }
 
 .next-button:hover {
-    background-color: var(--secondary-color);
     color: white;
+    background-color: var(--secondary-color);
 }
 
 .skip-button {
-    background-color: transparent;
-    color: #F1730094;
     border: none;
+    color: #F1730094;
+    background-color: transparent;
 }
 
 .head {
     height: 25px;
-    box-sizing: border-box;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .deactive-head {
@@ -142,10 +139,10 @@ input[type="date"] {
 }
 
 .active-head {
-    color: var(--secondary-color);
-    padding-right: 5px;
-    margin-right: 5px;
     font-size: 16px;
+    margin-right: 5px;
+    padding-right: 5px;
+    color: var(--secondary-color);
 }
 
 .display-block {
@@ -153,15 +150,15 @@ input[type="date"] {
 }
 
 .error-message {
-    animation-fill-mode: forwards;
-    animation-iteration-count: 1;
-    animation-name: fade-in;
-    animation-duration: 1s;
-    display: none;
-    color: red;
-    opacity: 0%;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    opacity: 0%;
+    color: red;
+    display: none;
+    animation-duration: 1s;
+    animation-name: fade-in;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 .input-error {
@@ -175,4 +172,64 @@ input[type="date"] {
 .logo-empleadisimo:hover {
     animation-name: rotate;
     animation-duration: 1s;
+}
+
+.container-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.container-photo{
+    width: 100%;
+}
+
+.input-file{
+    display: none;
+}
+
+.button-file{
+    display: flex;
+    color: white;
+    max-width: 40%;
+    cursor: pointer;
+    min-width: 10px;
+    min-height: 39px;
+    border-radius: 5px;
+    text-align: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0px 0px 10px;
+    background-color: var(--secondary-color);
+}
+
+.button-file i{
+    margin-right: 5px;
+}
+
+.button-file:hover{
+    background-color: #ff942e;
+}
+
+.container-bOffice{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgP{
+    width: 200px;
+    height: 200px;
+    margin-right: 10px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .basic-info {
+      width: 70%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .basic-info {
+      width: 90%;
+    }
 }

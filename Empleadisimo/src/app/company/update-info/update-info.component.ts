@@ -51,7 +51,6 @@ export class UpdateInfoComponent implements OnInit {
 
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
     .subscribe((res:any)=>{
-      console.log(res);
       this.usuario= res;
 
       if(this.usuario.fotoPerfil!=''){
@@ -65,7 +64,6 @@ export class UpdateInfoComponent implements OnInit {
       }
       var s:string='';
       if(res.rubros[0]!=null){
-        console.log('Hay rubros');
         for (let i = 0; i < res.rubros.length; i++) {
           if(i>=1){
             s =s+", "+ res.rubros[i];
@@ -77,7 +75,6 @@ export class UpdateInfoComponent implements OnInit {
       }else{
 
       }
-      console.log(s);
       this.forma.setValue({
         'name':res.nombreCompleto,
         'fechaFundacion':res.fechaFundacion,
@@ -129,8 +126,6 @@ export class UpdateInfoComponent implements OnInit {
       avatar: file
     });
     this.uploadForm.get('avatar')!.updateValueAndValidity()
-    console.log(this.uploadForm.get('avatar'));
-    // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
