@@ -9,6 +9,7 @@
             <div class="col-8">
                 <p>
                     <ngb-alert type="danger" [ngClass]="{'visible': errorMessage, 'no-visible': !errorMessage}">¡Ups! El formulario no se ha completado</ngb-alert>
+                    <ngb-alert type="danger" [ngClass]="{'visible': noPicture, 'no-visible': !noPicture}">Se debe selecionar una foto de perfil!</ngb-alert>
                     <ngb-alert type="success" [ngClass]="{'visible': successMessage, 'no-visible': !successMessage}">¡Datos actualizados correctamente! Espera unos segundos...</ngb-alert>
                 </p>
                 <div class="container-fluid basic-form">
@@ -109,7 +110,7 @@
                         <input type="file" accept="image/*" (change)="showPreview($event)" />
                     </div>
                     <div class="row mt-4">
-                        <button class="btn btn-primary" (click)="upload()">Subir Imagen</button>
+                       <!-- <button class="btn btn-primary" (click)="upload()">Subir Imagen</button> -->
                     </div>
                 </form>
                 
