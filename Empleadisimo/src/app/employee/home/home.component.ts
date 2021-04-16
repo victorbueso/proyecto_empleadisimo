@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerPublicaciones()
     this.publicaciones.forEach((publicacion, index) => {
+
       let today = new Date();
       publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
       publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
@@ -125,6 +126,11 @@ export class HomeComponent implements OnInit {
     .subscribe(res => {
       this.publicaciones = res;
       this.publicaciones.reverse();
+      this.publicaciones.forEach((publicacion, index) => {
+        if(publicacion?.contratado){
+          this.publicaciones.splice(index, 1);
+        }
+      })
     }, error => console.log(error))
   }
 
