@@ -63,7 +63,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
-      console.log(result)
       this.publicaciones = result;
       this.publicaciones.forEach((publicacion, index) => {
         let today = new Date();
