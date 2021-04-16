@@ -347,6 +347,18 @@ export class NavbarComponent implements OnInit{
     this.helperService.sidebarEvent.emit();
   }
 
+  showActivePosts(){
+    this.helperService.postsVigente.emit();
+  }
+
+  showUnactivePosts(){
+    this.helperService.postsVencido.emit();
+  }
+
+  showAllPosts(){
+    this.helperService.postsHistorial.emit();
+  }
+
   navChat(){
     this.router.navigate(['chat']);
   }

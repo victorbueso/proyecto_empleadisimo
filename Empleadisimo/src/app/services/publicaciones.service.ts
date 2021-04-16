@@ -39,4 +39,8 @@ export class PublicacionesService {
     return this.httpClient.put(`${this.url}post/update/${id}`, data);
   }
 
+  sendHiringEmail(idPost:string, idUser:string, data):Observable<any>{
+    return this.httpClient.post(`${this.url}post/${idPost}/hireUser/${idUser}`, data);
+  }
+
 }

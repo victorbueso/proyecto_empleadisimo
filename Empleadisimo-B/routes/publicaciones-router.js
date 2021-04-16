@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 var publicaciones = require('../models/publicaciones');
+const sendEmail = require('../modules/contratadoMail');
 
 //Crear una publicacion
 router.post('/', function(req, res) {
@@ -137,7 +138,9 @@ router.get('/posts/getInfo/:idPost', function(req,res){
                 modalidad:true,
                 estado:true,
                 curriculumUsuario: true,
+                "resultado._id":true,
                 "resultado.nombreCompleto" : true,
+                "resultado.correo":true,
                 "resultado.fotoPerfil": true
             }
         }
@@ -188,6 +191,24 @@ router.post('/post/updateStatus/:idPost', function (req, res){
     }).catch(error => {
         res.send(error);
         res.end();
+    })
+});
+
+/*Agregar usuario contratado */
+router.post('/post/:idPost/hireUser/:idUser', function(req, res){
+    let datos = req.body;
+    publicaciones.updateOne({
+        _id: req.params.idPost
+    },
+    {
+        contratado: req.params.idUser
+    }).then(() => {
+        sendEmail(datos);
+        res.status(200).send();
+        res.end();
+    }).catch( error => {
+        res.send(error);
+        res.send();
     })
 });
 

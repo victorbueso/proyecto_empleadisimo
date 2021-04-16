@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbAlert, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicacionesService } from '../../services/publicaciones.service';
+import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from '../../services/socket.service'
 import { Router } from '@angular/router';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -21,9 +23,16 @@ export class HomeComponent implements OnInit {
   isNotSelected: string = '0'
   isSelected: string = '';
   public publicaciones: any = [];
+  public publicacionesVigentes:any = [];
+  public publicacionesVencidas:any =[];
+  mostrar:string = "todas";
 
   successMessage = false;
   successfull = ``;
+
+  page_size : number = 5;
+  page_number : number = 1;
+  pageSizeOptions = [5,10,20,50,100];
 
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
@@ -43,12 +52,13 @@ export class HomeComponent implements OnInit {
     private publicacionesService:PublicacionesService,
     private cookies: CookieService,
     private usuariosService:UsuariosService,
-    private config: NgbModalConfig,
+    // private config: NgbModalConfig,
     private socketService: SocketService,
-    private router:Router
+    private router:Router,
+    private helperService: HelperService
   ) {
-    config.backdrop = 'static';
-    config.keyboard = false;
+    // config.backdrop = 'static';
+    // config.keyboard = false;
     this.obtainConn();
     this.listenMessage();
   }
@@ -67,10 +77,34 @@ export class HomeComponent implements OnInit {
           .subscribe( () => {
           }, error => console.log(error))
         }
+        if(publicacion.estado=='eliminado'){
+          this.publicaciones.splice(index, 1);
+        }
+      });
+      this.publicaciones.forEach(publicacion => {
+        if(publicacion.estado=='vigente'){
+          this.publicacionesVigentes.push(publicacion);
+        } else if(publicacion.estado == 'vencida'){
+          this.publicacionesVencidas.push(publicacion);
+        }
       });
     }, error => {
       console.log(error);
-    })
+    });
+
+    this.helperService.postsVigente.subscribe( () => {
+      this.mostrar="vigentes";
+      console.log(this.mostrar);
+    });
+    this.helperService.postsVencido.subscribe( () => {
+      this.mostrar="vencidas";
+      console.log(this.mostrar);
+    });
+    this.helperService.postsHistorial.subscribe( () => {
+      this.mostrar="todas";
+      console.log(this.mostrar);
+    });
+
   }
 
   obtainConn(){
@@ -188,6 +222,11 @@ export class HomeComponent implements OnInit {
       console.log(error);
     });
     console.log(data);
+  }
+
+  handlePage(e:PageEvent){
+    this.page_size = e.pageSize;
+    this.page_number = e.pageIndex+1;
   }
 
   guardarNotificacion(data:any){

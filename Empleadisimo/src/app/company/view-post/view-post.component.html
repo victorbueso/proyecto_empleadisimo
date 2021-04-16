@@ -58,6 +58,7 @@
                     <th scope="col"></th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Curriculum Vitae</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +69,10 @@
                     </td>
                     <td>{{usuarios.nombreCompleto}}</td>
                     <td>
-                        <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i].rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
+                        <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i]?.rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary" (click)="hire(usuarios)">Contratar</button>
                     </td>
                   </tr>
                 </tbody>

@@ -33,10 +33,10 @@
                   <div ngbDropdown class="d-inline-block">
                     <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Publicaciones</a>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                      <button ngbDropdownItem>Recientes</button>
-                      <button ngbDropdownItem>Vencidas</button>
+                      <button ngbDropdownItem (click)="showActivePosts()">Vigentes</button>
+                      <button ngbDropdownItem (click)="showUnactivePosts()">Vencidas</button>
                       <div class="dropdown-divider"></div>
-                      <button ngbDropdownItem>Historial</button>
+                      <button ngbDropdownItem (click)="showAllPosts()">Historial</button>
                     </div>
                   </div>
                 </div>
