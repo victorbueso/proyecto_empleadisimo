@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   public publicaciones: any = [];
   public publicacionesVigentes:any = [];
   public publicacionesVencidas:any =[];
+  verifiedAccount:Boolean=false;
   mostrar:string = "todas";
 
   successMessage = false;
@@ -62,6 +63,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.helperService.navbarVisible.emit();
+    this.usuariosService.getUser(this.cookies.get('idUser'))
+    .subscribe( res => {
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    }, error => console.log(error));
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;

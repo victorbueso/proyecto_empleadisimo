@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   cvSelected : number = -1;
   postSelected : string = '';
   postNumber : number;
+  verifiedAccount:Boolean = false;
 
   public informationChat = {};
 
@@ -64,8 +65,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.helperService.navbarVisible.emit();
-    this.obtenerPublicaciones()
-    this.publicaciones.forEach((publicacion, index) => {
+    this.obtenerPublicaciones();
+    this.usuariosService.getUser(this.cookies.get('idUser'))
+    .subscribe( res => {
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    })
+    this.publicaciones.forEach((publicacion) => {
 
       let today = new Date();
       publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);

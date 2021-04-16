@@ -146,7 +146,8 @@ router.post('/', async function(req, res) {
         notificaciones: [],
         estado : 'activo',
         seguidores: [],
-        siguiendo:[]
+        siguiendo:[],
+        verified: false
     });
 
     userRouter.save().then(result => {
@@ -822,6 +823,24 @@ router.post('/StopfollowCompany/:idUser', async(req, res)=>{
     }
     
 });
+
+//Verificar cuenta
+router.post('/verifyAccount/:idUser', function(req, res){
+    usuario.updateOne(
+        {
+            _id : req.params.idUser
+        },
+        {
+            verified : true
+        }
+    ).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error =>{
+        res.send(error);
+        res.end();
+    })
+})
 
 
 module.exports = router;

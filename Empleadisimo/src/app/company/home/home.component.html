@@ -8,7 +8,7 @@
             <h1 *ngIf="mostrar == 'vencidas'">Publicaciones vencidas</h1>
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <button class="btn btn-primary" (click)="open(contenido)">
+            <button class="btn btn-primary"(click)="open(contenido)">
               Nueva publicación
             </button>
           </div>
@@ -100,7 +100,12 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
+  <div class="modal-body" *ngIf="!verifiedAccount">
+    <div class="text-align" style="font-family: 'Raleway medium';">
+      Es necesario que tu cuenta esté verificada antes de poder realizar publicaciones de trabajo.<br> Hemos enviado el enlace para verificar tu cuenta a tu correo electrónico
+    </div>
+  </div>
+  <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;" *ngIf="verifiedAccount">
     <ngb-alert type="success" class="mt-1" *ngIf="successMessage">{{ successfull }}</ngb-alert>
     <form [formGroup]="formPublications" (ngSubmit)="limpiar()">
       <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">

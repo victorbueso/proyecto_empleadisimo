@@ -20,7 +20,8 @@ var schema = new mongoose.Schema({
     notificaciones: Array,
     estado: String,
     seguidores: Array,
-    siguiendo: Array
+    siguiendo: Array,
+    verified: Boolean
 });
 
 module.exports = mongoose.model('usuarios', schema);
