@@ -52,13 +52,10 @@ export class HomeComponent implements OnInit {
     private publicacionesService:PublicacionesService,
     private cookies: CookieService,
     private usuariosService:UsuariosService,
-    // private config: NgbModalConfig,
     private socketService: SocketService,
     private router:Router,
     private helperService: HelperService
   ) {
-    // config.backdrop = 'static';
-    // config.keyboard = false;
     this.obtainConn();
     this.listenMessage();
   }
@@ -66,6 +63,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
+      console.log(result)
       this.publicaciones = result;
       this.publicaciones.forEach((publicacion, index) => {
         let today = new Date();
@@ -78,6 +76,9 @@ export class HomeComponent implements OnInit {
           }, error => console.log(error))
         }
         if(publicacion.estado=='eliminado'){
+          this.publicaciones.splice(index, 1);
+        }
+        if(publicacion?.contratado != undefined){
           this.publicaciones.splice(index, 1);
         }
       });
@@ -94,15 +95,12 @@ export class HomeComponent implements OnInit {
 
     this.helperService.postsVigente.subscribe( () => {
       this.mostrar="vigentes";
-      console.log(this.mostrar);
     });
     this.helperService.postsVencido.subscribe( () => {
       this.mostrar="vencidas";
-      console.log(this.mostrar);
     });
     this.helperService.postsHistorial.subscribe( () => {
       this.mostrar="todas";
-      console.log(this.mostrar);
     });
 
   }

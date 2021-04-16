@@ -22,6 +22,7 @@ router.post('/', function(req, res) {
         modalidad: req.body.modalidad,
         idEmpresa: req.body.idEmpresa,
         usuarios: [],
+        contratado : "",
         estado: 'vigente'
     });
 

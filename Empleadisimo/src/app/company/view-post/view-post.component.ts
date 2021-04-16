@@ -57,6 +57,7 @@ export class ViewPostComponent implements OnInit {
     let idPost = this.activatedRoute.snapshot.params.id;
     this.publicacionesService.getAllInfoPost(idPost)
     .subscribe(res => {
+
       this.post = res[0];
       let today = new Date();
       this.post.fechaVencimiento = new Date(res[0].fechaVencimiento);
@@ -117,8 +118,9 @@ export class ViewPostComponent implements OnInit {
           empresa: res.nombreCompleto,
         }
         this.publicacionesService.sendHiringEmail(this.post._id, usuario._id, data)
-        .subscribe( () => console.log("Se envió correo")),
-        err => console.log(err);
+        .subscribe( () => {
+        this.router.navigate(['/company'])
+        }, err => console.log(err))
       }, error => {
         console.log(error);
       }
