@@ -11,6 +11,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
+import { HelperService } from 'src/app/services/helper.service';
 
 
 @Component({
@@ -19,9 +20,6 @@ import { ChatService } from "../../services/chat.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  /*Carousel*/
-  // images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
 
   /*Input de búsqueda*/
   filterPosition ='';
@@ -52,6 +50,7 @@ export class HomeComponent implements OnInit {
               private usuariosService : UsuariosService,
               private socketService : SocketService,
               private router: Router,
+              private helperService: HelperService,
               private chatService:ChatService) {
     this.obtainConn();
   }
@@ -64,6 +63,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.helperService.navbarVisible.emit();
     this.obtenerPublicaciones()
     this.publicaciones.forEach((publicacion, index) => {
 

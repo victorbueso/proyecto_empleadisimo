@@ -1,4 +1,4 @@
-<nav #nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav #nav class="navbar navbar-expand-lg navbar-light bg-light" [ngClass]="{'d-none': !visible, 'd-flex': visible}">
     <button class="navbar-toggler" id="sidenav" type="button" (click)="showSidebar()" *ngIf="!!this.usuarioService.isAdminLogged()">
         <span class="navbar-toggler-icon" style="color: white;">
         </span>

@@ -10,6 +10,8 @@ export class HelperService {
   postsVigente = new EventEmitter();
   postsVencido = new EventEmitter();
   postsHistorial = new EventEmitter();
+  navbarVisible = new EventEmitter();
+  navbarNoVisible = new EventEmitter();
 
   constructor() { }
 }

@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.helperService.navbarVisible.emit();
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;
@@ -74,14 +75,18 @@ export class HomeComponent implements OnInit {
           .subscribe( () => {
           }, error => console.log(error))
         }
-        if(publicacion.estado=='eliminado'){
-          this.publicaciones.splice(index, 1);
-        }
-        if(publicacion?.contratado != undefined){
-          this.publicaciones.splice(index, 1);
-        }
       });
-      this.publicaciones.forEach(publicacion => {
+      for(let i = 0; this.publicaciones.length > i; i++){
+        if(this.publicaciones[i]?.contratado != undefined){
+          this.publicaciones.splice(i, 1);
+          i--;
+        }
+        if(this.publicaciones[i].estado=='eliminado'){
+          this.publicaciones.splice(i, 1);
+          i--;
+        }
+      }
+      this.publicaciones.forEach((publicacion, index) => {
         if(publicacion.estado=='vigente'){
           this.publicacionesVigentes.push(publicacion);
         } else if(publicacion.estado == 'vencida'){

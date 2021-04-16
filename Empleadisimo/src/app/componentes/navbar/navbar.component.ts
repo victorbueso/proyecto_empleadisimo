@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit{
   public errorRegistro: Boolean = false;
   public errorLogin: Boolean = false;
   public message : String = "";
+  public visible : Boolean = true;
   public imgPerfil : string = '../../../assets/img/usuario-sin-foto.png';
 
   public pruebaUsuarioLogueado = null;
@@ -102,11 +103,17 @@ export class NavbarComponent implements OnInit{
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
     });
+    this.helperService.navbarVisible.subscribe( () => {
+      this.visible = true;
+      this.obtenerUsuarioLoggedo();
+    })
+    this.helperService.navbarNoVisible.subscribe( () => {
+      this.visible = false;
+    })
     if(!!this.cookieService.get('idUser')){
       this.obtenerUsuarioLoggedo();
       this.obtenerNotificaciones();
     }
-
     this.socketService.listen('nuevaPublicacion').subscribe(
       res => {
         this.noLeido++;
@@ -269,27 +276,23 @@ export class NavbarComponent implements OnInit{
         result=>{
           console.log(result);
           this.registroSuccess= true;
-          this.formularioRegistro.reset();
-          this.cookieService.set('token', result.token);
-          this.cookieService.set('idUser', result.idUser);
-          this.cookieService.set('tipo', result.tipo);
-
           this.successRegistro=true;
-
           this.sendMessage(data.correo, result.token, result.idUser);
           setTimeout(() =>
             {
-              console.log('tipo: '+this.cookieService.get('tipo'));
+              this.formularioRegistro.reset();
               this.successRegistro=false;
-              this.modalService.dismissAll();
-              if(this.cookieService.get('tipo')=='1'){
+              if(data.tipoUsuario==1){
                   this.router.navigate(['company/update-info']);
               }else{
               this.router.navigate(['employee/update-info']);
               }
+              this.cookieService.set('token', result.token);
+              this.cookieService.set('idUser', result.idUser);
+              this.cookieService.set('tipo', result.tipo); 
+              this.modalService.dismissAll(); 
             },
             2000);
-
         },error=>{
           this.errorRegistro=true;
           this.message=error.error.message;
