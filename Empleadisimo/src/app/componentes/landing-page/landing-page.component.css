@@ -68,3 +68,75 @@ body {
 .img-block {
     max-height: 100%;
 }
+
+@media screen and (max-width: 790px) {
+    .image-slider {
+        display: none;
+    }
+    .slider-text {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        display: flex;
+        height: 100%;
+        top: 0px;
+        padding: 5%;
+    }
+    .main-title {
+        background-color: var(--main-color);
+    }
+    .secondary-title {
+        background-color: var(--secondary-color);
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .first-block {
+        border-top: 1px solid white;
+        padding: 1em 0em;
+        background-color: var(--main-color);
+        margin: 0px !important;
+    }
+    .f2-rigth {
+        display: none;
+    }
+    .f1-left {
+        width: 100vw;
+        background-color: var(--main-color);
+    }
+    .information h1 {
+        font-size: 1.5;
+        color: white;
+    }
+    .information h2 {
+        font-size: 1;
+        color: white !important;
+    }
+    .btn-outline-secondary {
+        border: 1px solid white;
+    }
+    .ff-div {
+        display: none;
+    }
+    .df-list {
+        display: none;
+    }
+    .ffr {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .information h1 {
+        font-size: 1em;
+    }
+    .information h2 {
+        font-size: .7em;
+    }
+    .btn-outline-secondary {
+        font-size: .7em;
+    }
+    .btn-outline-danger {
+        font-size: .7em;
+    }
+}
