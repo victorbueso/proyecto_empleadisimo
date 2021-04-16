@@ -57,6 +57,20 @@ router.get('/', function(req, res) {
     });
 });
 
+//Obtener publicaciones vigentes
+router.get('/posts/active', function(req, res){
+    publicaciones.find(
+        {estado:'vigente'},
+        {})
+    .then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
+
 //Eliminar una publicacion
 router.delete('/:id', function(req, res) {
     publicaciones.remove({

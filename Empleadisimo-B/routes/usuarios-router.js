@@ -420,11 +420,6 @@ router.post('/deleteCV/:idUser', async(req, res) => {
             fs.unlink(path.resolve(fpd.rutaArchivo))
             fpd = arr1.find(o => o.rutaArchivo === fp)
 
-
-        // const df = arr1.findIndex(x => x.rutaArchivo === fp)
-        // arr1.splice(df, 1)
-        // fs.unlink(path.resolve(fpd.rutaArchivo))
-
         usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
             res.send(error);
             res.end()
@@ -435,8 +430,6 @@ router.post('/deleteCV/:idUser', async(req, res) => {
         res.send(error2);
         res.end();
     })
-
-    //fs.unlink(path.resolve(fpd.rutaArchivo))
 
 })
 
@@ -556,7 +549,8 @@ router.get('/notifications/:idUser', function(req, res) {
             res.end();
         })
     })
-    // Notificación de empleo para todos los empleados
+    
+// Notificación de empleo para todos los empleados
 
 router.put('/notifications/newPost', function(req, res) {
     usuarios.updateMany({

@@ -23,6 +23,10 @@ export class PublicacionesService {
     return this.httpClient.get(`${this.url}posts/${id}`);
   }
 
+  getActivePosts():Observable<any>{
+    return this.httpClient.get(`${this.url}posts/active`);
+  }
+
   updatePostUser(data: any): Observable<any> {
     return this.httpClient.put(this.url, data);
   }

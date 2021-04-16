@@ -109,8 +109,6 @@ export class NavbarComponent implements OnInit{
 
     this.socketService.listen('nuevaPublicacion').subscribe(
       res => {
-        console.log('Empleado recibió notificación');
-        //this.obtenerNotificaciones();
         this.noLeido++;
         var data : any;
         data = res;
@@ -174,7 +172,6 @@ export class NavbarComponent implements OnInit{
     this.usuarioService.getNotifications(this.cookieService.get('idUser'))
     .subscribe(res => {
       if(this.cookieService.get('tipo')=='0'){
-        console.log(res[0].notificaciones)
         this.notificaciones = res[0].notificaciones;
         this.notificaciones.reverse();
         if(this.notificaciones.length != 0 && this.notificaciones[0].estado == false){
@@ -182,7 +179,6 @@ export class NavbarComponent implements OnInit{
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            console.log(notificacion);
             this.noLeido++;
           }
         })

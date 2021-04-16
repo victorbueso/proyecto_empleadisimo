@@ -65,9 +65,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerPublicaciones()
+    this.publicaciones.forEach((publicacion, index) => {
+      let today = new Date();
+      publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
+      publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
+      if(publicacion.fechaVencimiento <= today && publicacion.estado == 'vigente'){
+        let data = {estado : 'vencida'}
+        this.publicacionesService.updateStatus(publicacion._id, data)
+        .subscribe( () => {
+        }, error => console.log(error))
+      }
+    });
+    this.obtenerPublicacionesVigentes();
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
-      this.obtenerPublicaciones();
+      this.obtenerPublicacionesVigentes();
     }, error => console.log(error))
   }
 
@@ -103,10 +115,17 @@ export class HomeComponent implements OnInit {
             this.updateButtonStatus(Number(i));
           }
       }
-      /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
     })
+  }
+
+  obtenerPublicacionesVigentes(){
+    this.publicacionesService.getActivePosts()
+    .subscribe(res => {
+      this.publicaciones = res;
+      this.publicaciones.reverse();
+    }, error => console.log(error))
   }
 
   handlePage(e:PageEvent){

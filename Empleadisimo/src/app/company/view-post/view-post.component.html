@@ -165,12 +165,16 @@
     </div>
   </ng-template>
 
+<!-- Contratación efectuada correctamente -->
   <ng-template #hiring let-modal>
     <div class="modal-body">
       <h2>¡Enhorabuena!</h2>
         <p class="modal-text">
             Has contratado a alguien para <strong>{{post.titulo}}</strong>
         </p>
+        <p class="modal-text">
+          Hemos notificado sobre tu decisión por medio de correo electrónico.
+      </p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
