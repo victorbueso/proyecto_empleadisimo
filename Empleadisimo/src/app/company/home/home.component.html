@@ -101,7 +101,7 @@
     </button>
   </div>
   <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
-    <ngb-alert type="success" *ngIf="successMessage">{{ successfull }}</ngb-alert>
+    <ngb-alert type="success" class="mt-1" *ngIf="successMessage">{{ successfull }}</ngb-alert>
     <form [formGroup]="formPublications" (ngSubmit)="limpiar()">
       <div class="form-group" style="margin-bottom: 0px; padding-bottom: 0px;">
         <p [ngClass]="{'display-block': title}" class="error-message">No se ingreso título, o no es válido</p>

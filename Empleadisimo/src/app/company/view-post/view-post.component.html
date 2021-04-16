@@ -72,7 +72,7 @@
                         <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i]?.rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
                     </td>
                     <td>
-                      <button class="btn btn-primary" (click)="hire(usuarios)">Contratar</button>
+                      <button class="btn btn-primary" (click)="hire(usuarios); open(hiring)">Contratar</button>
                     </td>
                   </tr>
                 </tbody>
@@ -161,6 +161,18 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="deletePost()">Eliminar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #hiring let-modal>
+    <div class="modal-body">
+      <h2>¡Enhorabuena!</h2>
+        <p class="modal-text">
+            Has contratado a alguien para <strong>{{post.titulo}}</strong>
+        </p>
+    </div>
+    <div class="modal-footer">
       <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
     </div>
   </ng-template>

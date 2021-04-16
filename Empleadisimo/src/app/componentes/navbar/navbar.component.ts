@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit{
   public nuevaNotificacionC:Boolean = false;
   public noLeido : number = 0;
   public noLeidoC : number = 0;
+  public notificacionesNoLeidas : any = [];
 
 
   //datos para registro de usuario
@@ -105,19 +106,21 @@ export class NavbarComponent implements OnInit{
       this.obtenerUsuarioLoggedo();
       this.obtenerNotificaciones();
     }
+
     this.socketService.listen('nuevaPublicacion').subscribe(
-      () => {
-        this.obtenerNotificaciones();
-        // this.noLeido = this.noLeido + 1;
-        // var data : any;
-        // data = res;
-        // this.nuevaNotificacion = true;
-        // this.notificaciones.unshift({
-        //   idPublicacion:data._id,
-        //   titulo:data.titulo,
-        //   fechaPublicacion: data.fechaPublicacion,
-        //   estado: false
-        // });
+      res => {
+        console.log('Empleado recibió notificación');
+        //this.obtenerNotificaciones();
+        this.noLeido++;
+        var data : any;
+        data = res;
+        this.nuevaNotificacion = true;
+        this.notificaciones.unshift({
+          idPublicacion:data._id,
+          titulo:data.titulo,
+          fechaPublicacion: data.fechaPublicacion,
+          estado: false
+        });
     },
     error=>{
       console.log(error);
@@ -166,17 +169,21 @@ export class NavbarComponent implements OnInit{
   }
 
   obtenerNotificaciones(){
+    this.noLeidoC=0;
+    this.noLeido=0;
     this.usuarioService.getNotifications(this.cookieService.get('idUser'))
     .subscribe(res => {
       if(this.cookieService.get('tipo')=='0'){
-        this.notificaciones = res[0].notificaciones
+        console.log(res[0].notificaciones)
+        this.notificaciones = res[0].notificaciones;
         this.notificaciones.reverse();
         if(this.notificaciones.length != 0 && this.notificaciones[0].estado == false){
           this.nuevaNotificacion = true;
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeido = this.noLeido + 1;
+            console.log(notificacion);
+            this.noLeido++;
           }
         })
       } else if(this.cookieService.get('tipo')=='1'){
@@ -187,9 +194,9 @@ export class NavbarComponent implements OnInit{
         }
         this.notificacionesC.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeidoC = this.noLeidoC + 1;
+            this.noLeidoC++;
           }
-        })
+        });
       }
 
     }, error => {
@@ -305,7 +312,7 @@ export class NavbarComponent implements OnInit{
   }
 
   buttonLogout(){
-    this.router.navigate(['./']);
+    this.router.navigate(['/']);
     this.pruebaUsuarioLogueado = null;
     this.cookieService.deleteAll();
   }

@@ -22,7 +22,6 @@ router.post('/', function(req, res) {
         modalidad: req.body.modalidad,
         idEmpresa: req.body.idEmpresa,
         usuarios: [],
-        contratado : "",
         estado: 'vigente'
     });
 
@@ -202,7 +201,9 @@ router.post('/post/:idPost/hireUser/:idUser', function(req, res){
         _id: req.params.idPost
     },
     {
-        contratado: req.params.idUser
+        $set:{
+            contratado : req.params.idUser
+        }
     }).then(() => {
         sendEmail(datos);
         res.status(200).send();

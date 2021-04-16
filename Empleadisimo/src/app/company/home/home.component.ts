@@ -127,6 +127,7 @@ export class HomeComponent implements OnInit {
     this.successfull = `La publicación se ha realizado exitosamente`;
     setTimeout(() => {
       this.successMessage = false;
+      this._modal.dismissAll();
     }, 3000);
   }
 
@@ -228,13 +229,11 @@ export class HomeComponent implements OnInit {
 
   guardarNotificacion(data:any){
     this.usuariosService.addNotification(data).
-    subscribe(res =>{
-      console.log(res);
+    subscribe(() =>{
     },
       error => console.log(error)
     )
   }
-
 
   capturarSelect() {
     this.isSelected = this.isNotSelected;
