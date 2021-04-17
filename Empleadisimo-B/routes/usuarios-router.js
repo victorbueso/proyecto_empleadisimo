@@ -113,6 +113,14 @@ router.post("/signin", async(req, res) => {
         return res.status(401).json({ "message": 'Contraseña incorrecta' });
     }
 
+    if(user.estado=="bloqueado"){
+        return res.status(401).json({"message": 'Este usuario se encuentra bloqueado. Para mayor información escribir al correo empleadisimohn@gmail.com'})
+    }
+
+    if(user.estado=="eliminado"){
+        return res.status(401).json({"message": 'Este usuario ha sido eliminado. Si consideras que se trata de un error escribir al correo empleadisimohn@gmail.com'})
+    }
+
     const token = jwt.sign({ _id: user._id }, 'secretkey');
     return res.status(200).json({ token, 'idUser': user._id, 'tipo': user.tipoUsuario });
 });
@@ -146,7 +154,8 @@ router.post('/', async function(req, res) {
         notificaciones: [],
         estado : 'activo',
         seguidores: [],
-        siguiendo:[]
+        siguiendo:[],
+        verified: false
     });
 
     userRouter.save().then(result => {
@@ -420,11 +429,6 @@ router.post('/deleteCV/:idUser', async(req, res) => {
             fs.unlink(path.resolve(fpd.rutaArchivo))
             fpd = arr1.find(o => o.rutaArchivo === fp)
 
-
-        // const df = arr1.findIndex(x => x.rutaArchivo === fp)
-        // arr1.splice(df, 1)
-        // fs.unlink(path.resolve(fpd.rutaArchivo))
-
         usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
             res.send(error);
             res.end()
@@ -435,8 +439,6 @@ router.post('/deleteCV/:idUser', async(req, res) => {
         res.send(error2);
         res.end();
     })
-
-    //fs.unlink(path.resolve(fpd.rutaArchivo))
 
 })
 
@@ -556,7 +558,8 @@ router.get('/notifications/:idUser', function(req, res) {
             res.end();
         })
     })
-    // Notificación de empleo para todos los empleados
+    
+// Notificación de empleo para todos los empleados
 
 router.put('/notifications/newPost', function(req, res) {
     usuarios.updateMany({
@@ -828,6 +831,24 @@ router.post('/StopfollowCompany/:idUser', async(req, res)=>{
     }
     
 });
+
+//Verificar cuenta
+router.post('/verifyAccount/:idUser', function(req, res){
+    usuario.updateOne(
+        {
+            _id : req.params.idUser
+        },
+        {
+            verified : true
+        }
+    ).then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error =>{
+        res.send(error);
+        res.end();
+    })
+})
 
 
 module.exports = router;

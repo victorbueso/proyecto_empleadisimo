@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { faPlus, faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { CookieService } from 'ngx-cookie-service';
+import { HelperService } from 'src/app/services/helper.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -48,7 +49,7 @@ export class UpdateInfoComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private usuarioService: UsuariosService, private cookieService: CookieService,
-              private router:Router) {
+              private router:Router, private helperService:HelperService) {
 
     usuarioService.obtenerUsuario(this.cookieService.get('idUser'))
     .subscribe((res:any)=>{
@@ -88,6 +89,7 @@ export class UpdateInfoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.helperService.navbarNoVisible.emit();
   }
 
 

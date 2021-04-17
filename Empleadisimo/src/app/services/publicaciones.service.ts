@@ -23,6 +23,10 @@ export class PublicacionesService {
     return this.httpClient.get(`${this.url}posts/${id}`);
   }
 
+  getActivePosts():Observable<any>{
+    return this.httpClient.get(`${this.url}posts/active`);
+  }
+
   updatePostUser(data: any): Observable<any> {
     return this.httpClient.put(this.url, data);
   }
@@ -37,6 +41,10 @@ export class PublicacionesService {
 
   updatePost(id:string, data:any):Observable<any>{
     return this.httpClient.put(`${this.url}post/update/${id}`, data);
+  }
+
+  sendHiringEmail(idPost:string, idUser:string, data):Observable<any>{
+    return this.httpClient.post(`${this.url}post/${idPost}/hireUser/${idUser}`, data);
   }
 
 }

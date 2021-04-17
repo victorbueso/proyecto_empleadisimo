@@ -127,7 +127,7 @@
                                         <td class="text-center">{{company?.rubros.length}}</td>
                                         <td>{{company?.estado}}</td>
                                         <td class="option-btn text-center">
-                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left">Listar</button>
+                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left" (click)="openXL(listPosts, company._id)">Listar</button>
                                         </td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="company.estado == 'bloqueado'"> 
@@ -200,7 +200,7 @@
                                         <td class="text-center">{{company?.rubros.length}}</td>
                                         <td>{{company?.estado}}</td>
                                         <td class="option-btn text-center">
-                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left">Listar</button>
+                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left" (click)="openXL(listPosts, company._id)">Listar</button>
                                         </td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="company.estado == 'bloqueado'"> 
@@ -273,7 +273,7 @@
                                         <td class="text-center">{{company?.rubros.length}}</td>
                                         <td>{{company?.estado}}</td>
                                         <td class="option-btn text-center">
-                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left">Listar</button>
+                                            <button type="button" class="btn btn-outline-dark mb-auto mt-auto" ngbTooltip="Listar publicaciones" placement="left" (click)="openXL(listPosts, company._id)">Listar</button>
                                         </td>
                                         <div class="d-flex justify-content-end" >
                                             <td class="option-btn" *ngIf="company.estado == 'bloqueado'"> 

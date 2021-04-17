@@ -4,6 +4,7 @@ import { Component, OnInit} from '@angular/core';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Router } from '@angular/router';
 //import { ConsoleReporter } from 'jasmine';
+import { HelperService } from 'src/app/services/helper.service';
 
 
 @Component({
@@ -40,17 +41,13 @@ export class UpdateInfoComponent implements OnInit{
 
   })
 
-  // constructor(private fb: FormBuilder,
-  //             private cookieService: CookieService,
-  //             private userServices: UsuariosService,
-  //             private router:Router) {
-  //             }
 
   constructor(
     private fb: FormBuilder,
     private userServices: UsuariosService,
     private cookieService: CookieService,
-    private router:Router) {
+    private router:Router,
+    private helperService: HelperService) {
       userServices.obtenerUsuario(this.cookieService.get('idUser')).subscribe((res:any)=>{
         console.log(res);
         this.usuario= res;
@@ -80,6 +77,7 @@ export class UpdateInfoComponent implements OnInit{
       })}
 
   ngOnInit(){
+    this.helperService.navbarNoVisible.emit();
   }
 
   showPreview(event:any){

@@ -4,20 +4,23 @@ import { CommonModule } from '@angular/common';
 import { CompanyRoutingModule } from './company-routing.module';
 import { HomeComponent } from './home/home.component';
 import { UpdateInfoComponent } from './update-info/update-info.component';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CookieService } from 'ngx-cookie-service';
+
+import { PaginationPipe } from '../pipes/paginationc.pipe';
+
+import { MatPaginatorIntl, MatPaginatorModule } from "@angular/material/paginator";
 import { ViewPostComponent } from './view-post/view-post.component';
+import { CustomMatPaginatorIntl } from './paginator-es';
 
 @NgModule({
-  declarations: [HomeComponent, UpdateInfoComponent, ViewPostComponent],
-  exports: [MatSidenavModule],
+  declarations: [HomeComponent, UpdateInfoComponent, ViewPostComponent, PaginationPipe],
+  exports: [],
   imports: [
     CommonModule,
     CompanyRoutingModule,
@@ -27,7 +30,14 @@ import { ViewPostComponent } from './view-post/view-post.component';
     MatDatepickerModule,
     MatMomentDateModule,
     MatFormFieldModule,
+    MatPaginatorModule,
     FontAwesomeModule
+  ],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass : CustomMatPaginatorIntl
+    }
   ]
 })
 export class CompanyModule { }

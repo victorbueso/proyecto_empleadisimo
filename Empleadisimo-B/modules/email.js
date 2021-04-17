@@ -5,7 +5,7 @@ module.exports = info => {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'empleadisimohn@gmail.com',
+            user: 'empleadisimoprueba@gmail.com',
             pass: 'Febrero+2020'
         }
     });
@@ -14,8 +14,11 @@ module.exports = info => {
         from: `empleadisimohn@gmail.com`,
         to: `${info.correo}`,
         subject: 'Verificación de correo electrónico: Empleadísimo',
-        html: `<strong>Email:</strong>${info.correo}<br>
-               <strong>Mensaje:</strong>Ingrese a este nuevo enlace para terminar la verificación: ${access}${info.token}/${info.idUser}`
+        html: `
+               <h1>Bienvenido/a a nuestra familia</h1>
+               Da click en siguiente enlace para completar la verificación de tu cuenta: <br>
+               
+               ${access}${info.token}/${info.idUser}`
     };
 
     transporter.sendMail(mailOptions, (error, res) => {

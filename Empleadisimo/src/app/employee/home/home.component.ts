@@ -11,6 +11,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
+import { HelperService } from 'src/app/services/helper.service';
 
 
 @Component({
@@ -19,9 +20,6 @@ import { ChatService } from "../../services/chat.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  /*Carousel*/
-  // images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
 
   /*Input de búsqueda*/
   filterPosition ='';
@@ -41,6 +39,7 @@ export class HomeComponent implements OnInit {
   cvSelected : number = -1;
   postSelected : string = '';
   postNumber : number;
+  verifiedAccount:Boolean = false;
 
   public informationChat = {};
 
@@ -52,6 +51,7 @@ export class HomeComponent implements OnInit {
               private usuariosService : UsuariosService,
               private socketService : SocketService,
               private router: Router,
+              private helperService: HelperService,
               private chatService:ChatService) {
     this.obtainConn();
   }
@@ -64,10 +64,30 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerPublicaciones()
+    this.helperService.navbarVisible.emit();
+    this.obtenerPublicaciones();
+    this.usuariosService.getUser(this.cookies.get('idUser'))
+    .subscribe( res => {
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    })
+    this.publicaciones.forEach((publicacion) => {
+
+      let today = new Date();
+      publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
+      publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
+      if(publicacion.fechaVencimiento <= today && publicacion.estado == 'vigente'){
+        let data = {estado : 'vencida'}
+        this.publicacionesService.updateStatus(publicacion._id, data)
+        .subscribe( () => {
+        }, error => console.log(error))
+      }
+    });
+    this.obtenerPublicacionesVigentes();
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
-      this.obtenerPublicaciones();
+      this.obtenerPublicacionesVigentes();
     }, error => console.log(error))
   }
 
@@ -103,10 +123,22 @@ export class HomeComponent implements OnInit {
             this.updateButtonStatus(Number(i));
           }
       }
-      /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
     })
+  }
+
+  obtenerPublicacionesVigentes(){
+    this.publicacionesService.getActivePosts()
+    .subscribe(res => {
+      this.publicaciones = res;
+      this.publicaciones.reverse();
+      this.publicaciones.forEach((publicacion, index) => {
+        if(publicacion?.contratado){
+          this.publicaciones.splice(index, 1);
+        }
+      })
+    }, error => console.log(error))
   }
 
   handlePage(e:PageEvent){
