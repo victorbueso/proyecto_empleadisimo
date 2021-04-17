@@ -1,3 +1,4 @@
+<div [ngClass]="{'d-block': regionVisible=='publicaciones', 'd-none': regionVisible != 'publicaciones'}">
 <div class="container-lg">
     <div class="mt-4">
       <div class="card-body p-0">
@@ -17,7 +18,7 @@
     </div>
     <hr>
 </div>
-    <div class="container">
+<div class="container">
       <div class="row">
         <div *ngIf="publicaciones.length==0" class="d-flex" style="font-family: 'Raleway semibold';"> No has realizado ninguna publicación :( </div>
         <div class="col-xl-11 mr-auto ml-auto" *ngIf="publicaciones.length!=0">
@@ -89,8 +90,44 @@
           </div>
         </div>
       </div>
+</div>
+</div>
+<div [ngClass]="{'d-block': regionVisible=='contratados', 'd-none': regionVisible != 'contratados'}">
+  <div class="container-lg mt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Personas contratadas</h1>
+      </div>
+      
     </div>
-
+    <hr>
+  </div>
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-12 text-center" *ngIf="this.publicacionesContrato.length == 0">
+        Aún no has contratado a nadie
+      </div>
+    </div>
+      <div class="row" *ngIf="this.publicacionesContrato.length!=0 && regionVisible=='contratados'">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-2 mt-2" *ngFor="let post of publicacionesContrato">
+          <div class="card">
+            <div class="d-flex">
+              <div class="col-xl-4 col-5 mt-4 mb-4 ml-auto mr-auto">
+                <img [src]="'http://localhost:3000/'+post?.user?.fotoPerfil" alt=""  style="border-radius: 50%; height: 150px; width: 150px; padding:0px">
+              </div>
+              <div class="col-xl-8 col-7 mt-auto mb-auto ml-2 mr-2" style="font-family: 'Raleway semibold';">
+                <h3>
+                  {{post?.user?.nombreCompleto}}
+                </h3>
+                <p class="mt-2">Para publicación <br> <span style="font-family: 'Raleway bold'">{{post?.titulo}}</span> </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+     
+</div>
 
 <!-- Pantalla modal con formulario para crear publicaciones -->
 <ng-template #contenido let-modal>

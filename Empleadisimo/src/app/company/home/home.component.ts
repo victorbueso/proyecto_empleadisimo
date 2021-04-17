@@ -25,8 +25,10 @@ export class HomeComponent implements OnInit {
   public publicaciones: any = [];
   public publicacionesVigentes:any = [];
   public publicacionesVencidas:any =[];
+  public publicacionesContrato : any = [];
   verifiedAccount:Boolean=false;
   mostrar:string = "todas";
+  regionVisible:string="publicaciones";
 
   successMessage = false;
   successfull = ``;
@@ -72,7 +74,7 @@ export class HomeComponent implements OnInit {
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;
-      this.publicaciones.forEach((publicacion, index) => {
+      this.publicaciones.forEach(publicacion => {
         let today = new Date();
         publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
         publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
@@ -85,6 +87,7 @@ export class HomeComponent implements OnInit {
       });
       for(let i = 0; this.publicaciones.length > i; i++){
         if(this.publicaciones[i]?.contratado != undefined){
+          this.publicacionesContrato.push(this.publicaciones[i]);
           this.publicaciones.splice(i, 1);
           i--;
         }
@@ -93,7 +96,7 @@ export class HomeComponent implements OnInit {
           i--;
         }
       }
-      this.publicaciones.forEach((publicacion, index) => {
+      this.publicaciones.forEach(publicacion => {
         if(publicacion.estado=='vigente'){
           this.publicacionesVigentes.push(publicacion);
         } else if(publicacion.estado == 'vencida'){
@@ -106,13 +109,20 @@ export class HomeComponent implements OnInit {
 
     this.helperService.postsVigente.subscribe( () => {
       this.mostrar="vigentes";
+      this.regionVisible="publicaciones"
     });
     this.helperService.postsVencido.subscribe( () => {
       this.mostrar="vencidas";
+      this.regionVisible="publicaciones"
     });
     this.helperService.postsHistorial.subscribe( () => {
       this.mostrar="todas";
+      this.regionVisible="publicaciones"
     });
+    this.helperService.contratados.subscribe( () => {
+      this.regionVisible="contratados";
+      this.obtenerUsuarios();
+    })
 
   }
 
@@ -132,6 +142,16 @@ export class HomeComponent implements OnInit {
       (res) => console.log(res),
       (err) => console.error(err)
     )
+  }
+
+  obtenerUsuarios(){
+    if(this.publicacionesContrato.length!= 0){
+      this.publicacionesContrato.forEach((contract, index) => {
+        this.usuariosService.getUser(contract.contratado).subscribe(res => {
+          this.publicacionesContrato[index]['user'] = res;
+        }, error => console.log(error));
+      });
+    }
   }
 
   public SuccessfullMessage() {

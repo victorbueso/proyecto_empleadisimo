@@ -165,7 +165,7 @@ export class NavbarComponent implements OnInit{
         nombre: res.nombreCompleto,
         fotoPerfil : res.fotoPerfil
       }
-      if(res.fotoPerfil != ''){
+      if(res?.fotoPerfil != ''){
         this.imgPerfil = `http://localhost:3000/${this.usuarioLoggeado.fotoPerfil}`
       }
     }, error => {
@@ -359,6 +359,10 @@ export class NavbarComponent implements OnInit{
 
   showAllPosts(){
     this.helperService.postsHistorial.emit();
+  }
+
+  hiredPeople(){
+    this.helperService.contratados.emit();
   }
 
   navChat(){

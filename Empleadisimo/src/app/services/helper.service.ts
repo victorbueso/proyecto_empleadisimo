@@ -12,6 +12,7 @@ export class HelperService {
   postsHistorial = new EventEmitter();
   navbarVisible = new EventEmitter();
   navbarNoVisible = new EventEmitter();
+  contratados = new EventEmitter();
 
   constructor() { }
 }
