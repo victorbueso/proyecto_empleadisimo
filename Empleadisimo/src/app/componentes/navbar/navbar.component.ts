@@ -208,7 +208,8 @@ export class NavbarComponent implements OnInit{
   }
 
   buttonLogin(){
-
+    this.message="";
+    this.errorLogin = false;
    // data adquirida por el formulario que sera enviada
     var data = {
       correo:this.formularioLogin.value.lgCorreo,
@@ -234,16 +235,11 @@ export class NavbarComponent implements OnInit{
           this.router.navigate(['admin']);
           this.ngOnInit();
         }
+        this.formularioLogin.reset();
         this.modalService.dismissAll();
       },error=>{
         this.errorLogin=true;
         this.message=error.error.message;
-        setTimeout( () => {
-          this.message="";
-          this.errorLogin = false;
-          this.formularioLogin.reset();
-        }, 3000)
-
       }
     );
 
@@ -292,7 +288,7 @@ export class NavbarComponent implements OnInit{
               this.cookieService.set('tipo', result.tipo); 
               this.modalService.dismissAll(); 
             },
-            2000);
+            3000);
         },error=>{
           this.errorRegistro=true;
           this.message=error.error.message;

@@ -113,6 +113,14 @@ router.post("/signin", async(req, res) => {
         return res.status(401).json({ "message": 'Contraseña incorrecta' });
     }
 
+    if(user.estado=="bloqueado"){
+        return res.status(401).json({"message": 'Este usuario se encuentra bloqueado. Para mayor información escribir al correo empleadisimohn@gmail.com'})
+    }
+
+    if(user.estado=="eliminado"){
+        return res.status(401).json({"message": 'Este usuario ha sido eliminado. Si consideras que se trata de un error escribir al correo empleadisimohn@gmail.com'})
+    }
+
     const token = jwt.sign({ _id: user._id }, 'secretkey');
     return res.status(200).json({ token, 'idUser': user._id, 'tipo': user.tipoUsuario });
 });
