@@ -24,15 +24,14 @@ export class InformationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cookiesService: CookieService,
     private router: Router,) {
-      
-     }
+      console.log("¿Visualizador?: " + this.visualizador);
+    }
 
     ngOnInit(): void {
       this.id = this.activatedRoute.snapshot.params.id;
       // this.activatedRoute.params.subscribe(params => {
       //   this.id = params['id'];},
       //   err => console.log(err))
-      
         this.publicacionesService.getPostCompany(this.id).
         subscribe(res => {
           console.log(res);
