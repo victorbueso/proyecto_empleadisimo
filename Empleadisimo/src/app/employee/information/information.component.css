@@ -113,6 +113,7 @@
     box-sizing: border-box;
     flex-direction: column;
     background-color: white;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 25%);
 }
 
 .title-publication{
@@ -138,16 +139,49 @@
     margin-left: auto;
 }
 
-.collapse-button{
-    color: var(--secondary-color);
-    margin-left: auto;
-} 
-
 .contain-apply{
     text-align: end;
+}
+
+.contain-apply button{
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-color: var(--main-color);
+}
+
+.contain-apply button:hover{
+    color: var(--main-color);
+    background-color: transparent;
+    border: 1px solid var(--main-color);
 }
 
 .information-company>div:nth-of-type(1){
     padding: 0px 10px;
     box-sizing: border-box;
 }
+
+.main-infoC > span:nth-of-type(1){
+    color: var(--secondary-color);
+}
+
+.main-infoC > span:nth-of-type(2){
+    font-size: 12px;
+}
+
+.information-job{
+    padding: 10px 0px;
+}
+
+.information-job > p{
+    display: inline;
+}
+
+.title-info{
+    font-weight: 300;
+    color: var(--secondary-color);
+}
+

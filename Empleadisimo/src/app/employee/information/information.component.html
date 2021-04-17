@@ -18,25 +18,22 @@
             <div class="title-publication">
                 <h2>Publicaciones</h2>
             </div>
-            <div class="post">
+            <div *ngFor="let publicacion of publicaciones" class="post">
                 <div class="information-company">
-                    <img src="../../../assets/img/1.jpg">
-                    <div class="">
-                        <span>Alexander Ismael</span><br>
-                        <span>21 del febrero del 2021</span>                        
-                    </div>
-                    <div class="collapse-button">
-                        <i class="fas fa-angle-down"></i>
+                    <img [src]=" usuario.fotoPerfil | modifyImageP ">
+                    <div class="main-infoC">
+                        <span>{{ usuario.nombreCompleto }}</span><br>
+                        <span>{{ publicacion.fechaPublicacion }}</span>                        
                     </div>
                 </div>
                 <div class="information-job">
-                    <span>Se busca: Ingeniera en sistemas</span><br>
-                    <span>Sueldo: 20,000.00</span><br>
-                    <span>Fecha de vencimiento: 21 de febrero del 2021</span><br>
+                    <p><span class="title-info">Se busca:</span> {{ publicacion.titulo }}</p><br>
+                    <p><span class="title-info">Sueldo:</span> 20,000.00</p><br>
+                    <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento }}</p><br>
                 </div>
                 <div class="contain-apply">
                     <button>Aplicar</button>
-                </div>
+                </div> 
             </div>
         </div>
     </div>    
