@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit{
   public errorRegistro: Boolean = false;
   public errorLogin: Boolean = false;
   public message : String = "";
+  public visible : Boolean = true;
   public imgPerfil : string = '../../../assets/img/usuario-sin-foto.png';
 
   public pruebaUsuarioLogueado = null;
@@ -43,6 +44,7 @@ export class NavbarComponent implements OnInit{
   public nuevaNotificacionC:Boolean = false;
   public noLeido : number = 0;
   public noLeidoC : number = 0;
+  public notificacionesNoLeidas : any = [];
 
 
   //datos para registro de usuario
@@ -101,23 +103,29 @@ export class NavbarComponent implements OnInit{
     this.helperService.evento.subscribe( () => {
       this.abrirModal();
     });
+    this.helperService.navbarVisible.subscribe( () => {
+      this.visible = true;
+      this.obtenerUsuarioLoggedo();
+    })
+    this.helperService.navbarNoVisible.subscribe( () => {
+      this.visible = false;
+    })
     if(!!this.cookieService.get('idUser')){
       this.obtenerUsuarioLoggedo();
       this.obtenerNotificaciones();
     }
     this.socketService.listen('nuevaPublicacion').subscribe(
-      () => {
-        this.obtenerNotificaciones();
-        // this.noLeido = this.noLeido + 1;
-        // var data : any;
-        // data = res;
-        // this.nuevaNotificacion = true;
-        // this.notificaciones.unshift({
-        //   idPublicacion:data._id,
-        //   titulo:data.titulo,
-        //   fechaPublicacion: data.fechaPublicacion,
-        //   estado: false
-        // });
+      res => {
+        this.noLeido++;
+        var data : any;
+        data = res;
+        this.nuevaNotificacion = true;
+        this.notificaciones.unshift({
+          idPublicacion:data._id,
+          titulo:data.titulo,
+          fechaPublicacion: data.fechaPublicacion,
+          estado: false
+        });
     },
     error=>{
       console.log(error);
@@ -157,7 +165,7 @@ export class NavbarComponent implements OnInit{
         nombre: res.nombreCompleto,
         fotoPerfil : res.fotoPerfil
       }
-      if(res.fotoPerfil != ''){
+      if(res?.fotoPerfil != ''){
         this.imgPerfil = `http://localhost:3000/${this.usuarioLoggeado.fotoPerfil}`
       }
     }, error => {
@@ -166,17 +174,19 @@ export class NavbarComponent implements OnInit{
   }
 
   obtenerNotificaciones(){
+    this.noLeidoC=0;
+    this.noLeido=0;
     this.usuarioService.getNotifications(this.cookieService.get('idUser'))
     .subscribe(res => {
       if(this.cookieService.get('tipo')=='0'){
-        this.notificaciones = res[0].notificaciones
+        this.notificaciones = res[0].notificaciones;
         this.notificaciones.reverse();
         if(this.notificaciones.length != 0 && this.notificaciones[0].estado == false){
           this.nuevaNotificacion = true;
         }
         this.notificaciones.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeido = this.noLeido + 1;
+            this.noLeido++;
           }
         })
       } else if(this.cookieService.get('tipo')=='1'){
@@ -187,9 +197,9 @@ export class NavbarComponent implements OnInit{
         }
         this.notificacionesC.forEach(notificacion => {
           if(notificacion.estado == false){
-            this.noLeidoC = this.noLeidoC + 1;
+            this.noLeidoC++;
           }
-        })
+        });
       }
 
     }, error => {
@@ -198,7 +208,8 @@ export class NavbarComponent implements OnInit{
   }
 
   buttonLogin(){
-
+    this.message="";
+    this.errorLogin = false;
    // data adquirida por el formulario que sera enviada
     var data = {
       correo:this.formularioLogin.value.lgCorreo,
@@ -224,16 +235,11 @@ export class NavbarComponent implements OnInit{
           this.router.navigate(['admin']);
           this.ngOnInit();
         }
+        this.formularioLogin.reset();
         this.modalService.dismissAll();
       },error=>{
         this.errorLogin=true;
         this.message=error.error.message;
-        setTimeout( () => {
-          this.message="";
-          this.errorLogin = false;
-          this.formularioLogin.reset();
-        }, 3000)
-
       }
     );
 
@@ -266,27 +272,23 @@ export class NavbarComponent implements OnInit{
         result=>{
           console.log(result);
           this.registroSuccess= true;
-          this.formularioRegistro.reset();
-          this.cookieService.set('token', result.token);
-          this.cookieService.set('idUser', result.idUser);
-          this.cookieService.set('tipo', result.tipo);
-
           this.successRegistro=true;
-
           this.sendMessage(data.correo, result.token, result.idUser);
           setTimeout(() =>
             {
-              console.log('tipo: '+this.cookieService.get('tipo'));
+              this.formularioRegistro.reset();
               this.successRegistro=false;
-              this.modalService.dismissAll();
-              if(this.cookieService.get('tipo')=='1'){
+              if(data.tipoUsuario==1){
                   this.router.navigate(['company/update-info']);
               }else{
               this.router.navigate(['employee/update-info']);
               }
+              this.cookieService.set('token', result.token);
+              this.cookieService.set('idUser', result.idUser);
+              this.cookieService.set('tipo', result.tipo); 
+              this.modalService.dismissAll(); 
             },
-            2000);
-
+            3000);
         },error=>{
           this.errorRegistro=true;
           this.message=error.error.message;
@@ -305,7 +307,7 @@ export class NavbarComponent implements OnInit{
   }
 
   buttonLogout(){
-    this.router.navigate(['./']);
+    this.router.navigate(['/']);
     this.pruebaUsuarioLogueado = null;
     this.cookieService.deleteAll();
   }
@@ -345,6 +347,22 @@ export class NavbarComponent implements OnInit{
 
   showSidebar(){
     this.helperService.sidebarEvent.emit();
+  }
+
+  showActivePosts(){
+    this.helperService.postsVigente.emit();
+  }
+
+  showUnactivePosts(){
+    this.helperService.postsVencido.emit();
+  }
+
+  showAllPosts(){
+    this.helperService.postsHistorial.emit();
+  }
+
+  hiredPeople(){
+    this.helperService.contratados.emit();
   }
 
   navChat(){

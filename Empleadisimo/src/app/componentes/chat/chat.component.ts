@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { UsuariosService } from '../../services/usuarios.service'
 import { SocketService } from '../../services/socket.service';
 import { CookieService } from 'ngx-cookie-service';
+import { HelperService } from 'src/app/services/helper.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./chat.component.css']
 })
 
-export class ChatComponent{
+export class ChatComponent implements OnInit{
 
   informationChat: any;
   messages : Array<any> = [];
@@ -29,11 +30,16 @@ export class ChatComponent{
               private userService : UsuariosService,
               private socketService : SocketService,
               private cookie : CookieService,
-              private render : Renderer2 ){
+              private render : Renderer2,
+              private helperService: HelperService ){
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
     this.myId = this.cookie.get('idUser')
+  }
+
+  ngOnInit():void{
+    this.helperService.navbarNoVisible.emit();
   }
 
   connection(){

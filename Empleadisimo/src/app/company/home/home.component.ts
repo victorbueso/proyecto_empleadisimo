@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbAlert, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicacionesService } from '../../services/publicaciones.service';
+import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { SocketService } from '../../services/socket.service'
 import { Router } from '@angular/router';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-home',
@@ -21,9 +23,19 @@ export class HomeComponent implements OnInit {
   isNotSelected: string = '0'
   isSelected: string = '';
   public publicaciones: any = [];
+  public publicacionesVigentes:any = [];
+  public publicacionesVencidas:any =[];
+  public publicacionesContrato : any = [];
+  verifiedAccount:Boolean=false;
+  mostrar:string = "todas";
+  regionVisible:string="publicaciones";
 
   successMessage = false;
   successfull = ``;
+
+  page_size : number = 5;
+  page_number : number = 1;
+  pageSizeOptions = [5,10,20,50,100];
 
   formPublications: FormGroup = this.fb.group({
     title: [null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
@@ -43,21 +55,26 @@ export class HomeComponent implements OnInit {
     private publicacionesService:PublicacionesService,
     private cookies: CookieService,
     private usuariosService:UsuariosService,
-    private config: NgbModalConfig,
     private socketService: SocketService,
-    private router:Router
+    private router:Router,
+    private helperService: HelperService
   ) {
-    config.backdrop = 'static';
-    config.keyboard = false;
     this.obtainConn();
     this.listenMessage();
   }
 
   ngOnInit(): void {
+    this.helperService.navbarVisible.emit();
+    this.usuariosService.getUser(this.cookies.get('idUser'))
+    .subscribe( res => {
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    }, error => console.log(error));
     this.publicacionesService.getPostCompany(this.cookies.get("idUser"))
     .subscribe( result => {
       this.publicaciones = result;
-      this.publicaciones.forEach((publicacion, index) => {
+      this.publicaciones.forEach(publicacion => {
         let today = new Date();
         publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
         publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
@@ -68,9 +85,45 @@ export class HomeComponent implements OnInit {
           }, error => console.log(error))
         }
       });
+      for(let i = 0; this.publicaciones.length > i; i++){
+        if(this.publicaciones[i]?.contratado != undefined){
+          this.publicacionesContrato.push(this.publicaciones[i]);
+          this.publicaciones.splice(i, 1);
+          i--;
+        }
+        if(this.publicaciones[i].estado=='eliminado'){
+          this.publicaciones.splice(i, 1);
+          i--;
+        }
+      }
+      this.publicaciones.forEach(publicacion => {
+        if(publicacion.estado=='vigente'){
+          this.publicacionesVigentes.push(publicacion);
+        } else if(publicacion.estado == 'vencida'){
+          this.publicacionesVencidas.push(publicacion);
+        }
+      });
     }, error => {
       console.log(error);
+    });
+
+    this.helperService.postsVigente.subscribe( () => {
+      this.mostrar="vigentes";
+      this.regionVisible="publicaciones"
+    });
+    this.helperService.postsVencido.subscribe( () => {
+      this.mostrar="vencidas";
+      this.regionVisible="publicaciones"
+    });
+    this.helperService.postsHistorial.subscribe( () => {
+      this.mostrar="todas";
+      this.regionVisible="publicaciones"
+    });
+    this.helperService.contratados.subscribe( () => {
+      this.regionVisible="contratados";
+      this.obtenerUsuarios();
     })
+
   }
 
   obtainConn(){
@@ -91,11 +144,22 @@ export class HomeComponent implements OnInit {
     )
   }
 
+  obtenerUsuarios(){
+    if(this.publicacionesContrato.length!= 0){
+      this.publicacionesContrato.forEach((contract, index) => {
+        this.usuariosService.getUser(contract.contratado).subscribe(res => {
+          this.publicacionesContrato[index]['user'] = res;
+        }, error => console.log(error));
+      });
+    }
+  }
+
   public SuccessfullMessage() {
     this.successMessage = true;
     this.successfull = `La publicación se ha realizado exitosamente`;
     setTimeout(() => {
       this.successMessage = false;
+      this._modal.dismissAll();
     }, 3000);
   }
 
@@ -190,15 +254,18 @@ export class HomeComponent implements OnInit {
     console.log(data);
   }
 
+  handlePage(e:PageEvent){
+    this.page_size = e.pageSize;
+    this.page_number = e.pageIndex+1;
+  }
+
   guardarNotificacion(data:any){
     this.usuariosService.addNotification(data).
-    subscribe(res =>{
-      console.log(res);
+    subscribe(() =>{
     },
       error => console.log(error)
     )
   }
-
 
   capturarSelect() {
     this.isSelected = this.isNotSelected;

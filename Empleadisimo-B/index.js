@@ -34,7 +34,6 @@ app.use('/publicaciones', publicacionesRouter);
 app.use('/transacciones', transaccionesRouter);
 app.use('/contratos', contratosRouter);
 app.use('/uploads', express.static(path.resolve('uploads')));
-app.use('/uploads', express.static(path.resolve('uploads')))
 module.exports = {
     io
 }

@@ -15,6 +15,7 @@ export class LandingPageComponent implements OnInit {
               private router:Router) { }
 
   ngOnInit(): void {
+    this.helperService.navbarVisible.emit();
     if(this.cookieService.get('tipo') == '0'){
       this.router.navigate(['employee']);
     } else if(this.cookieService.get('tipo') == '1') {

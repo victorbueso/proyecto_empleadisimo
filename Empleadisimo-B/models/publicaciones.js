@@ -6,7 +6,6 @@ var schema = new mongoose.Schema({
     cantidadPago: Number,
     fechaPublicacion: String,
     fechaVencimiento: String,
-    /*cv: mongoose.SchemaTypes.Mixed,  */                   //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
     profesion: Array,
     duracionPublicacion: String,                        //Masculino: 1, Femenino: 0          
     ubicacion: mongoose.SchemaTypes.Mixed,              //{pais: '', departamento: '', ciudad: ''}
@@ -14,6 +13,7 @@ var schema = new mongoose.Schema({
     idEmpresa: mongoose.Types.ObjectId,
     usuarios: Array,
     curriculumUsuario:Array,
+    contratado: mongoose.Types.ObjectId,
     estado : String
 });
 

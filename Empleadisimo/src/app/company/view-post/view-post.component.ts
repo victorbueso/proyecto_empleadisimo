@@ -4,6 +4,8 @@ import { faArrowLeft, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms'
+import { UsuariosService } from 'src/app/services/usuarios.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-view-post',
@@ -33,7 +35,8 @@ export class ViewPostComponent implements OnInit {
     private publicacionesService:PublicacionesService,
     private router:Router,
     private modalService:NgbModal,
-    private fb : FormBuilder) { }
+    private usuariosService:UsuariosService,
+    private cookiesService:CookieService) { }
 
   open(content:any){
     this.modalService.open(content,{centered:true})
@@ -54,7 +57,7 @@ export class ViewPostComponent implements OnInit {
     let idPost = this.activatedRoute.snapshot.params.id;
     this.publicacionesService.getAllInfoPost(idPost)
     .subscribe(res => {
-      console.log(res);
+
       this.post = res[0];
       let today = new Date();
       this.post.fechaVencimiento = new Date(res[0].fechaVencimiento);
@@ -101,6 +104,28 @@ export class ViewPostComponent implements OnInit {
       this.modalService.dismissAll();
     }, error => console.log(error)
     )
+  }
+
+  hire(usuario:any){
+    let data:any;
+    this.usuariosService.getUser(this.cookiesService.get('idUser')).subscribe(
+      res => {
+        console.log(res);
+        data = {
+          correo : usuario.correo,
+          nombre: usuario.nombreCompleto,
+          tituloPublicacion : this.post.titulo,
+          empresa: res.nombreCompleto,
+        }
+        this.publicacionesService.sendHiringEmail(this.post._id, usuario._id, data)
+        .subscribe( () => {
+        this.router.navigate(['/company'])
+        }, err => console.log(err))
+      }, error => {
+        console.log(error);
+      }
+    )
+    
   }
 
 }

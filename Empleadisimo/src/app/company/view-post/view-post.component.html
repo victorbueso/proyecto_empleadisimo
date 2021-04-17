@@ -58,6 +58,7 @@
                     <th scope="col"></th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Curriculum Vitae</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +69,10 @@
                     </td>
                     <td>{{usuarios.nombreCompleto}}</td>
                     <td>
-                        <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i].rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
+                        <a [href]="'http://localhost:3000/'+ post?.curriculumUsuario[i]?.rutaArchivo" target="_blank" class="btn btn-primary">Ver curriculum</a>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary" (click)="hire(usuarios); open(hiring)">Contratar</button>
                     </td>
                   </tr>
                 </tbody>
@@ -157,6 +161,22 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="deletePost()">Eliminar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
+    </div>
+  </ng-template>
+
+<!-- Contratación efectuada correctamente -->
+  <ng-template #hiring let-modal>
+    <div class="modal-body">
+      <h2>¡Enhorabuena!</h2>
+        <p class="modal-text">
+            Has contratado a alguien para <strong>{{post.titulo}}</strong>
+        </p>
+        <p class="modal-text">
+          Hemos notificado sobre tu decisión por medio de correo electrónico.
+      </p>
+    </div>
+    <div class="modal-footer">
       <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cerrar</button>
     </div>
   </ng-template>
