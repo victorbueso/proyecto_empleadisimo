@@ -28,9 +28,6 @@ export class InformationComponent implements OnInit {
 
     ngOnInit(): void {
       this.id = this.activatedRoute.snapshot.params.id;
-      // this.activatedRoute.params.subscribe(params => {
-      //   this.id = params['id'];},
-      //   err => console.log(err))
         this.publicacionesService.getPostCompany(this.id).
         subscribe(res => {
           for (let i = 0; i < Object.values(res).length; i++) {
@@ -53,7 +50,6 @@ export class InformationComponent implements OnInit {
       }
       visualizar(input:string){
         this.visualizador = input;
-
       }
 
       seguir(){

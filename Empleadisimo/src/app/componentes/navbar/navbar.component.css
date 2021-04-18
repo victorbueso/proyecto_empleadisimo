@@ -159,6 +159,10 @@
     margin: auto;
 }
 
+.navbar{
+    z-index: 1;
+}
+
 @media(max-width:1332px){
     .navbar-brand-admin{
         display: inline-block;

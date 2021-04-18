@@ -83,7 +83,7 @@
 }
 
 .visible{
-    display: block;
+    display: flex;
 }
 
 .no-visible{
@@ -92,17 +92,16 @@
 
 .container-publications{
     width: 100%;
+    min-height: 100vh;
     padding: 20px 5px 0px 5px;
-    max-height: 100vh;
     background-color: transparent;
 }
 
 .posts{
     height: auto;
-    display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     background-color: transparent;
 }
 
@@ -110,6 +109,7 @@
     width: 75%;
     padding: 10px;
     display: flex;
+    margin-bottom: 10px;
     box-sizing: border-box;
     flex-direction: column;
     background-color: white;
@@ -146,6 +146,7 @@
 .contain-apply button{
     color: white;
     cursor: pointer;
+    font-weight: 500;
     padding: 5px 10px;
     border-radius: 20px;
     box-sizing: border-box;
@@ -185,3 +186,41 @@
     color: var(--secondary-color);
 }
 
+.general-information p>span{
+    color: var(--secondary-color);
+}
+
+.option-menu{
+    margin: 25px 0px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.option-menu:hover{
+    font-size: 30px;
+}
+
+.collapse-menu{
+    display: none;
+}
+
+@media only screen and (max-width: 635px){
+    .profile-information{
+        top: 0px;
+        min-width: 10%;
+        color: white;
+        cursor: pointer;
+        position: fixed;
+        min-height: 100vh;        
+        align-items: center;
+        background-color: var(--main-color);
+    }
+
+    .collapse-menu{
+        display: block;
+    }
+
+    .pp-container{
+        display: none;
+    }
+}

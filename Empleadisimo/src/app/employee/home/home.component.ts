@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
-import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck as farCalendarCheck } from '@fortawesome/free-regular-svg-icons'
-import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
-import { SocketService } from 'src/app/services/socket.service';
 import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
+import { SocketService } from 'src/app/services/socket.service';
 import { HelperService } from 'src/app/services/helper.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+import { PublicacionesService } from 'src/app/services/publicaciones.service';
+import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 
 
 @Component({

@@ -1,5 +1,13 @@
 <div class="profile-company">
     <div *ngIf = "usuario" class="profile-information">
+        <div class="collapse-menu">
+            <div (click)="visualizar('publicaciones')" class="option-menu">
+                <i class="far fa-eye"></i>
+            </div>
+            <div (click)="visualizar('perfil')" class="option-menu">
+                <i class="fas fa-info"></i>
+            </div>
+        </div>
         <div class="pp-container">
             <img class="img-profile pointer" [src]=" usuario.fotoPerfil | modifyImageP ">
             <div class="name-container">
@@ -8,8 +16,8 @@
             </div>
             <div class="option-container">
                 <button (click)="seguir()" class="follow-button">{{siguiendo | titlecase}}</button>
-                <h3 (click)="visualizar('perfil')" class="pointer">Informacion basica</h3>
                 <h3 (click)="visualizar('publicaciones')" class="pointer">Publicaciones</h3>
+                <h3 (click)="visualizar('perfil')" class="pointer">Informacion basica</h3>
             </div>
         </div>
     </div>    
@@ -23,18 +31,27 @@
                     <img [src]=" usuario.fotoPerfil | modifyImageP ">
                     <div class="main-infoC">
                         <span>{{ usuario.nombreCompleto }}</span><br>
-                        <span>{{ publicacion.fechaPublicacion }}</span>                        
+                        <span>{{ publicacion.fechaPublicacion | date:'longDate' }}</span>                        
                     </div>
                 </div>
                 <div class="information-job">
-                    <p><span class="title-info">Se busca:</span> {{ publicacion.titulo }}</p><br>
-                    <p><span class="title-info">Sueldo:</span> 20,000.00</p><br>
-                    <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento }}</p><br>
+                    <p><span class="title-info">Se busca:</span>{{ publicacion.titulo }}</p><br>
+                    <p><span class="title-info">Sueldo:</span>{{ publicacion.cantidadPago }}</p><br>
+                    <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento | date:'longDate' }}</p><br>
                 </div>
                 <div class="contain-apply">
                     <button>Aplicar</button>
                 </div> 
             </div>
         </div>
+        <div [ngClass]="{'visible':visualizador=='perfil','no-visible':visualizador!='perfil'}" class="posts">
+            <div class="post">
+                <div class="general-information">
+                    <p><span>Informacion empresa: </span> {{ usuario.nombreCompleto | titlecase }}</p>
+                    <p><span>Fecha fundación: </span>{{usuario.fechaFundacion  | date:'longDate'}}</p>
+                    <p><span>Correo: </span> {{usuario.correo}}</p>
+                </div>
+            </div>
+        </div>  
     </div>    
 </div>

@@ -1,9 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { ChatService } from '../../services/chat.service';
-import { UsuariosService } from '../../services/usuarios.service'
-import { SocketService } from '../../services/socket.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ChatService } from '../../services/chat.service';
+import { SocketService } from '../../services/socket.service';
 import { HelperService } from 'src/app/services/helper.service';
+import { UsuariosService } from '../../services/usuarios.service'
+import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -31,7 +32,8 @@ export class ChatComponent implements OnInit{
               private socketService : SocketService,
               private cookie : CookieService,
               private render : Renderer2,
-              private helperService: HelperService ){
+              private helperService: HelperService, 
+              private router : Router){
     this.obtainMessages();   
     this.obtainConn();
     this.serverMessage();
@@ -56,8 +58,6 @@ export class ChatComponent implements OnInit{
         if(index > -1){
           this.messages[index]['messages'].push(res['message']);
           this.notifications[index] = this.notifications[index] + 1;
-          console.log(this.users[index]);
-          console.log(this.actualMessages);
         }else{
           this.messages.unshift(res['message']);
           this.notifications[0] = 1; 
@@ -170,7 +170,6 @@ export class ChatComponent implements OnInit{
           this.messages = res['messages'];
           this.users = res['users'];
           this.obtainNotification(res['messages']);
-          console.log(this.notifications);
           this.homeChat()
         }else{
           this.homeChat()
@@ -187,11 +186,6 @@ export class ChatComponent implements OnInit{
     this.informationChat = user;
     this.actualMessages = this.obtainMessagesById(user['_id'])
     this.cleanNotifications(user, id)
-    // this.notifications[id] = 0;
-    // this.chatService.messageSeen(this.cookie.get('idUser'), user).subscribe(
-    //   (res) => {},
-    //   (err) => console.error(err)
-    // )
   }
 
   obtainMessagesById(userId : string){
@@ -239,6 +233,10 @@ export class ChatComponent implements OnInit{
       (err) => console.error(err)
     )
     this.notifications[id] = 0
+  }
+
+  goHome(){
+    this.router.navigate(['']);
   }
 
 }
