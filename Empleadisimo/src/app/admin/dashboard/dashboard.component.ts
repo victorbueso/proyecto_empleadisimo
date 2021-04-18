@@ -41,7 +41,6 @@ export class DashboardComponent implements OnInit {
         color += letters[valor];
         letters.splice(valor, 1);
     }
-    console.log(color);
     return color;
   }
 

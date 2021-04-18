@@ -102,7 +102,6 @@ export class FooterLinksComponent{
     for(var i of this.content){
       if(i['id'] == id){
         this.info = i
-        console.log(i)
       }
     }
   }

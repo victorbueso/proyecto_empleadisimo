@@ -49,7 +49,6 @@ export class UpdateInfoComponent implements OnInit{
     private router:Router,
     private helperService: HelperService) {
       userServices.obtenerUsuario(this.cookieService.get('idUser')).subscribe((res:any)=>{
-        console.log(res);
         this.usuario= res;
 
         if(this.usuario.fotoPerfil!=''){
@@ -87,7 +86,6 @@ export class UpdateInfoComponent implements OnInit{
       avatar: file
     });
     this.uploadForm.get('avatar')!.updateValueAndValidity()
-    console.log(this.uploadForm.get('avatar'));
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
@@ -99,7 +97,6 @@ export class UpdateInfoComponent implements OnInit{
   upload(){
     if(this.usuario.fotoPerfil==''&&this.imageURL!=''){
       let formData = new FormData();
-      console.log('se va a agregar la foto ');
       formData.append('image',this.uploadForm.value.avatar);
       this.userServices.uploadProfileImage(this.usuario._id,formData)
       .subscribe(res=>{
@@ -111,11 +108,9 @@ export class UpdateInfoComponent implements OnInit{
       if(this.imageURL!="http://localhost:3000/usuarios/profilePic/"+this.usuario._id){
         let formData = new FormData();
         formData.append('image',this.uploadForm.value.avatar);
-        console.log('se va a actualizar la foto');
         this.userServices.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
           //this.router.navigate(['employee']);
-          console.log("Irnos")
           // alert('foto de usuario actualizada');
         });
       }/*else{
@@ -195,10 +190,6 @@ export class UpdateInfoComponent implements OnInit{
     this.upload()
 
     if(!this.forma.valid){
-     /* console.log(this.forma.value.gender)
-      console.log(this.usuario.genero)
-      console.log(this.forma.value.name)
-      console.log(this.usuario.nombreCompleto)*/
       this.message="¡Ups! Al parecer el formulario no se ha completado."
       this.errorMessage=true;
       setTimeout( () => {

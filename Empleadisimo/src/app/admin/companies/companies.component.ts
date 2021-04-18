@@ -67,7 +67,6 @@ export class CompaniesComponent implements OnInit {
           this.deletedCompanies.push(res[i]);
         }
       }
-      console.log(res);
     }, error => console.log(error));
   }
 

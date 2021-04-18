@@ -110,7 +110,6 @@ export class ViewPostComponent implements OnInit {
     let data:any;
     this.usuariosService.getUser(this.cookiesService.get('idUser')).subscribe(
       res => {
-        console.log(res);
         data = {
           correo : usuario.correo,
           nombre: usuario.nombreCompleto,

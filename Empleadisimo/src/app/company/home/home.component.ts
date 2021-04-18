@@ -251,7 +251,6 @@ export class HomeComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-    console.log(data);
   }
 
   handlePage(e:PageEvent){

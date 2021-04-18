@@ -132,7 +132,6 @@ export class NavbarComponent implements OnInit{
     });
     var idUser =this.cookieService.get('idUser')
     if(idUser!=''){
-      console.log('el usuario escucha');
       this.socketService.listen(idUser).subscribe(
         () =>{
           this.obtenerNotificaciones();
@@ -270,7 +269,6 @@ export class NavbarComponent implements OnInit{
 
       this.usuarioService.registrarUsuario(data).subscribe(
         result=>{
-          console.log(result);
           this.registroSuccess= true;
           this.successRegistro=true;
           this.sendMessage(data.correo, result.token, result.idUser);

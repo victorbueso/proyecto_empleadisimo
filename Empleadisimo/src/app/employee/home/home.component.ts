@@ -156,7 +156,6 @@ export class HomeComponent implements OnInit {
       idPublicacion: this.postSelected,
       curriculum : this.curriculums[this.cvSelected]
     };
-    console.log(data);
     this.publicacionesService.updatePostUser(data).subscribe(res => {
       this.obtenerPublicaciones();
       this.modalService.dismissAll();
@@ -168,7 +167,6 @@ export class HomeComponent implements OnInit {
       .subscribe( () => {
       }, error => console.log(error));
     }, error => {
-      //console.log(`No se ha podido cumplir la petición para aplicar a un trabajo: ${error}`)
     })
     this.updateButtonStatus(this.postNumber);
 

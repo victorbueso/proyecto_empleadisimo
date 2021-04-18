@@ -148,10 +148,6 @@ export class UpdateInfoComponent implements OnInit {
     this.upload()
     this.successMessage=false;
     this.errorMessage=false;
-
-    console.log(this.forma.value.name);
-    console.log(this.imageURL)
-
     this.usuario.nombreCompleto= this.forma.value.name;
     this.usuario.rubros = this.partirRubros(this.forma.value.rubros);
     this.usuario.fechaFundacion = this.forma.value.fechaFundacion;
@@ -163,11 +159,8 @@ export class UpdateInfoComponent implements OnInit {
         this.noPicture = false;
       }, 3000);
     }else if(this.forma.valid == true){
-      console.log(this.usuario);
       this.usuarioService.updateInfoCompany(this.usuario,this.usuario._id)
       .subscribe(res=>{
-        console.log('respuesta Edicion');
-        console.log(res);
         this.successMessage=true;
         setTimeout(() => {
           this.successMessage=false;
@@ -187,7 +180,6 @@ export class UpdateInfoComponent implements OnInit {
 
   formarSucursal(){
     if(this.sucursalEdicion== -1){
-      console.log(this.sucursalForm.value);
       this.usuario.sucursales.push(this.sucursalForm.value);
       this.agregarSucursal = false;
       this.sucursalEdicion = -1;
@@ -200,13 +192,9 @@ export class UpdateInfoComponent implements OnInit {
 
   }
   deleteSucursal(index:Number){
-    console.log(index);
-    console.log(this.usuario.sucursales);
     this.usuario.sucursales.splice(index,1);
   }
   editSucursal(index:number){
-    console.log(index);
-    console.log(this.usuario.sucursales);
     this.agregarSucursal = true;
     this.sucursalForm.setValue(this.usuario.sucursales[index]);
     this.sucursalEdicion = index;
@@ -215,11 +203,9 @@ export class UpdateInfoComponent implements OnInit {
   upload(){
     if(this.usuario.fotoPerfil==''&&this.imageURL!=''){
       let formData = new FormData();
-      console.log('se va a agregar la foto ');
       formData.append('image',this.uploadForm.value.avatar);
       this.usuarioService.uploadProfileImage(this.usuario._id,formData)
       .subscribe(res=>{
-        console.log(res);
       },error=>{
         console.log(error);
       });
@@ -227,7 +213,6 @@ export class UpdateInfoComponent implements OnInit {
       if(this.imageURL!="http://localhost:3000/usuarios/profilePic/"+this.usuario._id){
         let formData = new FormData();
         formData.append('image',this.uploadForm.value.avatar);
-        console.log('se va a actualizar la foto');
         this.usuarioService.updateProfileImage(this.usuario._id,formData)
         .subscribe(res=>{
           console.log(res);
