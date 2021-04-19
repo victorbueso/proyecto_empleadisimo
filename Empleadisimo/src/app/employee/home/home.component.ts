@@ -39,6 +39,13 @@ export class HomeComponent implements OnInit {
   cvSelected : number = -1;
   postSelected : string = '';
   postNumber : number;
+  //cvlength: any = [];
+  cvl: number;
+
+
+/*Mensaje de alerta de cv( cuando un empleado aplica a un trabajo sin haber subido un cv) */
+  public errorMessage:Boolean = false;
+
   verifiedAccount:Boolean = false;
 
   public informationChat = {};
@@ -56,14 +63,21 @@ export class HomeComponent implements OnInit {
     this.obtainConn();
   }
 
+  checkcv(){
+    this.obtenerCurriculums();
+    }
+
   open(content:any, idPublicacion: string, publicacion: number){
     this.modalService.open(content, {centered: true});
     this.obtenerCurriculums();
     this.postSelected = idPublicacion;
     this.postNumber = publicacion;
+   
   }
 
   ngOnInit(): void {
+    this.obtenerCurriculums();
+    this.obtenerPublicaciones()
     this.helperService.navbarVisible.emit();
     this.obtenerPublicaciones();
     this.usuariosService.getUser(this.cookies.get('idUser'))
@@ -106,9 +120,11 @@ export class HomeComponent implements OnInit {
     this.usuariosService.getUser(this.cookies.get('idUser')).subscribe(
       res=> {
         this.curriculums = res.curriculum;
+        this.cvl = this.curriculums.length
       }, error => console.log(error)
     )
   }
+
 
   obtenerPublicaciones(){
     this.publicacionesService.getPosts()
