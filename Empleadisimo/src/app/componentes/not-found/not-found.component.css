@@ -1,0 +1,129 @@
+.container-notFound{
+    height: 100vh;
+    display: flex;
+    min-height: auto;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #0077B6 0%, #48BFE3 100%);
+}
+
+.circle{
+    z-index: 0;
+    border-radius: 50%;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 1px 9px 1px #0000003d;
+}
+
+.circle1{
+    animation: animationCircle1 2s cubic-bezier(.21,.98,.6,.99) 0s infinite alternate;
+}
+
+.circle2{
+    animation: animationCircle2 2s cubic-bezier(.21,.98,.6,.99) 0s infinite alternate;
+
+}
+.text-404{
+    z-index: 1;
+    position: absolute;
+}
+
+.text-404 h1{
+    font-size: 100px;
+    color: rgba(0, 119, 182, 0.70);
+    animation: animationText 2s cubic-bezier(.21,.98,.6,.99) 0s infinite alternate;
+}
+
+.messages-404{
+    color: white;
+    display: block;
+    text-align: center;
+    align-self: flex-end;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+}
+
+.messages-404 button{
+    color: white;
+    font-size: 18px;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    background-color: transparent;
+}
+
+.messages-404 button:hover{
+    font-size: 20px;
+}
+
+.messages-404 span{
+    font-size: 35px;
+}
+
+.fa-user-astronaut{
+    top: 20%;
+    left: 40%;
+    color: white;
+    font-size: 100px;
+    position: absolute;
+    transform: rotateZ(-45deg);
+    animation: animationAstronaut 2s cubic-bezier(.21,.98,.6,.99) 0s infinite alternate;
+}
+
+@keyframes animationAstronaut{
+    0%, 80%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+        
+    }
+}
+
+@keyframes animationCircle1{
+    from { 
+        height: 0px; 
+        width: 0px;
+    }
+    to{
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@keyframes animationCircle2{
+    0%, 50%{
+        height: 0px; 
+        width: 0px;       
+    }
+    100%{
+        width: 200px;
+        height: 200px;        
+    }
+}
+
+@keyframes animationText{
+    0%, 70%{
+        font-size: 0px;
+    }
+    100%{
+        font-size: 100px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .messages-404 span{
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .fa-user-astronaut{
+        top: 15%;
+        left: 43%;
+        transform: rotateZ(0deg);
+    }
+
+}

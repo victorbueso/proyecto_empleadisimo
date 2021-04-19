@@ -60,9 +60,9 @@
 }
 
 .contact-pp {
-    border-radius: 50%;
-    height: 40px;
     width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .messages {
@@ -324,6 +324,10 @@
 
 .fa-home:hover{
     font-size: 25px;
+}
+
+.ppc p{
+    margin-left: 10px;
 }
 
 @media screen and (max-width: 900px){

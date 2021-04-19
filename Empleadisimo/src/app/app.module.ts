@@ -22,7 +22,8 @@ import { ChatComponent } from './componentes/chat/chat.component';
 import { ModifyImagePipe } from './pipes/modify-image.pipe';
 
 import localeEs from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common'
+import { registerLocaleData } from '@angular/common';
+import { NotFoundComponent } from './componentes/not-found/not-found.component'
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -37,7 +38,8 @@ registerLocaleData(localeEs);
     ChatComponent,
     ModifyImagePipe,
     //EnterpriseComponent
-    ChatComponent
+    ChatComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

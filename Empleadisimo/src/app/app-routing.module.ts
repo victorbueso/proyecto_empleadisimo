@@ -6,11 +6,13 @@ import { FooterLinksComponent } from './componentes/footer-links/footer-links.co
 import { ChatComponent } from './componentes/chat/chat.component'
 import { AuthenticationGuard } from './authentication.guard'
 import { VerifyaccountComponent } from './componentes/verifyaccount/verifyaccount.component';
+import { NotFoundComponent } from './componentes/not-found/not-found.component'
 //import { EnterpriseComponent } from "./enterprise/enterprise.component";
 
 const routes: Routes = [
   { path: 'footer/:id' ,component: FooterLinksComponent },
   { path: '', component:LandingPageComponent },
+  { path: 'notFound', component:NotFoundComponent },
   { path: 'chat', component: ChatComponent},
   /*{ path: 'update-info', component: UpdateInfoComponent },*/
   { path: 'employee', loadChildren: () => import('./employee/employee.module').then(m =>m.EmployeeModule), canActivate:[AuthenticationGuard], data:{role: 'employee'} },

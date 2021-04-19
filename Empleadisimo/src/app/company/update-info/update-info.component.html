@@ -91,26 +91,6 @@
                 </div>
                 
             </div>
-            <div class="col-4">
-                <form action="" [formGroup]="uploadForm">
-                    <div style="background-color: white;width: 200px; height: 200px;">
-                        <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
-                            <img [src]="imageURL" [alt]="uploadForm.value.name" style="width: 200px; height: 200px;">
-                          </div>
-                    </div>
-                    <div class="row">
-                        Cargar nueva foto:
-                    </div>
-                    <div class="row">
-                        <input type="file" accept="image/*" (change)="showPreview($event)" />
-                    </div>
-                    <div class="row mt-4">
-                       <!-- <button class="btn btn-primary" (click)="upload()">Subir Imagen</button> -->
-                    </div>
-                </form>
-                
-                
-            </div>
         </div>
     </div>
 </div>
