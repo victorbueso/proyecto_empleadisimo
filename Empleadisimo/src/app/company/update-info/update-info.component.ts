@@ -27,7 +27,7 @@ export class UpdateInfoComponent implements OnInit {
 
   forma: FormGroup = this.fb.group({
     name: [null, [Validators.required, Validators.minLength(2), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]],
-    fechaFundacion:[null, [Validators.required, this.dateValidator]],
+    fechaFundacion:[null, [Validators.required /*this.dateValidator*/]],
     rubros:[null,[Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]]
   });
 
@@ -107,7 +107,7 @@ export class UpdateInfoComponent implements OnInit {
     }
   } */
 
-   dateValidator(control: AbstractControl){
+   /*dateValidator(control: AbstractControl){
     let dateT = new Date(control.value)
     let dateB = new Date()
     let age = Math.abs(dateT.getFullYear() - dateB.getFullYear());
@@ -117,7 +117,7 @@ export class UpdateInfoComponent implements OnInit {
       }
     }
     return null;
-  }
+  }*/
 
 
   showPreview(event:any){

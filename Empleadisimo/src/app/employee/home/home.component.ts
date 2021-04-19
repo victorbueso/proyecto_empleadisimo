@@ -41,6 +41,13 @@ export class HomeComponent implements OnInit {
   cvSelected : number = -1;
   postSelected : string = '';
   postNumber : number;
+  cvlength: any = [];
+  cvl: number;
+
+
+/*Mensaje de alerta de cv( cuando un empleado aplica a un trabajo sin haber subido un cv) */
+  public errorMessage:Boolean = false;
+
 
   public informationChat = {};
 
@@ -56,14 +63,25 @@ export class HomeComponent implements OnInit {
     this.obtainConn();
   }
 
+  checkcv(){
+    this.obtenerCurriculums();
+    }
+
   open(content:any, idPublicacion: string, publicacion: number){
+    this.obtenerCurriculums();
+    console.log(this.cvl)
+    if(this.cvl === 0){
+      setTimeout(function() { alert("Porfavor ingresar un cv para aplicar a un trabajo"); }, 3000);
+    }else{
     this.modalService.open(content, {centered: true});
     this.obtenerCurriculums();
     this.postSelected = idPublicacion;
     this.postNumber = publicacion;
+   } 
   }
 
   ngOnInit(): void {
+    this.obtenerCurriculums();
     this.obtenerPublicaciones()
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
@@ -86,9 +104,11 @@ export class HomeComponent implements OnInit {
     this.usuariosService.getUser(this.cookies.get('idUser')).subscribe(
       res=> {
         this.curriculums = res.curriculum;
+        this.cvl = this.curriculums.length
       }, error => console.log(error)
     )
   }
+
 
   obtenerPublicaciones(){
     this.publicacionesService.getPosts()

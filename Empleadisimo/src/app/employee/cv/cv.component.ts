@@ -46,7 +46,7 @@ export class CvComponent{
   updateCurriculum(){
     this.userService.obtainMyCurriculums(this.idEmpleado).subscribe((res) => {
       this.curriculums = res;
-      this.updateDirCv();
+      //this.updateDirCv();
     }, err => console.error(err))
   }
 
@@ -69,15 +69,16 @@ export class CvComponent{
   }
 
   listCv(){
+    console.log(this.curriculums)
     this.cvUpload = false;
     this.showCv = !this.showCv;
   }
 
-  updateDirCv(){
+  /*updateDirCv(){
     for(var i = 0; i < this.curriculums.length; i++){
       this.curriculums[i] = `http://localhost:3000/${ this.curriculums[i] }`
     }
-  }
+  }*/
 
   deleteCv(url:string){
     url = `${ url.slice(22, 29) }\\${ url.slice(30) }`
