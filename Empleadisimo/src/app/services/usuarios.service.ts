@@ -166,4 +166,8 @@ export class UsuariosService {
   StopfollowCompany(data:any,idUser:string):Observable<any>{
     return this.httpClient.post(`${this.url}/StopfollowCompany/${idUser}`,data);
   }
+
+  verifyAccount(idUser:string):Observable<any>{
+    return this.httpClient.post(`${this.url}/verifyAccount/${idUser}`, {})
+  }
 }

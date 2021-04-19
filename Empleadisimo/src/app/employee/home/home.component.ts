@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
-import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck as farCalendarCheck } from '@fortawesome/free-regular-svg-icons'
-import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
-import { UsuariosService } from 'src/app/services/usuarios.service';
-import { SocketService } from 'src/app/services/socket.service';
 import { ActivatedRoute } from "@angular/router";
 import { ChatService } from "../../services/chat.service";
+import { SocketService } from 'src/app/services/socket.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+import { PublicacionesService } from 'src/app/services/publicaciones.service';
+import { HomeEmployeeSliderService, SliderEmployeesData } from '../../services/homeEmployeeSlider.service';
 
 
 @Component({
@@ -19,9 +20,6 @@ import { ChatService } from "../../services/chat.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  /*Carousel*/
-  // images = [1, 2, 3, 4, 5, 6, 7].map((n) => `../../../assets/img/employees/${n}.jpg`);
 
   /*Input de búsqueda*/
   filterPosition ='';
@@ -41,13 +39,14 @@ export class HomeComponent implements OnInit {
   cvSelected : number = -1;
   postSelected : string = '';
   postNumber : number;
-  cvlength: any = [];
+  //cvlength: any = [];
   cvl: number;
 
 
 /*Mensaje de alerta de cv( cuando un empleado aplica a un trabajo sin haber subido un cv) */
   public errorMessage:Boolean = false;
 
+  verifiedAccount:Boolean = false;
 
   public informationChat = {};
 
@@ -59,6 +58,7 @@ export class HomeComponent implements OnInit {
               private usuariosService : UsuariosService,
               private socketService : SocketService,
               private router: Router,
+              private helperService: HelperService,
               private chatService:ChatService) {
     this.obtainConn();
   }
@@ -68,24 +68,40 @@ export class HomeComponent implements OnInit {
     }
 
   open(content:any, idPublicacion: string, publicacion: number){
-    this.obtenerCurriculums();
-    console.log(this.cvl)
-    if(this.cvl === 0){
-      setTimeout(function() { alert("Porfavor ingresar un cv para aplicar a un trabajo"); }, 3000);
-    }else{
     this.modalService.open(content, {centered: true});
     this.obtenerCurriculums();
     this.postSelected = idPublicacion;
     this.postNumber = publicacion;
-   } 
+   
   }
 
   ngOnInit(): void {
     this.obtenerCurriculums();
     this.obtenerPublicaciones()
+    this.helperService.navbarVisible.emit();
+    this.obtenerPublicaciones();
+    this.usuariosService.getUser(this.cookies.get('idUser'))
+    .subscribe( res => {
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    })
+    this.publicaciones.forEach((publicacion) => {
+
+      let today = new Date();
+      publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
+      publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
+      if(publicacion.fechaVencimiento <= today && publicacion.estado == 'vigente'){
+        let data = {estado : 'vencida'}
+        this.publicacionesService.updateStatus(publicacion._id, data)
+        .subscribe( () => {
+        }, error => console.log(error))
+      }
+    });
+    this.obtenerPublicacionesVigentes();
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
-      this.obtenerPublicaciones();
+      this.obtenerPublicacionesVigentes();
     }, error => console.log(error))
   }
 
@@ -123,10 +139,22 @@ export class HomeComponent implements OnInit {
             this.updateButtonStatus(Number(i));
           }
       }
-      /*console.log(this.publicaciones[0].ubicacion.ciudad);*/
     }, error => {
       console.log(error);
     })
+  }
+
+  obtenerPublicacionesVigentes(){
+    this.publicacionesService.getActivePosts()
+    .subscribe(res => {
+      this.publicaciones = res;
+      this.publicaciones.reverse();
+      this.publicaciones.forEach((publicacion, index) => {
+        if(publicacion?.contratado){
+          this.publicaciones.splice(index, 1);
+        }
+      })
+    }, error => console.log(error))
   }
 
   handlePage(e:PageEvent){

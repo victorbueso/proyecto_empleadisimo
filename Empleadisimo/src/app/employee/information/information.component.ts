@@ -24,56 +24,32 @@ export class InformationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cookiesService: CookieService,
     private router: Router,) {
-      
-     }
+    }
 
     ngOnInit(): void {
       this.id = this.activatedRoute.snapshot.params.id;
-      // this.activatedRoute.params.subscribe(params => {
-      //   this.id = params['id'];},
-      //   err => console.log(err))
-      
         this.publicacionesService.getPostCompany(this.id).
         subscribe(res => {
-          console.log(res);
           for (let i = 0; i < Object.values(res).length; i++) {
             this.publicaciones.push(Object.values(res)[i]);
             }
-          //console.log(this.publicaciones);
         }, err => console.log(err))
         this.usuariosService.getUser(this.id).subscribe(result => {
-           /*for (let i = 0; i < res.length; i++) {
-            this.usuario[i] = res[i];
-            }*/
-          console.log(result);
           this.usuario = result;
           if(this.usuario.seguidores.indexOf(this.cookiesService.get('idUser'))!=-1){
             this.siguiendo = "dejar seguir";
-            console.log("aqui");
           }else{
             this.siguiendo = "seguir";
           }
           
         }, err => console.log(err))
       }
-      /*this.publicacionesService.getPostCompany().
-      subscribe(
-        res=>{
-          this.publicaciones = res;        
-        },
-        err=>console.log(err))*/
       
-  
-      showid(id:string){
-        console.log(id)
-      }
-
       regreso(){
         this.router.navigate(['/employee']);
       }
       visualizar(input:string){
         this.visualizador = input;
-
       }
 
       seguir(){
@@ -84,7 +60,6 @@ export class InformationComponent implements OnInit {
         this.usuariosService.followCompany(data,this.cookiesService.get('idUser'))
         .subscribe(
           result=>{
-            console.log(result)
             if(result.message=="se activo seguir la empresa"){
               this.siguiendo = "dejar seguir";
             }
@@ -99,7 +74,6 @@ export class InformationComponent implements OnInit {
           this.usuariosService.StopfollowCompany(data,this.cookiesService.get('idUser'))
           .subscribe(
             result=>{
-              console.log(result)
               if(result.message=="se activo dejar de seguir la empresa"){
                 this.siguiendo = "seguir";
               }

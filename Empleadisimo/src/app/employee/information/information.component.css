@@ -1,48 +1,39 @@
 .profile-company{
-    background-color: #F6F5F5;
-    flex-direction: row;     
-    max-height: 100vh;
     display: flex;
-    width: 100vw;
-    
+    max-width: 100vw;
+    max-height: 100vh;
+    flex-direction: row;     
+    background-color: #F6F5F5;    
 }
 
 .profile-information{
-    height: calc(100vh - 70px);
+    min-width: 30%;
     display: inherit;
     justify-content: center;
-    width: 30%; 
-}
-
-.profile-publications{
-    min-height: calc(100vh - 70px);
-    background-color: transparent;
-    box-sizing: border-box;
-    padding: 50px 0px;
-    height: auto;
-    width: 100%;
+    height: calc(100vh - 70px);
 }
 
 .img-profile{
-    border-radius: 50%;
     max-width: 180px;
     margin: 0px auto;
+    border-radius: 50%;
 }
 
 .pp-container{
+    width: 100%;
+    min-width: auto;
+    display: inherit;
+    padding-top: 30px;
+    min-height: 160px;
     box-sizing: border-box;
     flex-direction: column;
-    min-height: 160px;
-    padding-top: 30px;
-    display: inherit;
-    width: 100%;
 }
 
 .name-container{
-    box-sizing: border-box;
-    text-align: center;
     color: #F17300;
     padding-top: 5px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .name-container *{
@@ -60,9 +51,9 @@
 }
 
 .option-container{
+    margin-top: 30px;
     text-align: center;
     box-sizing: border-box;
-    margin-top: 30px;
 }
 
 .option-container h3{
@@ -73,61 +64,163 @@
     font-weight: 400;
 }
 
-.post{
-    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    padding: 10px 0px 0px 10px;
-    margin: 0px auto 40px auto;
-    display: flex;
-    height: auto;
-    width: 90%;
-}
-
-.post *{
-    display: inline;
-}
-
-.post-image{
-    height: 60px;
-    border-radius: 50%;
-}
-
-.title-profile{
-    box-sizing: border-box;
-    padding-left: 10px;
-    width: 40%;
-}
-
-.title-profile h2{
-    color: #F17300;
-    font-weight: 300;
-    font-size: 15px;
-}
-
-.information-post{
-    width: 100%;
-}
-
 .follow-button{
-    background-color: var(--main-color);
-    border: 1px solid var(--main-color);
-    box-sizing: border-box;
-    margin-bottom: 16px;
-    border-radius: 18px;
-    padding: 8px 11px;
-    font-size: 20px;
     color: white;
+    font-size: 20px;
+    padding: 8px 11px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    box-sizing: border-box;
+    border: 1px solid var(--main-color);
+    background-color: var(--main-color);
 }
 
 .follow-button:hover{
-    border: 1px solid var(--main-color);
-    color: var(--main-color);
     box-sizing: border-box;
     background-color: white;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
 }
 
 .visible{
-    display: block;
+    display: flex;
 }
+
 .no-visible{
     display: none;
+}
+
+.container-publications{
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 5px 0px 5px;
+    background-color: transparent;
+}
+
+.posts{
+    height: auto;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.post{
+    width: 75%;
+    padding: 10px;
+    display: flex;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 25%);
+}
+
+.title-publication{
+    width: 75%;
+}
+
+.information-company{
+    width: 100%;
+    flex-wrap: wrap;
+    display: inherit;
+    flex-direction: row;
+}
+
+.information-company img{
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    max-height: 45px;
+    max-width: 45px;
+}
+
+.information-company:nth-of-type(3){
+    margin-left: auto;
+}
+
+.contain-apply{
+    text-align: end;
+}
+
+.contain-apply button{
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-color: var(--main-color);
+}
+
+.contain-apply button:hover{
+    color: var(--main-color);
+    background-color: transparent;
+    border: 1px solid var(--main-color);
+}
+
+.information-company>div:nth-of-type(1){
+    padding: 0px 10px;
+    box-sizing: border-box;
+}
+
+.main-infoC > span:nth-of-type(1){
+    color: var(--secondary-color);
+}
+
+.main-infoC > span:nth-of-type(2){
+    font-size: 12px;
+}
+
+.information-job{
+    padding: 10px 0px;
+}
+
+.information-job > p{
+    display: inline;
+}
+
+.title-info{
+    font-weight: 300;
+    color: var(--secondary-color);
+}
+
+.general-information p>span{
+    color: var(--secondary-color);
+}
+
+.option-menu{
+    margin: 25px 0px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.option-menu:hover{
+    font-size: 30px;
+}
+
+.collapse-menu{
+    display: none;
+}
+
+@media only screen and (max-width: 635px){
+    .profile-information{
+        top: 0px;
+        min-width: 10%;
+        color: white;
+        cursor: pointer;
+        position: fixed;
+        min-height: 100vh;        
+        align-items: center;
+        background-color: var(--main-color);
+    }
+
+    .collapse-menu{
+        display: block;
+    }
+
+    .pp-container{
+        display: none;
+    }
 }

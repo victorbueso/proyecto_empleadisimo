@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 var publicaciones = require('../models/publicaciones');
+const sendEmail = require('../modules/contratadoMail');
 
 //Crear una publicacion
 router.post('/', function(req, res) {
@@ -12,18 +13,7 @@ router.post('/', function(req, res) {
         cantidadPago: req.body.cantidadPago,
         fechaPublicacion: req.body.fechaPublicacion,
         fechaVencimiento: req.body.fechaVencimiento,
-        /*cv: {                                                      //[{idCV: '', nombreCV: '', fechaCreacion: ''}]
-            idCV: req.body.idCV,
-            nombreCV: req.body.nombreCV,
-            fechaCreacion: req.body.fechaCreacion,
-        },
-        empleos: {
-            tituloEmpleo: req.body.tituloEmpleo,
-            descripcionEmpleo: req.body.descripcionEmpleo,
-            duracionEmpleo: req.body.duracionEmpleo,
-        },*/
         profesion: req.body.profesion,
-        //duracionPublicacion: req.body.duracionPublicacion,
         ubicacion: { //{pais: '', departamento: '', ciudad: ''}
             pais: req.body.pais,
             departamento: req.body.departamento,
@@ -31,7 +21,8 @@ router.post('/', function(req, res) {
         },
         modalidad: req.body.modalidad,
         idEmpresa: req.body.idEmpresa,
-        usuarios: []
+        usuarios: [],
+        estado: 'vigente'
     });
 
     publicationsRouter.save().then(result => {
@@ -58,6 +49,20 @@ router.get('/:id', function(req, res) {
 //Obtener todas las publicaciones
 router.get('/', function(req, res) {
     publicaciones.find().then(result => {
+        res.send(result);
+        res.end();
+    }).catch(error => {
+        res.send(error);
+        res.end();
+    });
+});
+
+//Obtener publicaciones vigentes
+router.get('/posts/active', function(req, res){
+    publicaciones.find(
+        {estado:'vigente'},
+        {})
+    .then(result => {
         res.send(result);
         res.end();
     }).catch(error => {
@@ -147,7 +152,9 @@ router.get('/posts/getInfo/:idPost', function(req,res){
                 modalidad:true,
                 estado:true,
                 curriculumUsuario: true,
+                "resultado._id":true,
                 "resultado.nombreCompleto" : true,
+                "resultado.correo":true,
                 "resultado.fotoPerfil": true
             }
         }
@@ -198,6 +205,26 @@ router.post('/post/updateStatus/:idPost', function (req, res){
     }).catch(error => {
         res.send(error);
         res.end();
+    })
+});
+
+/*Agregar usuario contratado */
+router.post('/post/:idPost/hireUser/:idUser', function(req, res){
+    let datos = req.body;
+    publicaciones.updateOne({
+        _id: req.params.idPost
+    },
+    {
+        $set:{
+            contratado : req.params.idUser
+        }
+    }).then(() => {
+        sendEmail(datos);
+        res.status(200).send();
+        res.end();
+    }).catch( error => {
+        res.send(error);
+        res.send();
     })
 });
 

@@ -92,8 +92,11 @@
 
 <!-- Seleccionar cv -->
 <ng-template #selectCV let-modal>
-  <div class="modal-body">
-
+  <div class="modal-body" *ngIf="!verifiedAccount">
+    Actualmente tu cuenta no se encuentra verificada, por lo tanto no puede aplicar a esta publicación de trabajo. <br>
+    Te hemos enviado un correo electrónico para que puedas verificar tu cuenta y así podrás aplicar a todos los trabajos que quieras.
+  </div>
+  <div class="modal-body" *ngIf="verifiedAccount">
     <div class="form-group">
       <label for="exampleFormControlSelect1" style="font-family:'Raleway semibold'">Seleccionado un CV</label>
       <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cvSelected">
@@ -103,6 +106,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-danger" (click)="updateApplyPostUser()" [disabled]="!cvSelected">Enviar</button>
+    <button type="button" class="btn btn-outline-danger" (click)="updateApplyPostUser()" [disabled]="!(cvSelected!=-1)">Enviar</button>
   </div>
 </ng-template>
