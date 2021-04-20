@@ -159,7 +159,7 @@
         <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
           <p [ngClass]="{'display-block': expirationDate}" class="error-message">Fecha de vencimiento no válida</p>
           <label for="inputCalendar">Fecha de vencimiento</label>
-          <input formControlName="expirationDate" type="date" class="form-control" id="inputCalendar" placeholder="Insertar fecha" required>
+          <input formControlName="expirationDate" type="date" class="form-control" id="inputCalendar" [min]="dateToday | date:'yyyy-MM-dd'" placeholder="Insertar fecha" required>
         </div>
         <div class="form-group col-md-4" style="padding-top: 2px; margin-bottom: 3px;">
           <p [ngClass]="{'display-block': salary}" class="error-message">Ingrese un salario válido</p>

@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
 
   checkcv(){
     this.obtenerCurriculums();
-    }
+  }
 
   open(content:any, idPublicacion: string, publicacion: number){
     this.modalService.open(content, {centered: true});
@@ -185,7 +185,6 @@ export class HomeComponent implements OnInit {
     }, error => {
     })
     this.updateButtonStatus(this.postNumber);
-
   }
 
   updateButtonStatus(i: number){
@@ -198,7 +197,6 @@ export class HomeComponent implements OnInit {
   }
 
   modifyPublications(publicaciones: any){
-    var publicacionModificada = [];
     for(var i in publicaciones){
       publicaciones[i]['aplico'] = false;
     }

@@ -18,6 +18,7 @@ export class ViewPostComponent implements OnInit {
   faTimes = faTimes;
 
   post : any = [];
+  dateToday = new Date();
 
   formPublications = new FormGroup ({
     title: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.pattern("([a-záéíóúñ][A-ZÁÉÍÓÚÑ])|([a-záéíóúñ])|([A-ZÁÉÍÓÚÑ])|([A-ZÁÉÍÓÚÑ][a-záéíóúñ])+\\s[\w!@#$%^&'\"*\(\)\[\]\{\};\?¿¡:=\-\~,./\.<>?\|¨`´´°\¬\\_+]")]),

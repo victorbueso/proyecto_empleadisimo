@@ -71,12 +71,12 @@
             Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
-            <ng-container *ngIf="cvl === 0">
+            <!-- <ng-container *ngIf="cvl === 0">
               <button class="btn btn-primary mr-2"
               (click)="checkcv()">Verificar(Subir CV)
               </button>
-            </ng-container>
-            <ng-container *ngIf="cvl > 0">
+            </ng-container> -->
+            <ng-container>
               <button [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
               (click)="open(selectCV, publicacion._id, i)">Aplicar
               </button>
@@ -96,11 +96,14 @@
     Actualmente tu cuenta no se encuentra verificada, por lo tanto no puede aplicar a esta publicación de trabajo. <br>
     Te hemos enviado un correo electrónico para que puedas verificar tu cuenta y así podrás aplicar a todos los trabajos que quieras.
   </div>
-  <div class="modal-body" *ngIf="verifiedAccount">
+  <div class="modal-body text-center" *ngIf="curriculums.length===0">
+    Agrega un curriculum para poder aplicar a un trabajo.
+  </div>
+  <div class="modal-body" *ngIf="verifiedAccount && curriculums.length != 0">
     <div class="form-group">
       <label for="exampleFormControlSelect1" style="font-family:'Raleway semibold'">Seleccionado un CV</label>
       <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cvSelected">
-        <option selected disabled>-- Seleccionar --</option>
+        <option selected disabled value="-1">-- Seleccionar --</option>
         <option *ngFor="let cv of curriculums; index as i" [value]="i"> Curriculum {{i}}</option>
       </select>
     </div>

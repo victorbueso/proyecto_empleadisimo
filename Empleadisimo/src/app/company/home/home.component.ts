@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   public publicacionesVigentes:any = [];
   public publicacionesVencidas:any =[];
   public publicacionesContrato : any = [];
+  dateToday = new Date();
   verifiedAccount:Boolean=false;
   mostrar:string = "todas";
   regionVisible:string="publicaciones";
