@@ -65,7 +65,9 @@ export class UpdateInfoComponent implements OnInit{
         }else{
           g = '';
         }
-
+        if(res.profesion.length == 0){
+          res.profesion[0]='';
+        }
         this.forma.setValue({
           'name':res.nombreCompleto,
           'profesion':res.profesion[0],

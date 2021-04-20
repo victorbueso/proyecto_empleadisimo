@@ -26,7 +26,7 @@
             <div class="title-publication">
                 <h2>Publicaciones</h2>
             </div>
-            <div *ngFor="let publicacion of publicaciones" class="post">
+            <div *ngFor="let publicacion of publicaciones; index as i" class="post">
                 <div class="information-company">
                     <img [src]=" usuario.fotoPerfil | modifyImageP ">
                     <div class="main-infoC">
@@ -40,7 +40,7 @@
                     <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento | date:'longDate' }}</p><br>
                 </div>
                 <div class="contain-apply">
-                    <button>Aplicar</button>
+                    <button type="button" [disabled]="publicacion['aplico']" (click)="open(selectCV, publicacion._id, i)">Aplicar</button>
                 </div> 
             </div>
         </div>
@@ -55,3 +55,26 @@
         </div>  
     </div>    
 </div>
+
+<!-- Seleccionar cv -->
+<ng-template #selectCV let-modal>
+    <div class="modal-body" *ngIf="!verifiedAccount">
+      Actualmente tu cuenta no se encuentra verificada, por lo tanto no puede aplicar a esta publicación de trabajo. <br>
+      Te hemos enviado un correo electrónico para que puedas verificar tu cuenta y así podrás aplicar a todos los trabajos que quieras.
+    </div>
+    <div class="modal-body text-center" *ngIf="curriculums.length===0">
+      Agrega un curriculum para poder aplicar a un trabajo.
+    </div>
+    <div class="modal-body" *ngIf="verifiedAccount && curriculums.length != 0">
+      <div class="form-group">
+        <label for="exampleFormControlSelect1" style="font-family:'Raleway semibold'">Seleccionado un CV</label>
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cvSelected">
+          <option selected disabled value="-1">-- Seleccionar --</option>
+          <option *ngFor="let cv of curriculums; index as i" [value]="i"> Curriculum {{i}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="aplicar()" [disabled]="!(cvSelected!=-1)">Enviar</button>
+    </div>
+  </ng-template>

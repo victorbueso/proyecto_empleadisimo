@@ -154,6 +154,23 @@
     background-color: var(--main-color);
 }
 
+.contain-apply button:disabled{
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-color: #007bff
+}
+
+.contain-apply button:hover:disabled{
+    color:white;
+    border: 1px solid #0269d6;
+    background-color: #0269d6;
+}
+
 .contain-apply button:hover{
     color: var(--main-color);
     background-color: transparent;
