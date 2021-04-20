@@ -6,6 +6,7 @@ import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms'
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { CookieService } from 'ngx-cookie-service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-view-post',
@@ -37,7 +38,8 @@ export class ViewPostComponent implements OnInit {
     private router:Router,
     private modalService:NgbModal,
     private usuariosService:UsuariosService,
-    private cookiesService:CookieService) { }
+    private cookiesService:CookieService,
+    private helperService:HelperService) { }
 
   open(content:any){
     this.modalService.open(content,{centered:true})
@@ -56,9 +58,17 @@ export class ViewPostComponent implements OnInit {
 
   ngOnInit(): void {
     let idPost = this.activatedRoute.snapshot.params.id;
+    this.getPost(idPost);
+    this.helperService.selectNotificationCompany.subscribe(
+      (id) => {
+        this.getPost(id);
+      }, error => console.log(error))
+    
+  }
+
+  getPost(idPost){
     this.publicacionesService.getAllInfoPost(idPost)
     .subscribe(res => {
-
       this.post = res[0];
       let today = new Date();
       this.post.fechaVencimiento = new Date(res[0].fechaVencimiento);
@@ -84,7 +94,6 @@ export class ViewPostComponent implements OnInit {
             }, error3 => console.log(error3)
           )}
     }, error => console.log(error));
-    
   }
 
   saveChanges(){

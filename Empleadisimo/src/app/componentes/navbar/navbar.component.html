@@ -41,11 +41,11 @@
                   </div>
                 </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ml-3">
             <a class="nav-link" (click)="hiredPeople()">Contratados</a>
           </li>
         </ul>
-        <form class="d-flex ml-auto mr-3">
+        <form class="d-flex ml-auto mr-3 ml-3">
           <div class="row">
             <div>
                 <div ngbDropdown class="d-inline-block">
@@ -54,15 +54,10 @@
                     <span class="icon-button__badge" *ngIf="this.noLeidoC!=0 && 99 >= this.noLeidoC">{{noLeidoC}}</span>
                     <span class="icon-button__badge" *ngIf="this.noLeidoC > 99">99+</span>
                 </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right dropdown-menu-custom">
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-custom">
                     <div class="row">
                         <div class="col-6 mr-1 ml-3">
                             <h2 class="title-notification">Notificaciones</h2>
-                        </div>
-                        <div class="col-5 mr-2 ml-1 mt-2 d-flex justify-content-end">
-                            <a class="item-link">
-                                Mostrar todo
-                            </a>
                         </div>
                         <div class="custom-scrollbar">
                             <div *ngIf="notificacionesC.length == 0">
@@ -72,7 +67,7 @@
                             </div>
                             <div *ngIf="notificacionesC.length != 0">
                                 <div class="card ml-2 mr-2 mb-1" *ngFor="let notification of notificacionesC" [ngClass]="{'no-leido': notification.estado==false, 'card': notification.estado==true}">
-                                    <div class="card-body" (click)="notificacionSeleccionada(notification.idPublicacion)">
+                                    <div class="card-body" (click)="notificacionSeleccionadaEmpresa(notification?.idPublicacion)">
                                         <div class="card-text">
                                             Tienes un nuevo aplicante en tu publicación <strong>{{notification.titulo}}</strong>
                                         </div>
@@ -89,12 +84,9 @@
             </div>
             <div>
                 <div ngbDropdown class="d-inline-block">
-                    <button (click)="navChat()" class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
-                  <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
-                      <div>
-                        Aquí va el chat
-                      </div>
-                  </div> -->
+                    <button (click)="navChat()" class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle>
+                        <fa-icon [icon]="faCommentDots" [ngClass]="{'custom-btn': newMessage==false, 'custom-new': newMessage==true}"></fa-icon>
+                    </button>
                 </div>
             </div>
             <div>
@@ -106,10 +98,7 @@
                     </div>
                 </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
-                    <button ngbDropdownItem>Mi perfil</button>
-                    <button ngbDropdownItem>Rubros</button>
-                    <button ngbDropdownItem>Sucursales</button>
-                    <button ngbDropdownItem>Configuraciones</button>
+                    <button ngbDropdownItem (click)="updateProfile()">Actualizar perfil</button>
                     <li><hr class="dropdown-divider"></li>
                     <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
                   </div>
@@ -132,15 +121,10 @@
                         <span class="icon-button__badge" *ngIf="this.noLeido!=0 && 99 >= this.noLeido">{{noLeido}}</span>
                         <span class="icon-button__badge" *ngIf="this.noLeido > 99">99+</span>
                     </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right dropdown-menu-custom">
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-custom">
                     <div class="row">
                         <div class="col-6 mr-1 ml-3">
                             <h2 class="title-notification">Notificaciones</h2>
-                        </div>
-                        <div class="col-5 mr-2 ml-1 mt-2 d-flex justify-content-end">
-                            <a class="item-link">
-                                Mostrar todo
-                            </a>
                         </div>
                         <div class="custom-scrollbar">
                             <div *ngIf="notificaciones.length == 0">
@@ -150,7 +134,7 @@
                             </div>
                             <div *ngIf="notificaciones.length != 0">
                                 <div class="card ml-2 mr-2 mb-1" *ngFor="let notification of notificaciones" [ngClass]="{'no-leido': notification.estado==false, 'card': notification.estado==true}">
-                                    <div class="card-body" (click)="notificacionSeleccionada(notification._id)">
+                                    <div class="card-body" (click)="notificacionSeleccionadaEmpleado(notification?.idPublicacion)">
                                         <div class="card-tex">
                                             Nueva oferta de trabajo <strong>{{notification.titulo}}</strong>
                                         </div>
@@ -167,12 +151,9 @@
             </div>
             <div>
                 <div ngbDropdown class="d-inline-block">
-                    <button (click)="navChat()" class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
-                  <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
-                      <div>
-                        Aquí va el chat
-                      </div>
-                  </div> -->
+                    <button (click)="navChat()" class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle>
+                        <fa-icon [icon]="faCommentDots" [ngClass]="{'custom-btn': newMessage==false, 'custom-new': newMessage==true}"></fa-icon>
+                    </button>
                 </div>
             </div>
             <div>
@@ -184,8 +165,7 @@
                     </div>
                 </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
-                    <button ngbDropdownItem>Mi perfil</button>
-                    <button ngbDropdownItem>Configuraciones</button>
+                    <button ngbDropdownItem (click)="updateProfile()">Actualizar perfil</button>
                     <li><hr class="dropdown-divider"></li>
                     <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
                   </div>

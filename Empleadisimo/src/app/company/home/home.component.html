@@ -9,7 +9,7 @@
             <h1 *ngIf="mostrar == 'vencidas'">Publicaciones vencidas</h1>
           </div>
           <div class="col-6 d-flex justify-content-end">
-            <button class="btn btn-primary"(click)="open(contenido)">
+            <button class="btn btn-primary"(click)="open(contenido)" [ngClass]="{'d-none' : mostrar != 'todas'}">
               Nueva publicación
             </button>
           </div>
@@ -46,6 +46,10 @@
           </div>
           <!-- Publicaciones vigentes -->
           <div  *ngIf="mostrar == 'vigentes'">
+            <div *ngIf="publicacionesVigentes==0" class="text-center" style="font-family: 'Raleway semibold';">
+              No tienes publicaciones vigentes
+            </div>
+            <div *ngIf="publicacionesVigentes.length!=0">
             <mat-paginator [length]="publicacionesVigentes.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
             <div *ngFor="let publicacion of publicacionesVigentes | pagination:page_size:page_number">
             <div class="card mb-2 mt-2">
@@ -66,8 +70,13 @@
             </div>
             </div>
           </div>
+          </div>
           <!-- Publicaciones vencidas -->
           <div  *ngIf="mostrar == 'vencidas'">
+            <div *ngIf="publicacionesVencidas==0" class="text-center" style="font-family: 'Raleway semibold';">
+              No tienes publicaciones vencidas
+            </div>
+            <div *ngIf="publicacionesVencidas.length!=0">
             <mat-paginator [length]="publicacionesVencidas.length" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
             <div *ngFor="let publicacion of publicacionesVencidas | pagination:page_size:page_number">
             <div class="card mb-2 mt-2">
@@ -87,6 +96,7 @@
               </div>
             </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

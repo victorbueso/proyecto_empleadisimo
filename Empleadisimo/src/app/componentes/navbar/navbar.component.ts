@@ -8,6 +8,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { faBell as farBell, faCommentDots as farCommentDots } from '@fortawesome/free-regular-svg-icons'
 import { SocketService } from 'src/app/services/socket.service';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { PublicacionesService } from 'src/app/services/publicaciones.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 
 @Component({
@@ -42,6 +44,7 @@ export class NavbarComponent implements OnInit{
   public usuarioLoggeado : any = [];
   public nuevaNotificacion:Boolean = false;
   public nuevaNotificacionC:Boolean = false;
+  public newMessage : Boolean = false;
   public noLeido : number = 0;
   public noLeidoC : number = 0;
   public notificacionesNoLeidas : any = [];
@@ -84,7 +87,9 @@ export class NavbarComponent implements OnInit{
               private helperService:HelperService,
               private cookieService:CookieService,
               private router:Router,
-              private socketService:SocketService) { }
+              private socketService:SocketService,
+              private publicacionesService : PublicacionesService,
+              private chatService:ChatService) { }
 
   open(content:any) {
     this.modalService.dismissAll();
@@ -114,6 +119,14 @@ export class NavbarComponent implements OnInit{
       this.obtenerUsuarioLoggedo();
       this.obtenerNotificaciones();
     }
+    this.socketService.listen('messageServer').subscribe(
+      (res:any) => {
+        if(res.message.users.includes(this.cookieService.get('idUser'))){
+          this.newMessage=true;
+        }
+      }
+    )
+
     this.socketService.listen('nuevaPublicacion').subscribe(
       res => {
         this.noLeido++;
@@ -310,8 +323,18 @@ export class NavbarComponent implements OnInit{
     this.cookieService.deleteAll();
   }
 
-  notificacionSeleccionada(id:string){
-    console.log(id);
+  notificacionSeleccionadaEmpresa(id:string){
+    this.router.navigate([`/company/post/${id}`])
+    this.helperService.selectNotificationCompany.emit(id);
+  }
+
+  notificacionSeleccionadaEmpleado(id:string){
+    this.publicacionesService.getPost(id).subscribe(
+      res =>  {
+        this.router.navigate([`/employee/information/${res.idEmpresa}`]);
+        this.helperService.selectNotificationEmployee.emit(res.idEmpresa);
+      }, error => console.log(error)
+    )
   }
 
   openNotifications(){
@@ -364,7 +387,17 @@ export class NavbarComponent implements OnInit{
   }
 
   navChat(){
+    this.newMessage=false;
     this.router.navigate(['chat']);
+  }
+
+  updateProfile(){
+    let tipoUsuario = this.cookieService.get('tipo');
+    if(tipoUsuario=='0'){
+      this.router.navigate(['/employee/update-info'])
+    } else{
+      this.router.navigate(['/company/update-info'])
+    }
   }
 
 } 

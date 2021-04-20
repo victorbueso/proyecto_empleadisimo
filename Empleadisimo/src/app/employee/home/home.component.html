@@ -71,11 +71,6 @@
             Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
           </div>
           <div class="d-flex justify-content-end">
-            <!-- <ng-container *ngIf="cvl === 0">
-              <button class="btn btn-primary mr-2"
-              (click)="checkcv()">Verificar(Subir CV)
-              </button>
-            </ng-container> -->
             <ng-container>
               <button [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
               (click)="open(selectCV, publicacion._id, i)">Aplicar

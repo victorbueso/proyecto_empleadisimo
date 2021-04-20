@@ -179,3 +179,17 @@
         display: block;
     }
 }
+
+@media(min-width: 992px){
+    .dropdown-menu-custom{
+        right: 0;
+        left: auto;
+    }
+}
+
+@media(max-width: 992px){
+    .dropdown-menu-custom{
+        right: auto;
+        left: 0;
+    }
+}

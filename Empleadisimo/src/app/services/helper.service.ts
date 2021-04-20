@@ -13,6 +13,8 @@ export class HelperService {
   navbarVisible = new EventEmitter();
   navbarNoVisible = new EventEmitter();
   contratados = new EventEmitter();
+  selectNotificationCompany = new EventEmitter();
+  selectNotificationEmployee = new EventEmitter();
 
   constructor() { }
 }

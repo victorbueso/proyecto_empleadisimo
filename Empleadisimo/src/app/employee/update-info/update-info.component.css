@@ -9,7 +9,7 @@
     background: linear-gradient(270deg, #FFFFFF 0%, #0E8ED1 65%);
     justify-content: center;
     align-items: center;
-    height: auto;
+    min-height: 100vh;
     display: flex;
     padding: 3%;
 }

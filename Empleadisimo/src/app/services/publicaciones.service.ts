@@ -15,6 +15,10 @@ export class PublicacionesService {
     return this.httpClient.get(this.url);
   }
 
+  getPost(id:string):Observable<any>{
+    return this.httpClient.get(`${this.url}${id}`);
+  }
+
   createPost(data: any): Observable<any> {
     return this.httpClient.post(this.url, data);
   }

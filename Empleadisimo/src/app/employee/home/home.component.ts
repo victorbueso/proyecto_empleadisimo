@@ -77,9 +77,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerCurriculums();
-    this.obtenerPublicaciones()
+    this.obtenerPublicacionesVigentes()
     this.helperService.navbarVisible.emit();
-    this.obtenerPublicaciones();
     this.usuariosService.getUser(this.cookies.get('idUser'))
     .subscribe( res => {
       if(res?.verified != undefined){
@@ -87,7 +86,6 @@ export class HomeComponent implements OnInit {
       }
     })
     this.publicaciones.forEach((publicacion) => {
-
       let today = new Date();
       publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
       publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
@@ -98,7 +96,7 @@ export class HomeComponent implements OnInit {
         }, error => console.log(error))
       }
     });
-    this.obtenerPublicacionesVigentes();
+    //this.obtenerPublicacionesVigentes();
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
       this.obtenerPublicacionesVigentes();
@@ -126,34 +124,44 @@ export class HomeComponent implements OnInit {
   }
 
 
-  obtenerPublicaciones(){
-    this.publicacionesService.getPosts()
-    .subscribe( result => {
-      this.publicaciones = result;
-      this.modifyPublications(this.publicaciones)
-      this.publicaciones.reverse();
+  // obtenerPublicaciones(){
+  //   this.publicacionesService.getPosts()
+  //   .subscribe( result => {
+  //     this.publicaciones = result;
+  //     this.modifyPublications(this.publicaciones)
+  //     this.publicaciones.reverse();
 
-      let user = this.cookies.get('idUser');
-      for (let i in this.publicaciones){
-          if (this.publicaciones[i].usuarios.includes(user)){
-            this.updateButtonStatus(Number(i));
-          }
-      }
-    }, error => {
-      console.log(error);
-    })
-  }
+  //     let user = this.cookies.get('idUser');
+  //     for (let i in this.publicaciones){
+  //         if (this.publicaciones[i].usuarios.includes(user)){
+  //           this.updateButtonStatus(Number(i));
+  //         }
+  //     }
+  //   }, error => {
+  //     console.log(error);
+  //   })
+  // }
 
   obtenerPublicacionesVigentes(){
     this.publicacionesService.getActivePosts()
     .subscribe(res => {
       this.publicaciones = res;
+      this.modifyPublications(this.publicaciones)
       this.publicaciones.reverse();
-      this.publicaciones.forEach((publicacion, index) => {
+      let user = this.cookies.get('idUser');
+      for (let i=0; i < this.publicaciones.length; i++){
+          if (this.publicaciones[i].usuarios.includes(user)){
+            this.updateButtonStatus(Number(i));
+          }
+          if(this.publicaciones[i]?.contratado){
+            this.publicaciones.splice(i, 1);
+          }
+      }
+      /*this.publicaciones.forEach((publicacion, index) => {
         if(publicacion?.contratado){
           this.publicaciones.splice(index, 1);
         }
-      })
+      })*/
     }, error => console.log(error))
   }
 
@@ -173,7 +181,7 @@ export class HomeComponent implements OnInit {
       curriculum : this.curriculums[this.cvSelected]
     };
     this.publicacionesService.updatePostUser(data).subscribe(res => {
-      this.obtenerPublicaciones();
+      this.obtenerPublicacionesVigentes();
       this.modalService.dismissAll();
       let notification = {
         idPublicacion : this.postSelected,
