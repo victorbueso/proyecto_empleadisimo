@@ -96,7 +96,6 @@ export class HomeComponent implements OnInit {
         }, error => console.log(error))
       }
     });
-    //this.obtenerPublicacionesVigentes();
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
       this.obtenerPublicacionesVigentes();
@@ -155,13 +154,9 @@ export class HomeComponent implements OnInit {
           }
           if(this.publicaciones[i]?.contratado){
             this.publicaciones.splice(i, 1);
+            i--;
           }
       }
-      /*this.publicaciones.forEach((publicacion, index) => {
-        if(publicacion?.contratado){
-          this.publicaciones.splice(index, 1);
-        }
-      })*/
     }, error => console.log(error))
   }
 
