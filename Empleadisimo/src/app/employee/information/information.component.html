@@ -26,30 +26,35 @@
             <div class="title-publication">
                 <h2>Publicaciones</h2>
             </div>
-            <div *ngFor="let publicacion of publicaciones; index as i" class="post">
-                <div class="information-company">
-                    <img [src]=" usuario.fotoPerfil | modifyImageP ">
-                    <div class="main-infoC">
-                        <span>{{ usuario.nombreCompleto }}</span><br>
-                        <span>{{ publicacion.fechaPublicacion | date:'longDate' }}</span>                        
+            <div class="list-posts">
+                <div *ngFor="let publicacion of publicaciones; index as i" class="post">
+                    <div class="information-company">
+                        <img [src]=" usuario.fotoPerfil | modifyImageP ">
+                        <div class="main-infoC">
+                            <span>{{ usuario.nombreCompleto }}</span><br>
+                            <span>{{ publicacion.fechaPublicacion | date:'longDate' }}</span>                        
+                        </div>
                     </div>
+                    <div class="information-job">
+                        <p><span class="title-info">Se busca:</span>{{ publicacion.titulo }}</p><br>
+                        <p><span class="title-info">Sueldo:</span>{{ publicacion.cantidadPago }}</p><br>
+                        <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento | date:'longDate' }}</p><br>
+                    </div>
+                    <div class="contain-apply">
+                        <button type="button" [disabled]="publicacion['aplico']" (click)="open(selectCV, publicacion._id, i)">Aplicar</button>
+                    </div> 
                 </div>
-                <div class="information-job">
-                    <p><span class="title-info">Se busca:</span>{{ publicacion.titulo }}</p><br>
-                    <p><span class="title-info">Sueldo:</span>{{ publicacion.cantidadPago }}</p><br>
-                    <p><span class="title-info">Fecha de vencimiento:</span> {{ publicacion.fechaVencimiento | date:'longDate' }}</p><br>
-                </div>
-                <div class="contain-apply">
-                    <button type="button" [disabled]="publicacion['aplico']" (click)="open(selectCV, publicacion._id, i)">Aplicar</button>
-                </div> 
             </div>
+            
         </div>
         <div [ngClass]="{'visible':visualizador=='perfil','no-visible':visualizador!='perfil'}" class="posts">
-            <div class="post">
-                <div class="general-information">
-                    <p><span>Informacion empresa: </span> {{ usuario.nombreCompleto | titlecase }}</p>
-                    <p><span>Fecha fundación: </span>{{usuario.fechaFundacion  | date:'longDate'}}</p>
-                    <p><span>Correo: </span> {{usuario.correo}}</p>
+            <div class="list-posts">
+                <div class="post">
+                    <div class="general-information">
+                        <p><span>Informacion empresa: </span> {{ usuario.nombreCompleto | titlecase }}</p>
+                        <p><span>Fecha fundación: </span>{{usuario.fechaFundacion  | date:'longDate'}}</p>
+                        <p><span>Correo: </span> {{usuario.correo}}</p>
+                    </div>
                 </div>
             </div>
         </div>  
