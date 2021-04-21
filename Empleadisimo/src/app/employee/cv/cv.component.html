@@ -27,7 +27,7 @@
             <div class="modify-content">
                 <div class="buttons-modify">
                     <button (click)="deleteCv(curriculum)"  class="delete-cv">Eliminar</button>
-                    <a [href]='curriculum' class="open-cv">Abrir</a>
+                    <a [href]='curriculum' class="open-cv" target="_blank">Abrir</a>
                     <form (submit)="updateCV(curriculum)">
                         <input (change)="onPhotoSelected($event)" type="file" class="d-none" #photoinput>
                         <div (click)="photoinput.click()" class="input-file-cv">

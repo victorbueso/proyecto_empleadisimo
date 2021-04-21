@@ -130,7 +130,6 @@ router.post('/', async function(req, res) {
     const correo = req.body.correo;
     const hash = await bcrypt.hashSync(req.body.password, 10)
     const user = await usuario.findOne({ 'correo': correo });
-    // console.log(user);
     if (user != null) {
         return res.status(401).json({ "message": "Correo en uso" });
     }
@@ -173,10 +172,8 @@ router.post('/', async function(req, res) {
 
 //Obtener un usuario
 router.get('/:idUser', function(req, res) {
-    // console.log(req.params.idUser);
     usuario.find({ _id: mongoose.Types.ObjectId(req.params.idUser) })
         .then(result => {
-            // console.log(result[0])
             res.send(result[0]);
             res.end();
         }).catch(error => {
@@ -207,13 +204,9 @@ router.put('/updateEmployee/:idUser', async(req, res) => {
             _id: req.params.idUser
         }, {
             "nombreCompleto": req.body.nombreCompleto,
-            /*"correo": req.body.correo,*/
             "profesion": req.body.profesion,
             "fechaNacimiento": req.body.fechaNacimiento,
-            "genero": req.body.genero,
-            /*"curriculums": req.body.curriculums,
-            /*"fotoPerfil":req.body.urlFotoPerfil,
-            "medioPago": req.body.medioPago*/
+            "genero": req.body.genero
         })
         .then(result => {
             res.status(200).json({ 'message': 'Datos actualizados correctamente' });
@@ -232,7 +225,6 @@ router.post('/updateCompany/:idUser', async(req, res) => {
         }, {
             "nombreCompleto": req.body.nombreCompleto,
             "correo": req.body.correo,
-            /*"fotoPerfil":req.body.fotoPerfil,/*/
             "sucursales": req.body.sucursales,
             "rubros": req.body.rubros,
             "fechaFundacion": req.body.fechaFundacion
@@ -293,7 +285,6 @@ function verifyToken(req, res, next) {
     }
 
     const payload = jwt.verify(token, 'secretkey')
-    // console.log(payload);
     req.userId = payload._id;
     next();
 }
@@ -315,7 +306,6 @@ var upload = multer({ storage: storage })
 // subir una foto de perfil 
 
 router.put('/profilePic/:idUser', upload.single('image'), async(req, res) => {
-    // console.log(req.file);
     await usuario.updateOne({ _id: req.params.idUser }, { "fotoPerfil": req.file.path })
         .then(result => {
             res.status(200).json({ 'message': 'Foto de perfil actualizada con exito' });
@@ -388,11 +378,6 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
     }
 
     const arrtemp = { titulo: titulo, fecha: fd, rutaArchivo: req.file.path };
-    /* const arr = []
-
-     const cvtemp = usuario.find({_id: req.params.idUser},{curriculum: 1})
-     ;(await cvtemp).push*/
-
 
     await usuario.updateOne({ _id: req.params.idUser }, { $push: { curriculum: arrtemp } })
         .then(result => {
@@ -407,29 +392,21 @@ router.post('/CV/:idUser', upload.single('curriculums'), async(req, res) => {
 // borrar un cv en pdf
 
 router.post('/deleteCV/:idUser', async(req, res) => {
-    var fp = req.body.fp
-    // console.log(fp)
-    const arr = []
-    const arr1 = []
-        //var fpd
+    var fp = req.body.fp;
+    let arr = [];
 
-    usuario.find({ _id: req.params.idUser }, { curriculum: 1 }).
+    usuario.findOne({ _id: req.params.idUser }, { curriculum: true }).
     then(result2 => {
-        for (var i = 0; i < result2.length; i++) {
-            arr[i] = result2[i].curriculum;
+        for (var i = 0; i < result2.curriculum.length; i++) {
+            arr[i] = result2.curriculum[i];
         }
 
+        const df = arr.findIndex( x => x.rutaArchivo === fp)
+        fs.unlink(path.resolve(arr[df].rutaArchivo))
+        arr.splice(df,1);
+        
 
-        for (var i = 0; i < arr[0].length; i++) {
-            arr1[i] = arr[0][i];
-        }
-
-            const df = arr1.findIndex( x => x.rutaArchivo === fp) 
-            arr1.splice(df,1)
-            fs.unlink(path.resolve(fpd.rutaArchivo))
-            fpd = arr1.find(o => o.rutaArchivo === fp)
-
-        usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr1 }).then().catch(error => {
+        usuario.updateOne({ _id: req.params.idUser }, { "curriculum": arr }).then().catch(error => {
             res.send(error);
             res.end()
         });
@@ -449,7 +426,6 @@ router.put('/updateCV/:idUser', upload.single('curriculums'), async(req, res) =>
     const arr = []
     const arr1 = []
     const  mimetype = req.file.mimetype;
-    // const mimetype = req.file.mimetype;
 
     if (mimetype !== 'application/pdf') {
         return res.json({ message: 'Archivo no soportado, Solo se permiten archivos pdf', })
@@ -515,8 +491,6 @@ router.get('/CVinfo/:idUser', async(req, res) => {
         for (var i = 0; i < arr[0].length; i++) {
             arr1[i] = arr[0][i].rutaArchivo;
         }
-        /*console.log(arr1.length)
-        console.log(arr1.findIndex( x => x.rutaArchivo === "uploads\\f46a165a-0b1a-413c-aec0-98f35f5482f4.pdf"))*/
         return res.json(arr1);
         res.end();
     }).catch(error => {
@@ -527,18 +501,13 @@ router.get('/CVinfo/:idUser', async(req, res) => {
 })
 
 router.get('/profilePic/:idUser', function(req, res) {
-    // console.log('..', req.params.idUser);
     usuario.findById(req.params.idUser, { fotoPerfil: 1 })
         .then(result => {
-            // console.log(path.join(__dirname, '..', result.fotoPerfil));
             res.sendFile(path.join(__dirname, '..', result.fotoPerfil));
 
         })
         .catch();
 
-    /* res.sendFile(path.join('..',foto.fotoPerfil)); */
-
-    /* res.sendFile(path.join( '..',`${req.params.fileName}`)); */
 });
 
 // Notificaciones 
@@ -610,7 +579,8 @@ router.put('/notifications/newPost/company/:idCompany', function(req, res) {
             res.end();
         })
     })
-    // Cambiar estado de notificaciones a leídas
+
+// Cambiar estado de notificaciones a leídas
 router.post('/notifications/read/:idUser', function(req, res) {
     usuarios.updateMany({
         _id: req.params.idUser
