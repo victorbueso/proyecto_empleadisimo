@@ -84,18 +84,8 @@ export class HomeComponent implements OnInit {
       if(res?.verified != undefined){
         this.verifiedAccount = res?.verified;
       }
-    })
-    this.publicaciones.forEach((publicacion) => {
-      let today = new Date();
-      publicacion.fechaPublicacion = new Date(publicacion.fechaPublicacion);
-      publicacion.fechaVencimiento = new Date(publicacion.fechaVencimiento);
-      if(publicacion.fechaVencimiento <= today && publicacion.estado == 'vigente'){
-        let data = {estado : 'vencida'}
-        this.publicacionesService.updateStatus(publicacion._id, data)
-        .subscribe( () => {
-        }, error => console.log(error))
-      }
-    });
+    }, error => console.log(error))
+    
     this.socketService.listen('nuevaPublicacion')
     .subscribe( () => {
       this.obtenerPublicacionesVigentes();
@@ -123,24 +113,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-  // obtenerPublicaciones(){
-  //   this.publicacionesService.getPosts()
-  //   .subscribe( result => {
-  //     this.publicaciones = result;
-  //     this.modifyPublications(this.publicaciones)
-  //     this.publicaciones.reverse();
-
-  //     let user = this.cookies.get('idUser');
-  //     for (let i in this.publicaciones){
-  //         if (this.publicaciones[i].usuarios.includes(user)){
-  //           this.updateButtonStatus(Number(i));
-  //         }
-  //     }
-  //   }, error => {
-  //     console.log(error);
-  //   })
-  // }
-
   obtenerPublicacionesVigentes(){
     this.publicacionesService.getActivePosts()
     .subscribe(res => {
@@ -149,14 +121,25 @@ export class HomeComponent implements OnInit {
       this.publicaciones.reverse();
       let user = this.cookies.get('idUser');
       for (let i=0; i < this.publicaciones.length; i++){
-          if (this.publicaciones[i].usuarios.includes(user)){
-            this.updateButtonStatus(Number(i));
-          }
-          if(this.publicaciones[i]?.contratado){
+        if (this.publicaciones[i].usuarios.includes(user)){
+          this.updateButtonStatus(Number(i));
+        }
+        if(this.publicaciones[i]?.contratado){
+          this.publicaciones.splice(i, 1);
+          i--;
+        }
+        let today = new Date();
+        this.publicaciones[i].fechaPublicacion = new Date(this.publicaciones[i].fechaPublicacion);
+        this.publicaciones[i].fechaVencimiento = new Date(this.publicaciones[i].fechaVencimiento);
+        if(this.publicaciones[i].fechaVencimiento < today && this.publicaciones[i].estado=='vigente'){
+          let data = {estado : 'vencida'}
+          this.publicacionesService.updateStatus(this.publicaciones[i]._id, data)
+          .subscribe( () => {
             this.publicaciones.splice(i, 1);
             i--;
-          }
+          }, error => console.log(error))
       }
+      };
     }, error => console.log(error))
   }
 

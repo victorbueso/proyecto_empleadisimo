@@ -60,7 +60,7 @@ export class InformationComponent implements OnInit {
         
       }
     }, err => console.log(err))
-    this.usuariosService.getUser(id).subscribe(result => {
+    this.usuariosService.getUser(this.cookiesService.get('idUser')).subscribe(result => {
       this.usuario = result;
       if(result?.verified != undefined){
         this.verifiedAccount = result?.verified;

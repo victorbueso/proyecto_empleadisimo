@@ -68,7 +68,7 @@
             <div class="icon">
               <fa-icon [icon]="faCalendarCheck"></fa-icon>
             </div>
-            Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
+            Publicado el {{publicacion.fechaPublicacion | date:'dd-MM-yyyy'}}
           </div>
           <div class="d-flex justify-content-end">
             <ng-container>
