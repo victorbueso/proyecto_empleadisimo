@@ -530,9 +530,14 @@ router.get('/notifications/:idUser', function(req, res) {
     
 // Notificación de empleo para todos los empleados
 
-router.put('/notifications/newPost', function(req, res) {
+router.put('/notifications/newPost', async(req, res) => {
+     
+    
+    const FP = await usuario.findById(req.body.idEmpresa);
+    
+    
     usuarios.updateMany({
-        tipoUsuario: 0
+        _id: FP.seguidores
     }, {
         $push: {
             "notificaciones": {

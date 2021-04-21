@@ -244,7 +244,8 @@ export class HomeComponent implements OnInit {
         idPublicacion : res._id,
         titulo : res.titulo,
         fechaPublicacion : res.fechaPublicacion,
-        estado:false
+        estado:false,
+        idEmpresa:this.cookies.get("idUser")
       }
       this.guardarNotificacion(data);
       this.formPublications.reset(this.formPublications);

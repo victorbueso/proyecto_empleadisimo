@@ -129,9 +129,13 @@ export class NavbarComponent implements OnInit{
 
     this.socketService.listen('nuevaPublicacion').subscribe(
       res => {
-        this.noLeido++;
+        
         var data : any;
         data = res;
+        
+        if(this.usuarioLoggeado.siguiendo.includes(data.idEmpresa)){
+          this.noLeido++;
+        
         this.nuevaNotificacion = true;
         this.notificaciones.unshift({
           idPublicacion:data._id,
@@ -139,6 +143,7 @@ export class NavbarComponent implements OnInit{
           fechaPublicacion: data.fechaPublicacion,
           estado: false
         });
+        }
     },
     error=>{
       console.log(error);
@@ -175,7 +180,8 @@ export class NavbarComponent implements OnInit{
       this.usuarioLoggeado = {
         id: res._id,
         nombre: res.nombreCompleto,
-        fotoPerfil : res.fotoPerfil
+        fotoPerfil : res.fotoPerfil,
+        siguiendo: res.siguiendo
       }
       if(res?.fotoPerfil != ''){
         this.imgPerfil = `http://localhost:3000/${this.usuarioLoggeado.fotoPerfil}`
