@@ -91,7 +91,7 @@
     Actualmente tu cuenta no se encuentra verificada, por lo tanto no puede aplicar a esta publicación de trabajo. <br>
     Te hemos enviado un correo electrónico para que puedas verificar tu cuenta y así podrás aplicar a todos los trabajos que quieras.
   </div>
-  <div class="modal-body text-center" *ngIf="curriculums.length===0">
+  <div class="modal-body text-center" *ngIf="verifiedAccount && curriculums.length==0">
     Agrega un curriculum para poder aplicar a un trabajo.
   </div>
   <div class="modal-body" *ngIf="verifiedAccount && curriculums.length != 0">
