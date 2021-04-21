@@ -82,8 +82,8 @@
     background-color: white;
     box-sizing: border-box;
     position: absolute;
+    min-height: auto;
     display: none;
-    height: 50px;
     width: 20%;
     z-index: 1;
     left: 0px;
@@ -96,8 +96,8 @@
     cursor: pointer;
     font-size: 20px;
     color: white;
-    display: flex;
-    width: 20%;
+    /* display: flex; */
+    /* width: 20%; */
 }
 
 .cv-information:hover+.modify-content{
@@ -197,4 +197,10 @@
 
 .success-file{
     margin-left: 5px;
+}
+
+@media screen and (max-width: 885px) {
+    .modify-content{
+        width: 40%;
+    }
 }
