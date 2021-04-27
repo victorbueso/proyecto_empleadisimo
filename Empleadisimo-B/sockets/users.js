@@ -48,7 +48,15 @@ class Users{
     }
 
     async chatExits(idUser, idCompany){  
-        return await chat.find({ users : idUser, users: idCompany })
+        let eChats = await chat.find({ users : idUser });
+        if(eChats.length > 0){
+            for(var i = 0; i < eChats.length; i++){
+                if(eChats[i]['users'].includes( idCompany )){
+                    return [eChats[i]];
+                }
+            }
+        }
+        return [];
     }
 
     notExistingChat(chatInformation){
