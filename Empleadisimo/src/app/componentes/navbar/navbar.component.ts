@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit{
   public errorLogin: Boolean = false;
   public message : String = "";
   public visible : Boolean = true;
-  public imgPerfil : string = '../../../assets/img/usuario-sin-foto.png';
+  public imgPerfil : string = '/assets/img/usuario-sin-foto.png';
 
   public pruebaUsuarioLogueado = null;
 

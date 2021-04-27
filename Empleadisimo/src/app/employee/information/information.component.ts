@@ -42,7 +42,12 @@ export class InformationComponent implements OnInit {
       this.id = id;
       this.getInformation(this.id);
     }, error => console.log(error));
-    }
+    this.usuariosService.getUser(this.cookiesService.get('idUser')).subscribe(res =>{
+      if(res?.verified != undefined){
+        this.verifiedAccount = res?.verified;
+      }
+    }, () => {})
+  }
   
   getInformation(id:string){
     this.publicacionesService.getPostCompany(id).
@@ -62,16 +67,13 @@ export class InformationComponent implements OnInit {
     }, err => console.log(err))
     this.usuariosService.getUser(id).subscribe(result => {
       this.usuario = result;
-      if(result?.verified != undefined){
-        this.verifiedAccount = result?.verified;
-      }
       if(this.usuario.seguidores.indexOf(this.cookiesService.get('idUser'))!=-1){
         this.siguiendo = "dejar seguir";
       }else{
         this.siguiendo = "seguir";
-      }
-      
+      } 
     }, err => console.log(err))
+    
   }
   
   open(content:any, idPublicacion: string, publicacion: number){
